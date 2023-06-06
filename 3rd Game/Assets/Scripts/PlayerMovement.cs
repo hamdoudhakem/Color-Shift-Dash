@@ -13,31 +13,30 @@ public class PlayerMovement : MonoBehaviour
     public float ForwardSpeed , MaxSideSwipe , MaxSideSpeed;
     [Tooltip("The Speed Change Multiplier")]
     public float IncreaseRate;
-    [Tooltip("The quantity of speed to add to my original speed after the speed boost")]
-    public float BoostValue;
+    [Tooltip("The Speed i will lose gradualy after reaching the finish line")]
+    public float StopRate;    
     [Tooltip("The Duraction of the Speed Boost (In Seconds)")]
     public float SpeedBoostTime;
     public LayerMask GroundLayer;
     public Vector3 GroundedSize;
 
+    [HideInInspector] public bool MoveForward, InputMove;
     private float LastFrameVel;    
     private Rigidbody rb;
     private bool StopSliding;
-    private LayerMask SpeedBoost;
-    private bool Move;
 
     void Start()
     {
-        Move = true;
+        MoveForward = true;
+        InputMove = true; 
         rb = GetComponent<Rigidbody>();
-        LastFrameVel = int.MaxValue;
+        LastFrameVel = int.MaxValue;  
         StopSliding = false;
-        SpeedBoost = LayerMask.NameToLayer("Speed Boost");
     }
 
     void Update()
     {
-        if (Move)
+        if (MoveForward)
         {
             rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, ForwardSpeed);
         }
@@ -65,46 +64,49 @@ public class PlayerMovement : MonoBehaviour
                 StopSliding = false;
             }
         }
-    }  
+     
+    }      
 
     public void ChangeVel(float DifInPixel)
     {
-        Debug.Log("DifInPixel = " + DifInPixel);
-
-        float Dif = Mathf.Clamp(DifInPixel, -MaxSideSwipe, MaxSideSwipe);            
-
-        if (rb.velocity.x < 0 && Dif > 0 || rb.velocity.x > 0 && Dif < 0)
+        if (InputMove)
         {
-            rb.velocity = new Vector3(Dif * IncreaseRate * Time.deltaTime, rb.velocity.y, rb.velocity.z);
-        }
-        else
-        {
-            //If the speed becomes 2 times superior to the last speed boost then i will make it 3/2 instead
-            //So that i can prevent a super fast accelerations
-            float vel = Dif * IncreaseRate * Time.deltaTime > 2 * LastFrameVel ?
-                Dif * IncreaseRate * Time.deltaTime * 3f/2: Dif * IncreaseRate * Time.deltaTime;
+            Debug.Log("DifInPixel = " + DifInPixel);
 
-            rb.velocity += vel * Vector3.right;
+            float Dif = Mathf.Clamp(DifInPixel, -MaxSideSwipe, MaxSideSwipe);
 
-            LastFrameVel = vel;
-        }
+            if (rb.velocity.x < 0 && Dif > 0 || rb.velocity.x > 0 && Dif < 0)
+            {
+                rb.velocity = new Vector3(Dif * IncreaseRate * Time.deltaTime, rb.velocity.y, rb.velocity.z);
+            }
+            else
+            {
+                //If the speed becomes 2 times superior to the last speed boost then i will make it 3/2 instead
+                //So that i can prevent a super fast accelerations
+                float vel = Dif * IncreaseRate * Time.deltaTime > 2 * LastFrameVel ?
+                    Dif * IncreaseRate * Time.deltaTime * 3f / 2 : Dif * IncreaseRate * Time.deltaTime;
 
-        rb.velocity = new Vector3(Mathf.Clamp(rb.velocity.x , -MaxSideSpeed, MaxSideSpeed)
-                                                                              , rb.velocity.y, rb.velocity.z);
+                rb.velocity += vel * Vector3.right;
 
-        RemainingTime = time;        
+                LastFrameVel = vel;
+            }
+
+            rb.velocity = new Vector3(Mathf.Clamp(rb.velocity.x, -MaxSideSpeed, MaxSideSpeed)
+                                                                                  , rb.velocity.y, rb.velocity.z);
+
+            RemainingTime = time;
+        }       
+    }       
+
+    void OnDrawGizmos()
+    {
+        Gizmos.DrawCube(transform.position + Vector3.down * .5f, GroundedSize);
     }
 
-    void OnTriggerEnter(Collider other)
+    public IEnumerator SpeedUp(float BoostValue, bool TakeInput = true)
     {
-        if(other.gameObject.layer == SpeedBoost)
-        {
-            StartCoroutine(SpeedUp());
-        }
-    }
-
-    IEnumerator SpeedUp()
-    {
+        //We Will Change the Input Move and Forward Speed temporarely
+        InputMove = TakeInput;
         ForwardSpeed += BoostValue;
 
         yield return new WaitForSeconds(SpeedBoostTime);
@@ -115,17 +117,23 @@ public class PlayerMovement : MonoBehaviour
         });
 
         ForwardSpeed -= BoostValue;
-    }
-
-    void OnDrawGizmos()
-    {
-        Gizmos.DrawCube(transform.position + Vector3.down * .5f, GroundedSize);
-    }
+        InputMove = true;
+    }    
 
     public IEnumerator Stop()
     {
-        Move = false;
+        MoveForward = false;
+        InputMove = false;
         yield return new WaitForEndOfFrame();
+
+        //Stop The Player Gradually
+        do
+        {
+            rb.velocity -= (rb.velocity.z / 10) * Time.deltaTime * StopRate * Vector3.forward;
+            yield return new WaitForEndOfFrame();
+
+        } while (rb.velocity.z > 0);
+
         rb.velocity = Vector3.zero;
     }
 }

@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Cannon Stuff
+  - Obstacle
+  - Boost lv 1
+  - Boost lv 2
   layers:
   - Default
   - TransparentFX
@@ -16,7 +20,7 @@ TagManager:
   - Color Obst
   - Speed Boost
   - Finish Line
-  - 
+  - Spot Obst
   - 
   - 
   - 

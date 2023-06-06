@@ -6,17 +6,19 @@ public class BrickWallBehavior : MonoBehaviour
 {
     public Material NeededColor;
 
-    void Awake()
-    {      
+    void Start()
+    {        
         int chosen = Random.Range(0, transform.childCount);
-        int Prohibated = ColorsData.Materials.FindIndex(mat => mat == NeededColor);
+        int Prohibated = StaticData.Materials.FindIndex(mat => mat == NeededColor);
+        //Debug.Log($"{(transform.name.Contains("2") ? "Script 2" : "Script 1")} : prohibited Index is = {Prohibated}");
 
-        for(int i = 0; i< transform.childCount; i++)
+        for (int i = 0; i< transform.childCount; i++)
         {
             Transform trans = transform.GetChild(i);
 
             if (i == chosen)
             {
+               // Debug.Log($"{(transform.name.Contains("2") ? "Script 2" : "Script 1")} : I Will give the Needed color to = {trans.name}");
                 for (int y = 0; y < trans.childCount; y++)
                 {
                     trans.GetChild(y).GetComponent<MeshRenderer>().material = NeededColor;
@@ -29,13 +31,14 @@ public class BrickWallBehavior : MonoBehaviour
                 int j;
                 do
                 {
-                    j = Random.Range(0, ColorsData.Materials.Count);
+                    j = Random.Range(0, StaticData.Materials.Count);
 
                 } while (j == Prohibated);
 
+                //Debug.Log($"{(transform.name.Contains("2") ? "Script 2" : "Script 1")} : I Will give the {ColorsData.Materials[j].name} color to = {trans.name}");
                 for (int y = 0; y < trans.childCount; y++)
                 {
-                    trans.GetChild(y).GetComponent<MeshRenderer>().material = ColorsData.Materials[j];
+                    trans.GetChild(y).GetComponent<MeshRenderer>().material = StaticData.Materials[j];
                 }
             }
         }
