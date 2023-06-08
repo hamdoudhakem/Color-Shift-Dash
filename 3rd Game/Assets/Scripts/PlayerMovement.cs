@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public Camera Cam;
     [Tooltip("The Amount of friction applied after the player gets his hands of the screen")] [Range(1 , 20)]
     [SerializeField] private float FrictionValue;
     [Tooltip("If this much time Passes after the last movement i will start applying friction")]
@@ -17,6 +18,10 @@ public class PlayerMovement : MonoBehaviour
     public float StopRate;    
     [Tooltip("The Duraction of the Speed Boost (In Seconds)")]
     public float SpeedBoostTime;
+    [Tooltip("How much the Camera view field will narrow when using a speed boost")]
+    public float ViewChange;
+    [Tooltip("THe Speed at which the Camera view field will change")]
+    public float ViewChangeSpeed;
     public LayerMask GroundLayer;
     public Vector3 GroundedSize;
 
@@ -24,14 +29,23 @@ public class PlayerMovement : MonoBehaviour
     private float LastFrameVel;    
     private Rigidbody rb;
     private bool StopSliding;
+    private GameObject BoostEffect;
+
+    private bool ChangeViewField;
+    private float DefaultView,StartView, TargetView;
 
     void Start()
     {
+        ChangeViewField = false;
         MoveForward = true;
-        InputMove = true; 
-        rb = GetComponent<Rigidbody>();
-        LastFrameVel = int.MaxValue;  
+        InputMove = true;
         StopSliding = false;
+
+        LastFrameVel = int.MaxValue;
+        DefaultView = Cam.fieldOfView;
+
+        rb = GetComponent<Rigidbody>();
+        BoostEffect = transform.GetChild(0).gameObject;
     }
 
     void Update()
@@ -64,7 +78,16 @@ public class PlayerMovement : MonoBehaviour
                 StopSliding = false;
             }
         }
-     
+
+        if (ChangeViewField)
+        {
+            Cam.fieldOfView = Mathf.Lerp(Cam.fieldOfView, TargetView, ViewChangeSpeed);
+
+            if (Mathf.Abs(Cam.fieldOfView - TargetView) < .2f)
+            {
+                ChangeViewField = false;
+            }
+        }
     }      
 
     public void ChangeVel(float DifInPixel)
@@ -105,6 +128,10 @@ public class PlayerMovement : MonoBehaviour
 
     public IEnumerator SpeedUp(float BoostValue, bool TakeInput = true)
     {
+        //Boost Effects
+        BoostEffect.SetActive(true);
+        ChangeFieldOfView(DefaultView, DefaultView - ViewChange);       
+
         //We Will Change the Input Move and Forward Speed temporarely
         InputMove = TakeInput;
         ForwardSpeed += BoostValue;
@@ -118,7 +145,18 @@ public class PlayerMovement : MonoBehaviour
 
         ForwardSpeed -= BoostValue;
         InputMove = true;
-    }    
+
+        //Boost Effects
+        BoostEffect.SetActive(false);
+        ChangeFieldOfView(Cam.fieldOfView , DefaultView);
+    }
+
+    private void ChangeFieldOfView(float ViewA, float ViewB)
+    {
+        StartView = ViewA;
+        TargetView = ViewB;
+        ChangeViewField = true;
+    }
 
     public IEnumerator Stop()
     {

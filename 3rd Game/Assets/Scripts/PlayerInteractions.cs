@@ -100,6 +100,8 @@ public class PlayerInteractions : MonoBehaviour
 
         Instantiate(ParticleEffect, transform.position, new Quaternion()).transform.Rotate(Vector3.right * -90);
 
+        Pm.StopAllCoroutines();
+
         Destroy(gameObject);
     }
 }
