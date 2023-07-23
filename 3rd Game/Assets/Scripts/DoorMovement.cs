@@ -10,7 +10,7 @@ public class DoorMovement : MonoBehaviour
 
     private Vector3 Target;
     private float LeftX, RightX;
-    private float OffsetX;     
+    [HideInInspector] public float OffsetX;     
 
     public Direction Side { get; set; }
 
@@ -63,10 +63,7 @@ public class DoorMovement : MonoBehaviour
         float ldis = Mathf.Abs(hitL.transform.position.x - hitL.point.x);
 
         hitR.transform.position = new Vector3(transform.position.x + (DrObs.PassSize / 2) + rdis, hitR.transform.position.y, hitR.transform.position.z);
-        hitL.transform.position = new Vector3(transform.position.x - (DrObs.PassSize / 2) - ldis, hitL.transform.position.y, hitL.transform.position.z);
-
-        Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 10 , GroundLayer);
-        OffsetX = (hit.transform.localScale.x / 2) - (DrObs.PassSize / 2) - .2f;
+        hitL.transform.position = new Vector3(transform.position.x - (DrObs.PassSize / 2) - ldis, hitL.transform.position.y, hitL.transform.position.z);        
 
     }
 }

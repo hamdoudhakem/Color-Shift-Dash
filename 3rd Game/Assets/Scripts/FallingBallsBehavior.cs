@@ -52,7 +52,7 @@ public class FallingBallsBehavior : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        Gizmos.DrawCube(transform.position + Vector3.back * StartDistance + (Vector3)Offset, BoxSize);
+        Gizmos.DrawCube(transform.position + Vector3.back * StartDistance + (Vector3)Offset, BoxSize * 2);
     }
 
     void Update()
@@ -87,7 +87,7 @@ public class FallingBallsBehavior : MonoBehaviour
                 Balls[i % Balls.Length].transform.position += new Vector3(0 , 10, BallDis * Balls.Length);
 
                 ChooseSide(Balls[i % Balls.Length].transform);
-
+                
                 yield return new WaitForSeconds(Delay - .4f);
             }            
 
@@ -122,14 +122,14 @@ public class FallingBallsBehavior : MonoBehaviour
     void GoRight(Transform tran)
     {
         LeftSideIndicator = 0;
-        tran.position = new Vector3(OffsetX, tran.position.y, tran.position.z);
+        tran.localPosition = new Vector3(OffsetX, tran.localPosition.y, tran.localPosition.z);
         RightSideIndicator += 1;
     }
 
     void GoLeft(Transform tran)
     {
         RightSideIndicator = 0;
-        tran.position = new Vector3(-OffsetX, tran.position.y, tran.position.z);
+        tran.localPosition = new Vector3(-OffsetX, tran.localPosition.y, tran.localPosition.z);
         LeftSideIndicator += 1;
     }
 }

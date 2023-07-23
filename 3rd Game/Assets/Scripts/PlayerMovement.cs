@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,18 +5,23 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public Camera Cam;
-    [Tooltip("The Amount of friction applied after the player gets his hands of the screen")] [Range(1 , 20)]
+    [Tooltip("The Amount of friction applied after the player gets his hands of the screen")]
+    [Range(1, 20)]
     [SerializeField] private float FrictionValue;
     [Tooltip("If this much time Passes after the last movement i will start applying friction")]
     public float time;
     private float RemainingTime;
-    public float ForwardSpeed , MaxSideSwipe , MaxSideSpeed;
-    [Tooltip("The Speed Change Multiplier")]
-    public float IncreaseRate;
-    [Tooltip("The Speed i will lose gradualy after reaching the finish line")]
-    public float StopRate;    
-    [Tooltip("The Duraction of the Speed Boost (In Seconds)")]
-    public float SpeedBoostTime;
+    public float ForwardSpeed;
+    [Tooltip("How much I should swipe to go from Speed lv 1 to lv 2")]
+    public float SwipeLv1;
+    [Tooltip("How much I should swipe to go from Speed lv 1 to lv 2")]
+    public float SwipeLv2;
+    [Tooltip("The Side Speed Lv 1 and Lv 2")]
+    public float lv0Speed ,lv1Speed, lv2Speed;
+    [Tooltip("How fast the speed will change from lv 1 to lv 2 and vice-versa. Make it big something like lv1Speed / 2")] [Range(0 , 50)]
+    public float ChangeRate;
+    [Tooltip("How much time it will take for the player to stop when on the Finish line (1 is 1 second , 2 is 1/2 second)")] [Range(0 , 10f)]
+    public float StopRate;
     [Tooltip("How much the Camera view field will narrow when using a speed boost")]
     public float ViewChange;
     [Tooltip("THe Speed at which the Camera view field will change")]
@@ -26,13 +30,14 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 GroundedSize;
 
     [HideInInspector] public bool MoveForward, InputMove;
-    private float LastFrameVel;    
-    private Rigidbody rb;
+    [HideInInspector] public Rigidbody rb;
     private bool StopSliding;
     private GameObject BoostEffect;
 
+    private int StackedBoosts;
     private bool ChangeViewField;
-    private float DefaultView,StartView, TargetView;
+    private float DefaultView, TargetView;
+    private float DefaultForSpeed;
 
     void Start()
     {
@@ -40,8 +45,9 @@ public class PlayerMovement : MonoBehaviour
         MoveForward = true;
         InputMove = true;
         StopSliding = false;
+        StackedBoosts = 0;
+        DefaultForSpeed = ForwardSpeed;
 
-        LastFrameVel = int.MaxValue;
         DefaultView = Cam.fieldOfView;
 
         rb = GetComponent<Rigidbody>();
@@ -49,18 +55,12 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void Update()
-    {
-        if (MoveForward)
-        {
-            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, ForwardSpeed);
-        }
-       
-
-        if(RemainingTime > 0)
+    {      
+        if (RemainingTime > 0)
         {
             RemainingTime -= Time.deltaTime;
 
-            if(RemainingTime < 0)
+            if (RemainingTime < 0)
             {
                 StopSliding = true;
             }
@@ -88,72 +88,101 @@ public class PlayerMovement : MonoBehaviour
                 ChangeViewField = false;
             }
         }
-    }      
+    }
 
-    public void ChangeVel(float DifInPixel)
+    void FixedUpdate()
+    {
+        if (MoveForward)
+        {
+            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, ForwardSpeed);
+        }
+    }
+
+    public void Move(float Dif)
     {
         if (InputMove)
         {
-            Debug.Log("DifInPixel = " + DifInPixel);
+            //Debug.Log("Dif = " + Dif);
 
-            float Dif = Mathf.Clamp(DifInPixel, -MaxSideSwipe, MaxSideSwipe);
+            float speed = 0;
 
-            if (rb.velocity.x < 0 && Dif > 0 || rb.velocity.x > 0 && Dif < 0)
+            if (Mathf.Abs(Dif) < SwipeLv1)
             {
-                rb.velocity = new Vector3(Dif * IncreaseRate * Time.deltaTime, rb.velocity.y, rb.velocity.z);
+                speed = lv0Speed;
+            }
+            else if (SwipeLv1 < Mathf.Abs(Dif) && Mathf.Abs(Dif) < SwipeLv2)
+            {
+                speed = lv1Speed;
+            }
+            else if (SwipeLv2 < Mathf.Abs(Dif))
+            {
+                speed = lv2Speed;
+            }
+
+            if (Dif < 0)
+            {
+                speed *= -1;
+            }
+
+            float velX = Mathf.Abs(rb.velocity.x);
+
+            if (Mathf.Abs(velX - speed) < .1f)
+            {
+                rb.velocity = new Vector3(speed, rb.velocity.y, rb.velocity.z);
             }
             else
             {
-                //If the speed becomes 2 times superior to the last speed boost then i will make it 3/2 instead
-                //So that i can prevent a super fast accelerations
-                float vel = Dif * IncreaseRate * Time.deltaTime > 2 * LastFrameVel ?
-                    Dif * IncreaseRate * Time.deltaTime * 3f / 2 : Dif * IncreaseRate * Time.deltaTime;
-
-                rb.velocity += vel * Vector3.right;
-
-                LastFrameVel = vel;
+                rb.velocity = new Vector3(Mathf.Lerp(rb.velocity.x, speed, ChangeRate), rb.velocity.y, rb.velocity.z);
+                //Debug.Log("I changed Progressivly cause : " + Mathf.Abs(velX - speed) + " is > .1");
             }
 
-            rb.velocity = new Vector3(Mathf.Clamp(rb.velocity.x, -MaxSideSpeed, MaxSideSpeed)
-                                                                                  , rb.velocity.y, rb.velocity.z);
+            //Debug.Log("Current X Velocity = " + rb.velocity.x);
 
             RemainingTime = time;
-        }       
-    }       
+
+            // Debug.Log("rb.velocity.x : " + rb.velocity.x);
+        }
+    }
 
     void OnDrawGizmos()
     {
-        Gizmos.DrawCube(transform.position + Vector3.down * .5f, GroundedSize);
+        Gizmos.DrawCube(transform.position + Vector3.down * .5f, GroundedSize * 2);
     }
 
-    public IEnumerator SpeedUp(float BoostValue, bool TakeInput = true)
+    public IEnumerator SpeedUp(float BoostValue, float BoostTime, bool TakeInput)
     {
         //Boost Effects
+        StackedBoosts++;
         BoostEffect.SetActive(true);
-        ChangeFieldOfView(DefaultView, DefaultView - ViewChange);       
+        ChangeFieldOfView(DefaultView - ViewChange);
 
         //We Will Change the Input Move and Forward Speed temporarely
         InputMove = TakeInput;
         ForwardSpeed += BoostValue;
 
-        yield return new WaitForSeconds(SpeedBoostTime);
+        yield return new WaitForSeconds(BoostTime);
 
         yield return new WaitUntil(() =>
         {
-            return Physics.OverlapBox(transform.position + Vector3.down * .5f, GroundedSize, new Quaternion(), GroundLayer).Length > 0;
+            return Physics.OverlapBox(transform.position + Vector3.down * .5f, GroundedSize, new Quaternion(), GroundLayer ,QueryTriggerInteraction.Ignore).Length > 0
+            || Physics.OverlapBox(transform.position + Vector3.forward * .5f, GroundedSize, Quaternion.Euler(90, 0, 0), GroundLayer, QueryTriggerInteraction.Ignore).Length > 0;
         });
 
+        StackedBoosts--;
         ForwardSpeed -= BoostValue;
-        InputMove = true;
+        InputMove = !TakeInput ? true : InputMove;
 
-        //Boost Effects
-        BoostEffect.SetActive(false);
-        ChangeFieldOfView(Cam.fieldOfView , DefaultView);
+        //Cancel Boost Effects
+        if(StackedBoosts == 0)
+        {
+            BoostEffect.SetActive(false);
+            ChangeFieldOfView(DefaultView);
+        }
+        
     }
 
-    private void ChangeFieldOfView(float ViewA, float ViewB)
+    private void ChangeFieldOfView(float ViewB)
     {
-        StartView = ViewA;
         TargetView = ViewB;
         ChangeViewField = true;
     }
@@ -162,15 +191,19 @@ public class PlayerMovement : MonoBehaviour
     {
         MoveForward = false;
         InputMove = false;
+        BoostEffect.SetActive(false);
+        ChangeFieldOfView(DefaultView);        
         yield return new WaitForEndOfFrame();
+
+        rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, DefaultForSpeed);
 
         //Stop The Player Gradually
         do
         {
-            rb.velocity -= (rb.velocity.z / 10) * Time.deltaTime * StopRate * Vector3.forward;
+            rb.velocity += rb.velocity.z * Time.deltaTime * StopRate * Vector3.back;
             yield return new WaitForEndOfFrame();
 
-        } while (rb.velocity.z > 0);
+        } while (rb.velocity.z > 0.3f);
 
         rb.velocity = Vector3.zero;
     }

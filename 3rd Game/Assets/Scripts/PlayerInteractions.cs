@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerInteractions : MonoBehaviour
 {
     public static bool Dead;
+    public Material StartCol;
     public GameObject ParticleEffect;
     [HideInInspector] public float Origin;
     [Tooltip("How much the player needs to fall from his original platform to Die")]
@@ -13,6 +14,8 @@ public class PlayerInteractions : MonoBehaviour
     public float BoostValueLv1;
     [Tooltip("The quantity of speed to add to my original speed after the speed boost lv2")]
     public float BoostValueLv2;
+    [Tooltip("The Duraction of the Speed Boost (In Seconds)")]
+    public float SpeedBoostTime;
 
     private LayerMask ColorSwitch , ColorObst , FinishLine , SpeedBoost;
     private MeshRenderer Mat;
@@ -28,6 +31,7 @@ public class PlayerInteractions : MonoBehaviour
         ColorObst = LayerMask.NameToLayer("Color Obst");
         FinishLine = LayerMask.NameToLayer("Finish Line");
         SpeedBoost = LayerMask.NameToLayer("Speed Boost");
+        Mat.material.color = StartCol.color;
 
     }
 
@@ -51,15 +55,33 @@ public class PlayerInteractions : MonoBehaviour
         }
         else if (other.gameObject.layer == SpeedBoost)
         {
-            if(other.tag == "Boost lv 1")
+            float BoostVal = 0, BoostTimeVal = SpeedBoostTime;
+            bool TakeInput = true;
+            BoostProperties Bp = other.GetComponent<BoostProperties>();
+
+            //This can be considered the Boost Presets
+            if (other.tag == "Boost lv 1")
             {
-                StartCoroutine(Pm.SpeedUp(BoostValueLv1));
+                BoostVal = BoostValueLv1;
             }
             else if (other.tag == "Boost lv 2")
-            {               
-                StartCoroutine(Pm.SpeedUp(BoostValueLv2 , false));                
+            {
+                BoostVal = BoostValueLv2;
+                TakeInput = false;
             }
-            
+
+            if (Bp.OverideBoostVal)
+            {
+                BoostVal = Bp.OveridedBoostVal;
+            }
+
+            if (Bp.OverideBoostTime)
+            {
+                BoostTimeVal = Bp.OveridedBoostTime;
+            }
+          
+            StartCoroutine(Pm.SpeedUp(BoostVal, BoostTimeVal ,TakeInput));
+
         }        
         else if (other.tag == "Cannon Stuff")
         {

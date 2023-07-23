@@ -13,14 +13,14 @@ public class RampBehavior : MonoBehaviour
     {               
         if(Physics.OverlapBox(transform.position + new Vector3(0, 2.2f, 5.1f), OverlapBox, new Quaternion(), PlayerMask).Length > 0)
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 
-    //void OnDrawGizmos()
-    //{
-    //    Gizmos.DrawCube(transform.position + new Vector3(0 , 2.2f , 5.1f), OverlapBox);
-    //}
+    void OnDrawGizmos()
+    {
+        Gizmos.DrawCube(transform.position + new Vector3(0, 2.2f, 5.1f), OverlapBox * 2);
+    }
 
-  
+
 }

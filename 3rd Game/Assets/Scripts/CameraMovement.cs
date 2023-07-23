@@ -12,6 +12,8 @@ public class CameraMovement : MonoBehaviour
     public Transform Player;
     public Vector3 Offset;
 
+    [Tooltip("The Y value of the Lowest piece of Ground that the Camera shouldn't go below (default is 0)")]
+    public float MinHeight;
     [Tooltip("The Height that should be kept from the ground")]
     private float Height;
 
@@ -27,8 +29,8 @@ public class CameraMovement : MonoBehaviour
         if (!PlayerInteractions.Dead)
         {
             //For the Y and Z Axes
-            transform.position = new Vector3(transform.position.x, Player.position.y + Offset.y >= Height
-             ? Player.position.y + Offset.y : Height, Player.position.z + Offset.z);
+            transform.position = new Vector3(transform.position.x, Player.position.y + Offset.y >= Height + MinHeight
+             ? Player.position.y + Offset.y : Height + MinHeight, Player.position.z + Offset.z);
 
             //For the X Axe
             if (Player.position.x - transform.position.x > OutOfSight)

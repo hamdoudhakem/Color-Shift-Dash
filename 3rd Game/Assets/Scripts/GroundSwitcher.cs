@@ -1,19 +1,18 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GroundSwitcher : MonoBehaviour
 {
-    [Tooltip("The Distance the player needs to be at for the switcher to chose a final ground")]
-    public float Distance;
     [Tooltip("How much Delay between every Ground Change (In seconds)")]
     public float Delay;
+    [Tooltip("I Will creat a range equal to [Delay - DelayRange / 2 , Delay + DelayRange] that will randomly generate the true Delay that will be used")]
+    public float DelayRange;
     [Tooltip("The Offset to the center of the Overlap Box")]
     public Vector3 Offset;
     [Tooltip("Size of the overlap Box")]
     public Vector3 Size;
-    public LayerMask PlayerLayer;
+    public LayerMask PlayerLayer;    
 
     private GameObject[] Grs;    
 
@@ -25,6 +24,8 @@ public class GroundSwitcher : MonoBehaviour
         {
             Grs[i] = transform.GetChild(i).gameObject;
         }
+
+        Delay = Random.Range(Delay - DelayRange / 2, Delay + DelayRange);
 
         InvokeRepeating("ChangeDelay", 0, Delay);
     }    
@@ -46,7 +47,7 @@ public class GroundSwitcher : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawCube(transform.position + Offset, Size);
+        Gizmos.DrawCube(transform.position + Offset, Size * 2);
     }
 
     void Update()

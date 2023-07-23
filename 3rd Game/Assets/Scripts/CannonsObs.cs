@@ -18,6 +18,12 @@ public class CannonsObs : MonoBehaviour
     public float FireDistance;    
     [Tooltip("The Size of the Overlap Box that will prevente the Cannon from Shooting at times")]
     public Vector3 OverBoxSize;
+    [Tooltip("The Maximum Distance between this Cannon Ball and the Cannon at which the ball is gonna self destroy")]
+    public float MaxDistance;
+    [Tooltip("The Speed at which the Cannon Ball Goes")]
+    public float Speed;
+    [Tooltip("How Much this will increase the scale of the projected Cannon Balls")] [Range(1 , 2)]
+    public float UpScalingFac;
 
     private float TimeLeft;
     [Tooltip("The Distance at which the cannons will not fire as to let the player choose a cannon to destroy")]
@@ -76,16 +82,16 @@ public class CannonsObs : MonoBehaviour
         
     }
 
-    //void OnDrawGizmos()
-    //{
-    //    Gizmos.color = Color.gray;
-    //    Gizmos.DrawCube(transform.position + Vector3.up * 4, OverBoxSize);
-    //    Gizmos.DrawCube(transform.position + new Vector3(0, 4, -FireDistance), OverBoxSize);
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        //Gizmos.DrawCube(transform.position + Vector3.up * 4, OverBoxSize * 2);
+        Gizmos.DrawCube(transform.position + new Vector3(0, 4, -FireDistance), OverBoxSize * 2);
 
-    //    //The Overlap Box for the safe zone
-    //    Gizmos.color = Color.cyan;
-    //    Gizmos.DrawCube(transform.position + new Vector3(0, 4, -SafeDistance), OverBoxSize);
-    //}
+        //The Overlap Box for the safe zone
+        Gizmos.color = Color.cyan;
+        //Gizmos.DrawCube(transform.position + new Vector3(0, 4, -SafeDistance), OverBoxSize * 2);
+    }
 
     void Update()
     {
@@ -105,9 +111,20 @@ public class CannonsObs : MonoBehaviour
 
                         j = (Random.Range(1, 2) + i) % ParRugs.Count;
 
-                        Instantiate(CanBall, ParRugs[i].position + new Vector3(-0.1f, 1), new Quaternion());
+                        CanBallBehavior obj = Instantiate(CanBall, ParRugs[i].position + new Vector3(-0.1f, 1), new Quaternion()).GetComponent<CanBallBehavior>();
 
-                        Instantiate(CanBall, ParRugs[j].position + new Vector3(-0.1f, 1), new Quaternion());
+                        obj.transform.localScale *= UpScalingFac;
+                        obj.MaxDistance = MaxDistance;
+                        obj.Speed = Speed;                        
+                        obj.Set();
+
+                        obj = Instantiate(CanBall, ParRugs[j].position + new Vector3(-0.1f, 1), new Quaternion()).GetComponent<CanBallBehavior>();
+
+                        obj.transform.localScale *= UpScalingFac;
+                        obj.MaxDistance = MaxDistance;
+                        obj.Speed = Speed;
+                        obj.Set();
+
                     }
                 }
                 else
@@ -129,10 +146,10 @@ public class CannonsObs : MonoBehaviour
 
             ParRugs.Remove(Rug2x[Rug]);
 
-            for(int i = 0; i < 3; i++)
-            {
-                Debug.Log($"The Number {i} at pos {ParRugs[i].position} there are {ParRugs.Count}");
-            }
+            //for(int i = 0; i < 3; i++)
+            //{
+            //    Debug.Log($"The Number {i} at pos {ParRugs[i].position} there are {ParRugs.Count}");
+            //}
         }
     }
 
