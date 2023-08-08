@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -3085800285022199769}
   - component: {fileID: 6273298746923397288}
   - component: {fileID: -7182960106791982106}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Cannon Ball
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -125,6 +125,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12e6f0d7b4b47c244a45e610c0b524d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CanBallDesEffect: {fileID: 2534509045215940672, guid: bc5847fd304a23e45a43ed0e8d61b078,
+    type: 3}
   CheckRate: 2
   Speed: 5
   MaxDistance: 25

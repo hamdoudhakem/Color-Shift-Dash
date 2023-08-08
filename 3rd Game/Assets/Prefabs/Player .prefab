@@ -4936,14 +4936,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Cam: {fileID: 0}
   FrictionValue: 8.9
-  time: 0.1
+  time: 0.15
   ForwardSpeed: 7.18
-  SwipeLv1: 4.1
-  SwipeLv2: 7
-  lv0Speed: 1.2
-  lv1Speed: 5
-  lv2Speed: 12
-  ChangeRate: 0.58
+  SwipeLv1: 3.7
+  SwipeLv2: 8.5
+  lv0Speed: 1.5
+  lv1Speed: 6
+  lv2Speed: 25
+  ChangeRate0To1: 0.61
+  ChangeRate1To2: 0.358
   StopRate: 10
   ViewChange: 7
   ViewChangeSpeed: 0.07
@@ -4966,7 +4967,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2095dc7b0c45e014c803415b704d4a5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartCol: {fileID: 0}
+  StartCol: {fileID: 2100000, guid: 977085e6b2fc1de49b0aeddb18097348, type: 2}
   ParticleEffect: {fileID: 2534509045215940672, guid: 0fa5f9ec35ca0d1408307d437f0f2050,
     type: 3}
   Origin: 0
@@ -4974,6 +4975,15 @@ MonoBehaviour:
   BoostValueLv1: 6
   BoostValueLv2: 8
   SpeedBoostTime: 2
+  ShowStar:
+    m_PersistentCalls:
+      m_Calls: []
+  Won:
+    m_PersistentCalls:
+      m_Calls: []
+  Lost:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &4874573282488446279
 MonoBehaviour:
   m_ObjectHideFlags: 0

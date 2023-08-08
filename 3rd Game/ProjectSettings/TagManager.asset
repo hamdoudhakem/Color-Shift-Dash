@@ -8,6 +8,8 @@ TagManager:
   - Obstacle
   - Boost lv 1
   - Boost lv 2
+  - Skins
+  - Skyboxes
   layers:
   - Default
   - TransparentFX
@@ -21,7 +23,7 @@ TagManager:
   - Speed Boost
   - Finish Line
   - Obstacle
-  - 
+  - Star
   - 
   - 
   - 

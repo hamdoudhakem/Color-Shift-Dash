@@ -432,6 +432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 619b76538795c524eaf74726cc48497b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <obsType>k__BackingField: 7
   NeededMat: {fileID: 2100000, guid: 977085e6b2fc1de49b0aeddb18097348, type: 2}
   StartMeshes:
   - {fileID: 4927758938124005651}

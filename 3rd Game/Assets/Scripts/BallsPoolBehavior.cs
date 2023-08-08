@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BallsPoolBehavior : MonoBehaviour
-{  
+public class BallsPoolBehavior : MonoBehaviour, IObsTypes
+{
+    [field: SerializeField]
+    public ObsTypes obsType { get; set; }
+
     public Material NeededMat;     
-    [Tooltip("How many Balls having the same color as the player ther will be per line")] [Range(4 , 25)]
+    [Tooltip("How many Balls having the same color as the player ther will be per line")] [Range(5 , 25)]
     public int NumPerLine;
 
     [Header("Constrains Player Y axe")]
@@ -17,6 +20,7 @@ public class BallsPoolBehavior : MonoBehaviour
 
     private bool IsIn;
     private Collider[] cols;
+
 
     void Start()
     {

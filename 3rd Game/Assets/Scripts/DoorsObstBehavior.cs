@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DoorsObstBehavior : MonoBehaviour
+public class DoorsObstBehavior : MonoBehaviour, IObsTypes
 {
+    [field: SerializeField]
+    public ObsTypes obsType { get; set; }
+
     public LayerMask PlayerLayer, GroundLayer;
     [Tooltip("The Distance that the player needs to be from this Obs to start moving the Doors")]
     public float StartDistance;
@@ -30,7 +33,7 @@ public class DoorsObstBehavior : MonoBehaviour
     {
         Stop = false;
 
-        //getting EAch door
+        //getting each door 
         Doors = new DoorMovement[transform.childCount];
 
         //Calculating how much the Doors Will offset Right and Left
@@ -43,8 +46,8 @@ public class DoorsObstBehavior : MonoBehaviour
         for (int i = 0; i < Doors.Length; i++)
         {
             Transform child = transform.GetChild(i);
-                      
-            Doors[i] = child.GetComponent<DoorMovement>();
+
+            Doors[i] = child.GetComponent<DoorMovement>();            
             Doors[i].DrObs = this;
 
             if (child.gameObject.activeSelf)
@@ -97,6 +100,8 @@ public class DoorsObstBehavior : MonoBehaviour
             else
             {
                 Doors[i % Doors.Length].transform.position += Vector3.forward * DoorDis * Doors.Length;
+
+                Doors[i % Doors.Length].ResetMats();
             }
             
         }

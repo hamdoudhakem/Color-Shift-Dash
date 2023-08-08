@@ -53,6 +53,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 746b9692e7e5b2b4c9d2738cdd83bcd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <obsType>k__BackingField: 4
   NeededMat: {fileID: 2100000, guid: 977085e6b2fc1de49b0aeddb18097348, type: 2}
   NumPerLine: 4
   PlayerLayer:

@@ -2,10 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CannonsObs : MonoBehaviour
+public class CannonsObs : MonoBehaviour, IObsTypes
 {
+    [field: SerializeField]
+    public ObsTypes obsType { get; set; }
+
     ///This code is based on the fact that the 4 fist childs are the cannons parents
     ///then comes the 4 triggers
+    public bool Randomize;
+    [Space]
 
     [Tooltip("The Cannon Ball Game Object")]
     public GameObject CanBall;
@@ -24,7 +29,7 @@ public class CannonsObs : MonoBehaviour
     public float Speed;
     [Tooltip("How Much this will increase the scale of the projected Cannon Balls")] [Range(1 , 2)]
     public float UpScalingFac;
-
+    
     private float TimeLeft;
     [Tooltip("The Distance at which the cannons will not fire as to let the player choose a cannon to destroy")]
     private float SafeDistance;   
@@ -97,19 +102,19 @@ public class CannonsObs : MonoBehaviour
     {
         if (!PlayerInteractions.Dead)
         {
-            if (Physics.BoxCast(transform.position + Vector3.up * 4, OverBoxSize, Vector3.back, new Quaternion(), FireDistance, PlayerLayer))
+            //To check if enough time has passed between this shot and the last one
+            if (TimeLeft <= 0)
             {
-                //To check if enough time has passed between this shot and the last one
-                if (TimeLeft <= 0)
+                //To see if the player is now pressing 1 of the triggers to disable a cannon
+                if (Physics.OverlapBox(transform.position + new Vector3(0, 4, -SafeDistance), OverBoxSize, new Quaternion(), PlayerLayer).Length <= 0)
                 {
-                    //To see if the player is now pressing 1 of the triggers to disable a cannon
-                    if (Physics.OverlapBox(transform.position + new Vector3(0, 4, -SafeDistance), OverBoxSize, new Quaternion(), PlayerLayer).Length <= 0)
+                    if (Physics.BoxCast(transform.position + Vector3.up * 4, OverBoxSize, Vector3.back, out RaycastHit hit, new Quaternion(), FireDistance, PlayerLayer))
                     {
                         TimeLeft = FireRate;
 
-                        int i = Random.Range(0, ParRugs.Count), j;
+                        int i = Randomize ? Random.Range(0 , ParRugs.Count) : ChooseCloseToPlayer(hit.transform), j;
 
-                        j = (Random.Range(1, 2) + i) % ParRugs.Count;
+                        j = (Random.Range(1, 3) + i) % ParRugs.Count;
 
                         CanBallBehavior obj = Instantiate(CanBall, ParRugs[i].position + new Vector3(-0.1f, 1), new Quaternion()).GetComponent<CanBallBehavior>();
 
@@ -127,12 +132,32 @@ public class CannonsObs : MonoBehaviour
 
                     }
                 }
-                else
-                {
-                    TimeLeft -= Time.deltaTime;
-                }
+
+            }
+            else
+            {
+                TimeLeft -= Time.deltaTime;
             }
         }      
+    }
+
+    int ChooseCloseToPlayer(Transform player)
+    {
+        int index = 0;
+        float min = Mathf.Abs(player.position.x - ParRugs[0].position.x);
+
+        for(int i = 1; i < ParRugs.Count; i++)
+        {
+            float dif = Mathf.Abs(player.position.x - ParRugs[i].position.x);
+
+            if (dif < min)
+            {
+                min = dif;
+                index = i;
+            }
+        }
+
+        return index;
     }
 
     public void DestCan(Transform Rug)

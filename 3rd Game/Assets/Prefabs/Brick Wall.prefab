@@ -532,6 +532,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86b76ca8c912b6e4dba8931603f83621, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <obsType>k__BackingField: 2
   NeededColor: {fileID: 2100000, guid: 977085e6b2fc1de49b0aeddb18097348, type: 2}
 --- !u!1 &3200519789325020065
 GameObject:

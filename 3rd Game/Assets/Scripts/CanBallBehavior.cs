@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CanBallBehavior : MonoBehaviour
-{    
+{
+    [Tooltip("The Cannon Ball Destruction particle effect")]
+    public GameObject CanBallDesEffect;
     [Tooltip("How Much Times passes between each Distance Check (in seconds)")]
     public float CheckRate;
 
@@ -14,10 +16,12 @@ public class CanBallBehavior : MonoBehaviour
 
     private Rigidbody rb;
     private float StartZ;
+    private bool AlreadyDoneFor;
 
     public void Set()
     {
         StartZ = transform.position.z;
+        AlreadyDoneFor = false;
 
         rb = GetComponent<Rigidbody>();
         rb.velocity = Vector3.back * Speed;
@@ -36,15 +40,15 @@ public class CanBallBehavior : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if(collision.transform.tag == "Player")
+        if (!AlreadyDoneFor)
         {
-            rb.velocity = Vector3.back * Speed;
-        }
-        else
-        {
-            //Debug.Log("I Didn't Collide with the Player I Col with : " + collision.transform.name);
+            AlreadyDoneFor = true;
+
+            //Debug.Log("I Collided with something that is : " + collision.transform.name);
+            Instantiate(CanBallDesEffect, transform.position, new Quaternion());
             Destroy(gameObject);
-        }       
+        }
+        
     }
 
 

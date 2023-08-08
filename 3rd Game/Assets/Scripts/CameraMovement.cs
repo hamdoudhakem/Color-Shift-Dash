@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
+    [Header("Transparency")]
+    [Tooltip("If I should make the objects that comes between the player and camera (generaly doors or falling balls) Transparent")]
+    public bool UseTransparency;
+    public List<ObsTypes> ConcernedTypes;
+    public LayerMask ConcernedLayers;
+    public Material TransparWhiteMat;
+
+    [Space]
+    [Header("Position Related")]
     [Tooltip("The Limit that the X axe of the Camera can't go beyond")]
     public float SideLimit;
     [Tooltip("The Difference between the player X and camera X from which the player start going out of sight")]
@@ -47,6 +56,38 @@ public class CameraMovement : MonoBehaviour
                 transform.position = new Vector3(X, transform.position.y, transform.position.z);
 
             }
+
+            if (UseTransparency)
+            {
+                Vector3 offs = Player.position - transform.position;
+
+                if (Physics.Raycast(transform.position, offs, out RaycastHit hit, offs.magnitude, ConcernedLayers))
+                {
+                    if (hit.transform.TryGetComponent(out MeshRenderer mesh))
+                    {
+
+                        Transform Orig = hit.transform;
+
+                        do
+                        {
+                            if (Orig.TryGetComponent(out IObsTypes type))
+                            {
+                                if (ConcernedTypes.Contains(type.obsType))
+                                {
+                                    mesh.material = TransparWhiteMat;
+                                }
+
+                                break;
+                            }
+
+                            Orig = Orig.parent;
+
+                        } while (Orig != null);
+                    }
+
+                }
+            }
+            
         }       
     }
 }

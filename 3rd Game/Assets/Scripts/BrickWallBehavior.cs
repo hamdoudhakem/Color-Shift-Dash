@@ -1,7 +1,10 @@
 using UnityEngine;
 
-public class BrickWallBehavior : MonoBehaviour
+public class BrickWallBehavior : MonoBehaviour, IObsTypes
 {
+    [field: SerializeField]
+    public ObsTypes obsType { get; set; }
+
     public Material NeededColor;  
 
     void Start()

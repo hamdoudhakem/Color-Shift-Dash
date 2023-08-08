@@ -140,6 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f3f4aa74edb25245adcfbbb0fc7544c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <obsType>k__BackingField: 10
   Delay: 0.7
   DelayRange: 0.15
   Offset: {x: 0, y: 5.72, z: -9.64}

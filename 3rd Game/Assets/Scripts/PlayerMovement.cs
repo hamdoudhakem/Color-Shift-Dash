@@ -17,9 +17,9 @@ public class PlayerMovement : MonoBehaviour
     [Tooltip("How much I should swipe to go from Speed lv 1 to lv 2")]
     public float SwipeLv2;
     [Tooltip("The Side Speed Lv 1 and Lv 2")]
-    public float lv0Speed ,lv1Speed, lv2Speed;
-    [Tooltip("How fast the speed will change from lv 1 to lv 2 and vice-versa. Make it big something like lv1Speed / 2")] [Range(0 , 50)]
-    public float ChangeRate;
+    public float  lv0Speed ,lv1Speed, lv2Speed;
+    [Tooltip("how much the side speed will change each frame (using lerp so % based)")] [Range(0 , 1)]
+    public float ChangeRate0To1, ChangeRate1To2;
     [Tooltip("How much time it will take for the player to stop when on the Finish line (1 is 1 second , 2 is 1/2 second)")] [Range(0 , 10f)]
     public float StopRate;
     [Tooltip("How much the Camera view field will narrow when using a speed boost")]
@@ -38,9 +38,11 @@ public class PlayerMovement : MonoBehaviour
     private bool ChangeViewField;
     private float DefaultView, TargetView;
     private float DefaultForSpeed;
+    private float LastTargetSpeed;
 
     void Start()
     {
+        LastTargetSpeed = 0;
         ChangeViewField = false;
         MoveForward = true;
         InputMove = true;
@@ -104,43 +106,56 @@ public class PlayerMovement : MonoBehaviour
         {
             //Debug.Log("Dif = " + Dif);
 
-            float speed = 0;
+            float speed = 0 , ChangeRate = 0;
 
             if (Mathf.Abs(Dif) < SwipeLv1)
             {
                 speed = lv0Speed;
+
+                //So that when I switch sides while on this speed i do it rapidly
+                if(Mathf.Abs(LastTargetSpeed) == lv0Speed)
+                {
+                    ChangeRate = .7f;
+                }
+                else
+                {
+                    ChangeRate = Mathf.Min(ChangeRate0To1, ChangeRate1To2);
+                }
+                
             }
             else if (SwipeLv1 < Mathf.Abs(Dif) && Mathf.Abs(Dif) < SwipeLv2)
             {
                 speed = lv1Speed;
-            }
+                ChangeRate = ChangeRate0To1;
+            }       
             else if (SwipeLv2 < Mathf.Abs(Dif))
             {
                 speed = lv2Speed;
-            }
+                ChangeRate = ChangeRate1To2;
+            }           
 
             if (Dif < 0)
             {
                 speed *= -1;
             }
 
+            LastTargetSpeed = speed;
+
             float velX = Mathf.Abs(rb.velocity.x);
 
-            if (Mathf.Abs(velX - speed) < .1f)
+            if (Mathf.Abs(velX - speed) < .3f)
             {
                 rb.velocity = new Vector3(speed, rb.velocity.y, rb.velocity.z);
             }
             else
             {
+                //Debug.Log("Current rb.velocity.x = " + rb.velocity.x + " and ChangeRate is : " + ChangeRate);
                 rb.velocity = new Vector3(Mathf.Lerp(rb.velocity.x, speed, ChangeRate), rb.velocity.y, rb.velocity.z);
-                //Debug.Log("I changed Progressivly cause : " + Mathf.Abs(velX - speed) + " is > .1");
-            }
-
-            //Debug.Log("Current X Velocity = " + rb.velocity.x);
+            }                       
 
             RemainingTime = time;
 
-            // Debug.Log("rb.velocity.x : " + rb.velocity.x);
+            //Debug.Log("After rb.velocity.x : " + rb.velocity.x + " Target is : " + speed);
         }
     }
 

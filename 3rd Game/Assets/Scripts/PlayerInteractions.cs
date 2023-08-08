@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerInteractions : MonoBehaviour
 {
+    public static int StarsNum { get; private set; }
     public static bool Dead;
+
     public Material StartCol;
     public GameObject ParticleEffect;
     [HideInInspector] public float Origin;
@@ -17,12 +20,20 @@ public class PlayerInteractions : MonoBehaviour
     [Tooltip("The Duraction of the Speed Boost (In Seconds)")]
     public float SpeedBoostTime;
 
-    private LayerMask ColorSwitch , ColorObst , FinishLine , SpeedBoost;
+    [Header("Events")]
+    public UnityEvent ShowStar;
+    public UnityEvent Won;
+    public UnityEvent Lost;
+
+    private LayerMask ColorSwitch , ColorObst , FinishLine , SpeedBoost , StarLayer;
     private MeshRenderer Mat;
     private PlayerMovement Pm;
+    private bool AlreadyIn;
 
     void Start()
     {
+        AlreadyIn = false;
+        StarsNum = 0;
         Dead = false;
         Origin = transform.position.y;
         Pm = GetComponent<PlayerMovement>();
@@ -31,6 +42,7 @@ public class PlayerInteractions : MonoBehaviour
         ColorObst = LayerMask.NameToLayer("Color Obst");
         FinishLine = LayerMask.NameToLayer("Finish Line");
         SpeedBoost = LayerMask.NameToLayer("Speed Boost");
+        StarLayer = LayerMask.NameToLayer("Star");
         Mat.material.color = StartCol.color;
 
     }
@@ -79,15 +91,35 @@ public class PlayerInteractions : MonoBehaviour
             {
                 BoostTimeVal = Bp.OveridedBoostTime;
             }
-          
-            StartCoroutine(Pm.SpeedUp(BoostVal, BoostTimeVal ,TakeInput));
 
-        }        
+            StartCoroutine(Pm.SpeedUp(BoostVal, BoostTimeVal, TakeInput));
+
+        }
         else if (other.tag == "Cannon Stuff")
         {
             other.transform.parent.GetComponent<CannonsObs>().DestCan(other.transform);
         }
-        
+        else if (other.gameObject.layer == StarLayer)
+        {
+            if (!AlreadyIn)
+            {
+                AlreadyIn = true;                
+
+                //Deal With The Star
+                other.GetComponent<Collider>().enabled = false;
+
+                other.GetComponent<Animator>().SetTrigger("Disappear");
+
+                Destroy(other.transform.parent.gameObject, .5f);
+
+                //Increase Stars
+                StarsNum++;
+
+                ShowStar.Invoke();
+            }
+        }
+
+        AlreadyIn = false;
     }
 
     void OnCollisionEnter(Collision collision)
@@ -98,7 +130,13 @@ public class PlayerInteractions : MonoBehaviour
         }
         else if (collision.gameObject.layer == FinishLine)
         {
+            StarsNum++;
+
+            ShowStar.Invoke();
+
             StartCoroutine(Pm.Stop());
+
+            Won.Invoke();
         }
         else if (collision.transform.tag == "Obstacle")
         {            
@@ -116,9 +154,11 @@ public class PlayerInteractions : MonoBehaviour
 
     void Die()
     {
-        Debug.Log("You Died !");
+        Debug.Log("You Died !");        
 
         Dead = true;
+
+        Lost.Invoke();
 
         Instantiate(ParticleEffect, transform.position, new Quaternion()).transform.Rotate(Vector3.right * -90);
 

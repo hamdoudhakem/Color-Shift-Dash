@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SplasherBehavior : MonoBehaviour
+public class SplasherBehavior : MonoBehaviour ,IObsTypes
 {
+    [field: SerializeField]
+    public ObsTypes obsType { get;  set; }
+
     [Header("Layers")]
     public LayerMask PlayerLayer;
     public LayerMask GroundLayer;

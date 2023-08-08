@@ -14,11 +14,23 @@ public class DoorMovement : MonoBehaviour
 
     public Direction Side { get; set; }
 
+    private MeshRenderer[] Meshes;
+    private Material Mat;
 
     void Start()
     {
         RightX = transform.position.x + OffsetX;
-        LeftX = transform.position.x - OffsetX; ;
+        LeftX = transform.position.x - OffsetX;
+
+        //Preparing The Meshes to reassign there material later
+        Meshes = new MeshRenderer[transform.childCount];
+
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Meshes[i] = transform.GetChild(i).GetComponent<MeshRenderer>();
+        }
+
+        Mat = Meshes[0].material;
     }    
 
     void Update()
@@ -65,5 +77,13 @@ public class DoorMovement : MonoBehaviour
         hitR.transform.position = new Vector3(transform.position.x + (DrObs.PassSize / 2) + rdis, hitR.transform.position.y, hitR.transform.position.z);
         hitL.transform.position = new Vector3(transform.position.x - (DrObs.PassSize / 2) - ldis, hitL.transform.position.y, hitL.transform.position.z);        
 
+    }
+
+    public void ResetMats()
+    {
+        for(int i = 0; i < transform.childCount; i++)
+        {
+            Meshes[i].material = Mat;
+        }
     }
 }

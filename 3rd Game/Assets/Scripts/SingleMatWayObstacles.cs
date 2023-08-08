@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SingleMatWayObstacles : MonoBehaviour
+public class SingleMatWayObstacles : MonoBehaviour, IObsTypes
 {
+    [field: SerializeField]
+    public ObsTypes obsType { get; set; }
+
     public Material NeededMat;
 
     void Start()

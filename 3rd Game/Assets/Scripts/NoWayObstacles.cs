@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NoWayObstacles : MonoBehaviour
+public class NoWayObstacles : MonoBehaviour, IObsTypes
 {
+    [field: SerializeField]
+    public ObsTypes obsType { get; set; }
+
     public Material AvoidMat;
 
     void Start()

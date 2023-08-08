@@ -2050,6 +2050,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c26e4ed66f2bd4d92b0e8a08925fbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <obsType>k__BackingField: 6
+  Randomize: 1
   CanBall: {fileID: 6273298746923397291, guid: cc031143dd01f924baa12628fe7a87bd, type: 3}
   PlayerLayer:
     serializedVersion: 2

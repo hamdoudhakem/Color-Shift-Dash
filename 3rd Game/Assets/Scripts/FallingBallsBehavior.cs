@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FallingBallsBehavior : MonoBehaviour
+public class FallingBallsBehavior : MonoBehaviour , IObsTypes
 {
+    [field: SerializeField]
+    public ObsTypes obsType { get; set; }
+
     public LayerMask PlayerLayer;
     public LayerMask GroundLayer;
     [Tooltip("The Distance the Player Needs To Be for the Falling to start happening")]
@@ -17,12 +20,15 @@ public class FallingBallsBehavior : MonoBehaviour
     [Tooltip("How Many Falls there Will Be")] [Range(3 , 10)]
     public int FallNum;
 
-    private Rigidbody[] Balls;
+    private Rigidbody[] Balls;    
     private float BallDis;
     private float OffsetX;
     [Tooltip("This is Stop The Falling from Being one Sided Like All falling goes Right")]
     private int RightSideIndicator , LeftSideIndicator;
     private bool Started;
+
+    private MeshRenderer[] Meshes;
+    private Material Mat;
 
     void Start()
     {
@@ -30,13 +36,17 @@ public class FallingBallsBehavior : MonoBehaviour
         RightSideIndicator = 0;
         LeftSideIndicator = 0;
 
-        //Fill The Balls Array
+        //Fill The Balls Array and a Meshes array in case The transparency is used to reset to Start Material
         Balls = new Rigidbody[transform.childCount];
+        Meshes = new MeshRenderer[transform.childCount];
 
         for (int i = 0; i < Balls.Length; i++)
         {
-            Balls[i] = transform.GetChild(i).GetComponent<Rigidbody>();            
+            Balls[i] = transform.GetChild(i).GetComponent<Rigidbody>();
+            Meshes[i] = Balls[i].GetComponent<MeshRenderer>();
         }
+
+        Mat = Meshes[0].material;
 
         BallDis = Mathf.Abs(Balls[1].position.z - Balls[0].position.z);
 
@@ -85,6 +95,8 @@ public class FallingBallsBehavior : MonoBehaviour
             else
             {
                 Balls[i % Balls.Length].transform.position += new Vector3(0 , 10, BallDis * Balls.Length);
+
+                Meshes[i % Balls.Length].material = Mat;
 
                 ChooseSide(Balls[i % Balls.Length].transform);
                 

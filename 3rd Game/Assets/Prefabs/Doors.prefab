@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 2600186384620847155}
   - component: {fileID: 2600186384620847152}
   - component: {fileID: 2600186384620847153}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: 'Right Side '
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -107,9 +107,9 @@ GameObject:
   - component: {fileID: 2600186384658644102}
   - component: {fileID: 2600186384658644103}
   - component: {fileID: 2600186384658644100}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Left Side
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -302,9 +302,9 @@ GameObject:
   - component: {fileID: 2600186385117316385}
   - component: {fileID: 2600186385117316398}
   - component: {fileID: 2600186385117316399}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: 'Right Side '
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -397,9 +397,9 @@ GameObject:
   - component: {fileID: 2600186385596301305}
   - component: {fileID: 2600186385596301190}
   - component: {fileID: 2600186385596301191}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: 'Right Side '
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -492,9 +492,9 @@ GameObject:
   - component: {fileID: 2600186385711598696}
   - component: {fileID: 2600186385711598697}
   - component: {fileID: 2600186385711598710}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: 'Right Side '
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -687,9 +687,9 @@ GameObject:
   - component: {fileID: 2600186386028252663}
   - component: {fileID: 2600186386028252660}
   - component: {fileID: 2600186386028252661}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Left Side
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -782,9 +782,9 @@ GameObject:
   - component: {fileID: 2600186386273763718}
   - component: {fileID: 2600186386273763719}
   - component: {fileID: 2600186386273763716}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Left Side
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -877,9 +877,9 @@ GameObject:
   - component: {fileID: 2600186386350997935}
   - component: {fileID: 2600186386350997932}
   - component: {fileID: 2600186386350997933}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Left Side
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

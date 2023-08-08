@@ -270,6 +270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 597eae72b9c98c441abd78431e5452bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <obsType>k__BackingField: 1
   PlayerLayer:
     serializedVersion: 2
     m_Bits: 8

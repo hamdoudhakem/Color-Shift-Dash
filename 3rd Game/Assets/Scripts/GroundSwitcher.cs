@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GroundSwitcher : MonoBehaviour
+public class GroundSwitcher : MonoBehaviour, IObsTypes
 {
+    [field: SerializeField]
+    public ObsTypes obsType { get; set; }
+
     [Tooltip("How much Delay between every Ground Change (In seconds)")]
     public float Delay;
     [Tooltip("I Will creat a range equal to [Delay - DelayRange / 2 , Delay + DelayRange] that will randomly generate the true Delay that will be used")]
