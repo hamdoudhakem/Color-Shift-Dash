@@ -6,6 +6,12 @@ using UnityEngine.SceneManagement;
 public class ScreensEventHandlers : MonoBehaviour
 {
     public GameObject PauseMenu;
+    public SettingsManager SettingsMan;
+
+    void Start()
+    {
+        SettingsMan.LoadSettings();
+    }
 
     public void Pause_EventHandler()
     {

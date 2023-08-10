@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ShowStar : MonoBehaviour
 {
-    public void ShowNewStar()
+    public void ShowNewStar(int index)
     {
-        transform.GetChild(PlayerInteractions.StarsNum - 1).gameObject.SetActive(true);
+        transform.GetChild(index - 1).gameObject.SetActive(true);
     }
 }

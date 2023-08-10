@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class PlayerInteractions : MonoBehaviour
 {
     public static int StarsNum { get; private set; }
+    public static List<int> IndexsOfObtainedStars { get; private set; }
     public static bool Dead;
 
     public Material StartCol;
@@ -21,16 +23,16 @@ public class PlayerInteractions : MonoBehaviour
     public float SpeedBoostTime;
 
     [Header("Events")]
-    public UnityEvent ShowStar;
+    public UnityEvent<int> ShowStar;
     public UnityEvent Won;
     public UnityEvent Lost;
 
     private LayerMask ColorSwitch , ColorObst , FinishLine , SpeedBoost , StarLayer;
     private MeshRenderer Mat;
-    private PlayerMovement Pm;
+    private PlayerMovement Pm;    
     private bool AlreadyIn;
 
-    void Start()
+    void Awake()
     {
         AlreadyIn = false;
         StarsNum = 0;
@@ -45,6 +47,17 @@ public class PlayerInteractions : MonoBehaviour
         StarLayer = LayerMask.NameToLayer("Star");
         Mat.material.color = StartCol.color;
 
+        int CurLv = SceneManager.GetActiveScene().buildIndex;
+
+        IndexsOfObtainedStars = PlayerData.LvXStars[CurLv] > 1
+                       ? PlayerData.CollectedStarsIndex[CurLv - 1] : new List<int>();
+
+        StarsNum = PlayerData.LvXStars[CurLv];
+
+        for(int i = 0; i < StarsNum; i++)
+        {
+            ShowStar.Invoke(i+1);
+        }
     }
 
     void Update()
@@ -108,14 +121,21 @@ public class PlayerInteractions : MonoBehaviour
                 //Deal With The Star
                 other.GetComponent<Collider>().enabled = false;
 
+                var index = other.transform.parent.GetSiblingIndex();
+                IndexsOfObtainedStars.Add(index);
+                Debug.Log("I Got the star at the index = " + index);
+
                 other.GetComponent<Animator>().SetTrigger("Disappear");
 
                 Destroy(other.transform.parent.gameObject, .5f);
 
                 //Increase Stars
-                StarsNum++;
+                if (PlayerData.LvXStars[SceneManager.GetActiveScene().buildIndex] < 3)
+                {
+                    StarsNum++;
+                    ShowStar.Invoke(StarsNum);
+                }               
 
-                ShowStar.Invoke();
             }
         }
 
@@ -130,9 +150,11 @@ public class PlayerInteractions : MonoBehaviour
         }
         else if (collision.gameObject.layer == FinishLine)
         {
-            StarsNum++;
-
-            ShowStar.Invoke();
+            if(PlayerData.LvXStars[SceneManager.GetActiveScene().buildIndex] < 3)
+            {
+                StarsNum++;
+                ShowStar.Invoke(StarsNum);
+            }            
 
             StartCoroutine(Pm.Stop());
 

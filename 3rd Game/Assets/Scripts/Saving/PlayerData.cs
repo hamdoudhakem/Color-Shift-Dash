@@ -14,18 +14,21 @@ public class PlayerData
 
     public static Dictionary<int, int> LvXStars = new Dictionary<int, int>() { {1 , 0} };
 
+    public static List<int>[] CollectedStarsIndex = new List<int>[30];
+
     public static string CurrentSkin = string.Empty;
 
     public static string CurrentSkybox = "Mega Sun";
 
     public static List<string> Skins = new List<string>();
 
-    public static List<string> Skyboxes = new List<string>() { "Mega Sun" };
+    public static List<string> Skyboxes = new List<string>() { "Mega Sun" };    
 
     //Data for Save
     public int MoneyData;
     public int CurrentLvData;
-    public Dictionary<int, int> LvXStarsData = new Dictionary<int, int>();
+    public Dictionary<int, int> LvXStarsData = new Dictionary<int, int>(); 
+    public List<int>[] CollectedStarsIndexData = new List<int>[30];
     public string CurrentSkinData;
     public string CurrentSkyboxData;
     public List<string> SkinsData = new List<string>();
@@ -42,6 +45,7 @@ public class PlayerData
         SoundData = Sound;
         CurrentSkinData = CurrentSkin;
         CurrentSkyboxData = CurrentSkybox;
+        CollectedStarsIndexData = CollectedStarsIndex;
     }
 
     public void Assign()
@@ -54,5 +58,6 @@ public class PlayerData
         Sound = SoundData;
         CurrentSkin = CurrentSkinData;
         CurrentSkybox = CurrentSkyboxData;
+        CollectedStarsIndex = CollectedStarsIndexData;
     }
 }

@@ -16,8 +16,7 @@ public class SwipeLvs : MonoBehaviour
     private float SliderDif;
     private List<float> SlidersPos;
     private Vector2 StartPos, UpdatingPos, TargetSlider;
-    private bool Touching, AlreadySet = false , Siding;
-   
+    private bool Touching, AlreadySet = false , Siding;     
 
     void Start()
     {

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 using System;
 
@@ -33,9 +34,19 @@ public class WinScreenBehavior : MonoBehaviour
         Finished = false;
         IncreaseMoney = false;
         MoneyProgress = 0;
-        MoneyGoal = PlayerInteractions.StarsNum * MoneyPerStar;
         remark = Remarks[PlayerInteractions.StarsNum - 1];
 
+        int StarDif = PlayerInteractions.StarsNum - PlayerData.LvXStars[PlayerData.CurrentLv];
+        if(StarDif > 0)
+        {
+            MoneyGoal = StarDif * MoneyPerStar;
+        }
+        else
+        {
+            MoneyGoal = 30;
+        }        
+
+        UpdateData();
         StartCoroutine(DisplayStars());
     }
 
@@ -118,5 +129,31 @@ public class WinScreenBehavior : MonoBehaviour
             Remark.text = remark;
         }
         
+    }
+
+    void UpdateData()
+    {
+        int CurLv = SceneManager.GetActiveScene().buildIndex;
+
+        PlayerData.CollectedStarsIndex[CurLv - 1] = PlayerInteractions.IndexsOfObtainedStars;
+
+        PlayerData.Money += MoneyGoal;
+
+        if (PlayerData.LvXStars[CurLv] < PlayerInteractions.StarsNum)
+        {
+            PlayerData.LvXStars[CurLv] = PlayerInteractions.StarsNum;
+        }
+
+        //Check if i'm not on the last lv and if this is the latest unlocked level
+        if (PlayerData.CurrentLv == CurLv)
+        {
+            if (PlayerData.CurrentLv != SceneManager.sceneCountInBuildSettings)
+            {
+                PlayerData.CurrentLv++;
+                PlayerData.LvXStars.Add(PlayerData.CurrentLv, 0);
+            }                   
+        }
+
+        SaveSystem.Save();
     }
 }
