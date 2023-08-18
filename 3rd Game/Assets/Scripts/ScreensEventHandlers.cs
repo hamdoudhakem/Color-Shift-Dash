@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,10 +8,22 @@ public class ScreensEventHandlers : MonoBehaviour
 {
     public GameObject PauseMenu;
     public SettingsManager SettingsMan;
+    public Animator LoadScreen;
+    [Tooltip("How Much Time after the scene loaded to Disable the LoadScreen (in seconds)")]
+    public float LoadTime;
+
+    private bool LoadingScene;
 
     void Start()
     {
         SettingsMan.LoadSettings();
+        LoadingScene = false;
+        Invoke("Disable", LoadTime);
+    }
+
+    void Disable()
+    {
+        LoadScreen.gameObject.SetActive(false);
     }
 
     public void Pause_EventHandler()
@@ -27,18 +40,44 @@ public class ScreensEventHandlers : MonoBehaviour
 
     public void RestartLevel_EventHandler()
     {
-        Time.timeScale = 1;
-        AsyncOperation asyncOp = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+        if (!LoadingScene)
+        {
+            Time.timeScale = 1;
+            AsyncOperation asyncOp = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
+            StartLoadScreen();
+
+            LoadingScene = true;
+        }
+       
+    }
+
+    public void NextLevel_EventHandler()
+    {
+        if (!LoadingScene)
+        {
+            AsyncOperation asyncOp = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
+            StartLoadScreen();
+
+            LoadingScene = true;
+        }
     }
 
     public void Quit_EventHandler()
     {
-        Time.timeScale = 1;
-        AsyncOperation asyncOp = SceneManager.LoadSceneAsync(0);
+        if (!LoadingScene)
+        {
+            Time.timeScale = 1;
+            AsyncOperation asyncOp = SceneManager.LoadSceneAsync(0);
+            StartLoadScreen();
 
-        //while (!asyncOp.isDone)
-        //{
-
-        //}
+            LoadingScene = true;
+        }              
     }
+
+    void StartLoadScreen()
+    {
+        LoadScreen.gameObject.SetActive(true);
+        LoadScreen.SetTrigger("Appear");
+    }
+
 }

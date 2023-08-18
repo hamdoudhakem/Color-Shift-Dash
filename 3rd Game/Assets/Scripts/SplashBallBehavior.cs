@@ -8,6 +8,7 @@ public class SplashBallBehavior : MonoBehaviour
     [HideInInspector] public float Speed;
     [Tooltip("The Distance between the Splasher and the Ball to destroy this Ball")]
     [HideInInspector] public float MaxDistance;
+    [HideInInspector] public AudioSource Splashed;
 
     public GameObject Ball;
     public GameObject Splash;
@@ -33,6 +34,8 @@ public class SplashBallBehavior : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        Splashed.Play();
+
         Ball.SetActive(false);
         rb.velocity = Vector3.zero;
 

@@ -24,14 +24,16 @@ public class DoorsObstBehavior : MonoBehaviour, IObsTypes
     //[Tooltip("How Many doors will move from the started Before the player Reached the Start Distance")]
     //public int StartingDoorsNum;
 
+    [HideInInspector] public AudioSource SwitchSound;
     private DoorMovement[] Doors;
     private float DoorDis;
     private bool Stop;
-    private float OffsetX;
+    private float OffsetX;    
     
     void Start()
     {
         Stop = false;
+        SwitchSound = GetComponent<AudioSource>();
 
         //getting each door 
         Doors = new DoorMovement[transform.childCount];

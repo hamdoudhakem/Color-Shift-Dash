@@ -18,7 +18,7 @@ GameObject:
   m_TagString: Boost lv 2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &3707211963944268098
 Transform:
@@ -110,3 +110,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ParticleEffect: {fileID: 1511743563286163953, guid: c8a4d140a1b8f3a49817f78acad17b47,
     type: 3}
+  OverideBoostVal: 0
+  OveridedBoostVal: 0
+  OverideBoostTime: 0
+  OveridedBoostTime: 0

@@ -297,7 +297,7 @@ RectTransform:
   - {fileID: 1647990943}
   - {fileID: 561995695}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1323,6 +1323,128 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 100485276}
   m_CullTransparentMesh: 1
+--- !u!1 &111784077
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 111784078}
+  - component: {fileID: 111784079}
+  m_Layer: 0
+  m_Name: Audio Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &111784078
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 111784077}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -33.24499, y: 20.431181, z: 21.308928}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &111784079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 111784077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58b0773cd8745514eafadae30d6da3f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mixer: {fileID: 24300002, guid: 888a8709fccf9684882039d092dda6ce, type: 2}
+  sounds:
+  - name: Rolling Ball
+    Clip: {fileID: 0}
+    volume: 0.5
+    pitch: 1
+    SpacialBlend: 0.5
+    loop: 1
+    source: {fileID: 0}
+  - name: Won
+    Clip: {fileID: 0}
+    volume: 0.5
+    pitch: 1
+    SpacialBlend: 0.5
+    loop: 1
+    source: {fileID: 0}
+  - name: Died
+    Clip: {fileID: 0}
+    volume: 0.5
+    pitch: 1
+    SpacialBlend: 0.5
+    loop: 1
+    source: {fileID: 0}
+  - name: Lost
+    Clip: {fileID: 0}
+    volume: 0.5
+    pitch: 1
+    SpacialBlend: 0.5
+    loop: 1
+    source: {fileID: 0}
+  - name: Fell On Ground
+    Clip: {fileID: 0}
+    volume: 0.5
+    pitch: 1
+    SpacialBlend: 0.5
+    loop: 1
+    source: {fileID: 0}
+  - name: Star
+    Clip: {fileID: 0}
+    volume: 0.5
+    pitch: 1
+    SpacialBlend: 0.5
+    loop: 1
+    source: {fileID: 0}
+  - name: Boost
+    Clip: {fileID: 0}
+    volume: 0.5
+    pitch: 1
+    SpacialBlend: 0.5
+    loop: 1
+    source: {fileID: 0}
+  - name: Hitting Boxes
+    Clip: {fileID: 0}
+    volume: 0.5
+    pitch: 1
+    SpacialBlend: 0.5
+    loop: 1
+    source: {fileID: 0}
+  - name: Draging Boxes
+    Clip: {fileID: 0}
+    volume: 0.5
+    pitch: 1
+    SpacialBlend: 0.5
+    loop: 1
+    source: {fileID: 0}
+  - name: Click
+    Clip: {fileID: 0}
+    volume: 0.5
+    pitch: 1
+    SpacialBlend: 0.5
+    loop: 1
+    source: {fileID: 0}
+  - name: Buy
+    Clip: {fileID: 0}
+    volume: 0.5
+    pitch: 1
+    SpacialBlend: 0.5
+    loop: 1
+    source: {fileID: 0}
 --- !u!1 &112393142
 GameObject:
   m_ObjectHideFlags: 0
@@ -20498,7 +20620,7 @@ Transform:
   - {fileID: 221172014}
   - {fileID: 1263597178}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1395825543
 GameObject:
@@ -21347,7 +21469,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1465784594
 GameObject:
@@ -23167,7 +23289,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 44.3, y: 0, z: 0}
 --- !u!1 &1575579291
 GameObject:

@@ -40,7 +40,11 @@ public class SplasherBehavior : MonoBehaviour ,IObsTypes
     public float Range;
     public float FireRate;
     [Tooltip("How Many Shots before this stops working")] [Range(1 , 6)]
-    public int ShotNumber;    
+    public int ShotNumber;
+
+    [Header("Sounds")]
+    public AudioSource Move;
+    public AudioSource Splashed;
 
     private float CoolDown;
     private bool Moving;
@@ -83,6 +87,7 @@ public class SplasherBehavior : MonoBehaviour ,IObsTypes
                         Target = new Vector3(hit.transform.position.x, transform.position.y, transform.position.z);
                         Moving = true;
                         Mesh.material = StaticData.Materials[Random.Range(0, StaticData.Materials.Count)];
+                        Move.Play();
                     }
                 }
             }
@@ -100,6 +105,7 @@ public class SplasherBehavior : MonoBehaviour ,IObsTypes
                 SplashBallBehavior ball = Instantiate(SplashBall, Barrel.position + BarrelOffset, new Quaternion()).GetComponent<SplashBallBehavior>();
 
                 //Setting The Ball's Data
+                ball.Splashed = Splashed;
                 ball.Speed = BallSpeed;
                 ball.MaxDistance = MaxDistance;
                 ball.transform.localScale *= ScalingFac;

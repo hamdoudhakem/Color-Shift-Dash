@@ -17,7 +17,8 @@ public class GroundSwitcher : MonoBehaviour, IObsTypes
     public Vector3 Size;
     public LayerMask PlayerLayer;    
 
-    private GameObject[] Grs;    
+    private GameObject[] Grs;
+    private AudioSource Switched;
 
     void Start()
     {
@@ -44,7 +45,9 @@ public class GroundSwitcher : MonoBehaviour, IObsTypes
         {
             Grs[0].SetActive(false);
             Grs[1].SetActive(true);
-        }       
+        }
+
+        Switched.Play();
 
     }
 

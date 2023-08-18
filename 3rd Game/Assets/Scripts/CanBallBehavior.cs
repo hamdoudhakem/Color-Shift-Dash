@@ -17,6 +17,7 @@ public class CanBallBehavior : MonoBehaviour
     private Rigidbody rb;
     private float StartZ;
     private bool AlreadyDoneFor;
+    [HideInInspector] public AudioSource Crashed;
 
     public void Set()
     {
@@ -43,6 +44,7 @@ public class CanBallBehavior : MonoBehaviour
         if (!AlreadyDoneFor)
         {
             AlreadyDoneFor = true;
+            Crashed.Play();
 
             //Debug.Log("I Collided with something that is : " + collision.transform.name);
             Instantiate(CanBallDesEffect, transform.position, new Quaternion());

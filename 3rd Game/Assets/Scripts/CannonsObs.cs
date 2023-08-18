@@ -29,13 +29,16 @@ public class CannonsObs : MonoBehaviour, IObsTypes
     public float Speed;
     [Tooltip("How Much this will increase the scale of the projected Cannon Balls")] [Range(1 , 2)]
     public float UpScalingFac;
-    
+    [Header("Sound")]
+    public AudioSource Fire;
+    public AudioSource Crashed;
+
     private float TimeLeft;
     [Tooltip("The Distance at which the cannons will not fire as to let the player choose a cannon to destroy")]
     private float SafeDistance;   
     private bool used;
     private List<Transform> ParRugs;
-    private Dictionary<Transform, Transform> Rug2x;
+    private Dictionary<Transform, Transform> Rug2x;    
 
     void Start()
     {
@@ -110,6 +113,7 @@ public class CannonsObs : MonoBehaviour, IObsTypes
                 {
                     if (Physics.BoxCast(transform.position + Vector3.up * 4, OverBoxSize, Vector3.back, out RaycastHit hit, new Quaternion(), FireDistance, PlayerLayer))
                     {
+                        Fire.Play();
                         TimeLeft = FireRate;
 
                         int i = Randomize ? Random.Range(0 , ParRugs.Count) : ChooseCloseToPlayer(hit.transform), j;
@@ -120,6 +124,7 @@ public class CannonsObs : MonoBehaviour, IObsTypes
 
                         obj.transform.localScale *= UpScalingFac;
                         obj.MaxDistance = MaxDistance;
+                        obj.Crashed = Crashed;
                         obj.Speed = Speed;                        
                         obj.Set();
 
@@ -127,6 +132,7 @@ public class CannonsObs : MonoBehaviour, IObsTypes
 
                         obj.transform.localScale *= UpScalingFac;
                         obj.MaxDistance = MaxDistance;
+                        obj.Crashed = Crashed;
                         obj.Speed = Speed;
                         obj.Set();
 

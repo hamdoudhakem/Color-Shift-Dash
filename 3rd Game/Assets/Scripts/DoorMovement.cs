@@ -6,7 +6,7 @@ using UnityEngine;
 public class DoorMovement : MonoBehaviour
 {
     public LayerMask GroundLayer;
-    [HideInInspector] public DoorsObstBehavior DrObs;       
+    [HideInInspector] public DoorsObstBehavior DrObs;
 
     private Vector3 Target;
     private float LeftX, RightX;
@@ -49,6 +49,7 @@ public class DoorMovement : MonoBehaviour
             if ((transform.position - Target).magnitude <= .2f)
             {
                 Side = Direction.Left;
+                DrObs.SwitchSound.Play();
             }
 
         }
@@ -61,6 +62,7 @@ public class DoorMovement : MonoBehaviour
             if ((transform.position - Target).magnitude <= .2f)
             {
                 Side = Direction.Right;
+                DrObs.SwitchSound.Play();
             }
         }
         

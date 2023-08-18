@@ -40,8 +40,12 @@ public class PlayerMovement : MonoBehaviour
     private float DefaultForSpeed;
     private float LastTargetSpeed;
 
+    private bool Grounded , LastGrounded;
+
     void Start()
     {
+        Grounded = true;
+        LastGrounded = true;
         LastTargetSpeed = 0;
         ChangeViewField = false;
         MoveForward = true;
@@ -53,11 +57,28 @@ public class PlayerMovement : MonoBehaviour
         DefaultView = Cam.fieldOfView;
 
         rb = GetComponent<Rigidbody>();
-        BoostEffect = transform.GetChild(0).gameObject;
+        BoostEffect = Cam.transform.GetChild(0).gameObject;
     }
 
     void Update()
-    {      
+    {
+        Grounded = Physics.OverlapBox(transform.position + Vector3.down * .5f, GroundedSize, new Quaternion(), GroundLayer, QueryTriggerInteraction.Ignore).Length > 0;
+
+        if (Grounded && rb.velocity.z > .3f)
+        {
+            if (!LastGrounded)
+            {
+                AudioManager.AudMan.Play("Landed");
+            }
+
+            AudioManager.AudMan.Play("Rolling");
+
+        }
+        else
+        {
+            AudioManager.AudMan.Stop("Rolling");
+        }
+
         if (RemainingTime > 0)
         {
             RemainingTime -= Time.deltaTime;
@@ -90,6 +111,8 @@ public class PlayerMovement : MonoBehaviour
                 ChangeViewField = false;
             }
         }
+
+        LastGrounded = Grounded;
     }
 
     void FixedUpdate()
@@ -166,6 +189,8 @@ public class PlayerMovement : MonoBehaviour
 
     public IEnumerator SpeedUp(float BoostValue, float BoostTime, bool TakeInput)
     {
+        AudioManager.AudMan.Play("Boost" , true);
+
         //Boost Effects
         StackedBoosts++;
         BoostEffect.SetActive(true);
@@ -182,6 +207,9 @@ public class PlayerMovement : MonoBehaviour
             return Physics.OverlapBox(transform.position + Vector3.down * .5f, GroundedSize, new Quaternion(), GroundLayer ,QueryTriggerInteraction.Ignore).Length > 0
             || Physics.OverlapBox(transform.position + Vector3.forward * .5f, GroundedSize, Quaternion.Euler(90, 0, 0), GroundLayer, QueryTriggerInteraction.Ignore).Length > 0;
         });
+
+        //AudioManager.AudMan.Stop("Boost");
+        AudioManager.AudMan.Play("Deboost");
 
         StackedBoosts--;
         ForwardSpeed -= BoostValue;
@@ -204,6 +232,8 @@ public class PlayerMovement : MonoBehaviour
 
     public IEnumerator Stop()
     {
+        rb.constraints |= RigidbodyConstraints.FreezeRotationX;
+             
         MoveForward = false;
         InputMove = false;
         BoostEffect.SetActive(false);

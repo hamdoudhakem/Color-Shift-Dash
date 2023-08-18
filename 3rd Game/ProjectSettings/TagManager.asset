@@ -10,6 +10,8 @@ TagManager:
   - Boost lv 2
   - Skins
   - Skyboxes
+  - Box
+  - Ball
   layers:
   - Default
   - TransparentFX

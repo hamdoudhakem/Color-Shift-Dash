@@ -8,7 +8,7 @@ public class PlayerInteractions : MonoBehaviour
 {
     public static int StarsNum { get; private set; }
     public static List<int> IndexsOfObtainedStars { get; private set; }
-    public static bool Dead;
+    public static bool Dead , Win;
 
     public Material StartCol;
     public GameObject ParticleEffect;
@@ -29,7 +29,8 @@ public class PlayerInteractions : MonoBehaviour
 
     private LayerMask ColorSwitch , ColorObst , FinishLine , SpeedBoost , StarLayer;
     private MeshRenderer Mat;
-    private PlayerMovement Pm;    
+    private PlayerMovement Pm;   
+    private AudioManager AudMan;
     private bool AlreadyIn;
 
     void Awake()
@@ -37,6 +38,7 @@ public class PlayerInteractions : MonoBehaviour
         AlreadyIn = false;
         StarsNum = 0;
         Dead = false;
+        Win = false;
         Origin = transform.position.y;
         Pm = GetComponent<PlayerMovement>();
         Mat = GetComponent<MeshRenderer>();
@@ -73,6 +75,8 @@ public class PlayerInteractions : MonoBehaviour
         if (other.gameObject.layer == ColorSwitch)
         {
             Mat.material.color = other.GetComponent<MeshRenderer>().material.color;
+
+            AudioManager.AudMan.Play("Color Switch" , true);
         }
         else if (other.gameObject.layer == ColorObst)
         {
@@ -116,7 +120,13 @@ public class PlayerInteractions : MonoBehaviour
         {
             if (!AlreadyIn)
             {
-                AlreadyIn = true;                
+                AudioManager.AudMan.Play("Star");
+
+                AlreadyIn = true;
+
+                //Increase Stars
+                StarsNum++;
+                ShowStar.Invoke(StarsNum);
 
                 //Deal With The Star
                 other.GetComponent<Collider>().enabled = false;
@@ -125,17 +135,10 @@ public class PlayerInteractions : MonoBehaviour
                 IndexsOfObtainedStars.Add(index);
                 Debug.Log("I Got the star at the index = " + index);
 
+
                 other.GetComponent<Animator>().SetTrigger("Disappear");
 
-                Destroy(other.transform.parent.gameObject, .5f);
-
-                //Increase Stars
-                if (PlayerData.LvXStars[SceneManager.GetActiveScene().buildIndex] < 3)
-                {
-                    StarsNum++;
-                    ShowStar.Invoke(StarsNum);
-                }               
-
+                StartCoroutine(DisbaleStar(other.transform.parent.gameObject , .5f));
             }
         }
 
@@ -150,13 +153,16 @@ public class PlayerInteractions : MonoBehaviour
         }
         else if (collision.gameObject.layer == FinishLine)
         {
-            if(PlayerData.LvXStars[SceneManager.GetActiveScene().buildIndex] < 3)
+            if(StarsNum < 3)
             {
                 StarsNum++;
                 ShowStar.Invoke(StarsNum);
-            }            
+            }                                  
 
             StartCoroutine(Pm.Stop());
+
+            Win = true;
+            AudioManager.AudMan.StopAll();
 
             Won.Invoke();
         }
@@ -164,14 +170,14 @@ public class PlayerInteractions : MonoBehaviour
         {            
             Die();
         }
-    }
-   
+    }      
+
     void DeathCheck(Collider col)
-    {
+    {             
         if (col.gameObject.GetComponent<MeshRenderer>().material.color != Mat.material.color)
         {          
             Die();
-        }
+        }        
     }
 
     void Die()
@@ -180,6 +186,10 @@ public class PlayerInteractions : MonoBehaviour
 
         Dead = true;
 
+        AudioManager.AudMan.StopAll();
+        AudioManager.AudMan.Play("Lost");
+        AudioManager.AudMan.Play("Died");        
+
         Lost.Invoke();
 
         Instantiate(ParticleEffect, transform.position, new Quaternion()).transform.Rotate(Vector3.right * -90);
@@ -187,5 +197,12 @@ public class PlayerInteractions : MonoBehaviour
         Pm.StopAllCoroutines();
 
         Destroy(gameObject);
+    }
+
+    IEnumerator DisbaleStar(GameObject star,float Time)
+    {
+        yield return new WaitForSeconds(Time);
+
+        star.SetActive(false);
     }
 }

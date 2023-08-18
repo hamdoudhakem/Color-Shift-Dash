@@ -8,11 +8,14 @@ using System;
 public class WinScreenBehavior : MonoBehaviour
 {
     public Transform Stars;
+    [Header("Money Related")]
     [Tooltip("The Text Mesh Pro for the Money Won")]
     public TextMeshProUGUI MoneyCount;
     public int MoneyPerStar;
     [Tooltip("How Much Seconds it will take to reach the Money earned on this level on the money display")]
     [Range(1 , 5)]public int MoneyTime;
+
+    [Header("Performance")]
     [Tooltip("The Text Mesh Pro for the Note that I will give the player (good, passable...)")]
     public TextMeshProUGUI Remark;
     [Tooltip("This Array represents the possible remarks for the Player performance and they are sorted (exp: if he has 2 stars it's index need's to be 1)")]
@@ -31,12 +34,14 @@ public class WinScreenBehavior : MonoBehaviour
 
     void Start()
     {
+        AudioManager.AudMan.Play("Won");
         Finished = false;
         IncreaseMoney = false;
         MoneyProgress = 0;
         remark = Remarks[PlayerInteractions.StarsNum - 1];
 
-        int StarDif = PlayerInteractions.StarsNum - PlayerData.LvXStars[PlayerData.CurrentLv];
+        int StarDif = PlayerInteractions.StarsNum - PlayerData.LvXStars[SceneManager.GetActiveScene().buildIndex];
+
         if(StarDif > 0)
         {
             MoneyGoal = StarDif * MoneyPerStar;
@@ -52,10 +57,13 @@ public class WinScreenBehavior : MonoBehaviour
 
     IEnumerator DisplayStars()
     {
+        yield return new WaitForSeconds(StarInterval);
+
         //Showing The Stars
         for (int i = 0; i < PlayerInteractions.StarsNum; i++)
         {
             Stars.GetChild(i).gameObject.SetActive(true);
+            AudioManager.AudMan.Play("Star" , true);
 
             yield return new WaitForSeconds(StarInterval);            
         }
@@ -63,7 +71,7 @@ public class WinScreenBehavior : MonoBehaviour
         //Started Showing The Money
         MoneyCount.gameObject.SetActive(true);
 
-        IncreaseMoney = true;
+        IncreaseMoney = true;        
 
         StartCoroutine(ShowTheRest());
     }
@@ -100,6 +108,8 @@ public class WinScreenBehavior : MonoBehaviour
                 MoneyCount.text = "+" + MoneyGoal.ToString("0");
 
                 IncreaseMoney = false;
+
+                Finished = true;
             }
             
         }
@@ -110,6 +120,8 @@ public class WinScreenBehavior : MonoBehaviour
         if (!Finished)
         {
             Finished = true;
+
+            AudioManager.AudMan.Play("Star", true);
             StopAllCoroutines();
             IncreaseMoney = false;
 
@@ -126,7 +138,7 @@ public class WinScreenBehavior : MonoBehaviour
                 Remark.text = "   ";
             }
 
-            Remark.text = remark;
+            Remark.text += remark;
         }
         
     }

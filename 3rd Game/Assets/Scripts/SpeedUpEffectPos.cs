@@ -5,11 +5,11 @@ using UnityEngine;
 public class SpeedUpEffectPos : MonoBehaviour
 {
     private Transform SpeedUpEf;
-    private Transform Cam;
+    private Transform Player;
 
     void Start()
     {
-        Cam = GetComponent<PlayerMovement>().Cam.transform;
+        Player = GetComponent<CameraMovement>().Player;
         SpeedUpEf = transform.GetChild(0);
     }
 
@@ -17,7 +17,7 @@ public class SpeedUpEffectPos : MonoBehaviour
     {
         if (SpeedUpEf.gameObject.activeSelf)
         {
-            float offset = transform.position.x - Cam.position.x;
+            float offset = Player.position.x - transform.position.x;
 
             SpeedUpEf.localPosition = new Vector3(-offset / 2, SpeedUpEf.localPosition.y, SpeedUpEf.localPosition.z);
         }        

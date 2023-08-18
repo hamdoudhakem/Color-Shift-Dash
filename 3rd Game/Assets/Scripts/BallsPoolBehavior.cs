@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BallsPoolBehavior : MonoBehaviour, IObsTypes
+public class BallsPoolBehavior : MonoBehaviour, IObsTypes, IColParent
 {
     [field: SerializeField]
     public ObsTypes obsType { get; set; }
@@ -12,7 +12,7 @@ public class BallsPoolBehavior : MonoBehaviour, IObsTypes
     public int NumPerLine;
 
     [Header("Constrains Player Y axe")]
-    public LayerMask PlayerLayer;
+    private LayerMask PlayerLayer;
     [Tooltip("The Offset of the OverLap Box center from this object position To Check if the Player is GONE not if he's COMING.")]
     public Vector3 Offset;
     [Tooltip("The Size of the Overlap Box tha will detect the Player")]
@@ -20,10 +20,11 @@ public class BallsPoolBehavior : MonoBehaviour, IObsTypes
 
     private bool IsIn;
     private Collider[] cols;
-
+    private AudioSource HitBalls;
 
     void Start()
     {
+        PlayerLayer = LayerMask.NameToLayer("Player");
         IsIn = false;
 
         //Variables for coloring balls
@@ -64,17 +65,20 @@ public class BallsPoolBehavior : MonoBehaviour, IObsTypes
     {
         for (int j = 0; j < line.childCount; j++)
         {
+            Transform Ball = line.GetChild(j);
+            Ball.GetComponent<Collided>().ColProcess = this;
+
             if (j < offset)
             {
-                line.GetChild(j).GetComponent<MeshRenderer>().material = StaticData.Materials[x];
+                Ball.GetComponent<MeshRenderer>().material = StaticData.Materials[x];
             }
             else if (offset <= j && j < offset + NumPerLine)
             {
-                line.GetChild(j).GetComponent<MeshRenderer>().material = NeededMat;
+                Ball.GetComponent<MeshRenderer>().material = NeededMat;
             }
             else
             {
-                line.GetChild(j).GetComponent<MeshRenderer>().material = StaticData.Materials[y];
+                Ball.GetComponent<MeshRenderer>().material = StaticData.Materials[y];
             }
         }
     }
@@ -110,5 +114,16 @@ public class BallsPoolBehavior : MonoBehaviour, IObsTypes
         }        
     }
 
+    public void OnCollision(Collision collision)
+    {
+        if (collision.gameObject.layer == PlayerLayer)
+        {
+            HitBalls.Play();
+        }
+    }
 
+    public void OnExitCollision(Collision collision)
+    {
+
+    }
 }
