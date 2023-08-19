@@ -12,19 +12,25 @@ public class BallsPoolBehavior : MonoBehaviour, IObsTypes, IColParent
     public int NumPerLine;
 
     [Header("Constrains Player Y axe")]
-    private LayerMask PlayerLayer;
+    public LayerMask PlayerLayer;
     [Tooltip("The Offset of the OverLap Box center from this object position To Check if the Player is GONE not if he's COMING.")]
     public Vector3 Offset;
     [Tooltip("The Size of the Overlap Box tha will detect the Player")]
     public Vector3 BoxSize;
 
+    [Header("Sound")]
+    [Tooltip("The Layers That when in contact with this object will start emitting sounds")]
+    public LayerMask SoundLayers;
+
     private bool IsIn;
     private Collider[] cols;
-    private AudioSource HitBalls;
+    private int ContactCount;    
 
     void Start()
     {
-        PlayerLayer = LayerMask.NameToLayer("Player");
+        //PlayerLayer = LayerMask.NameToLayer("Player");
+        //SoundLayers = PlayerLayer | LayerMask.NameToLayer("Color Obst");
+        ContactCount = 0;
         IsIn = false;
 
         //Variables for coloring balls
@@ -109,6 +115,7 @@ public class BallsPoolBehavior : MonoBehaviour, IObsTypes, IColParent
             if (cols.Length > 0)
             {
                 cols[0].GetComponent<Rigidbody>().constraints &= ~RigidbodyConstraints.FreezePositionY;
+                AudioManager.AudMan.Stop("Drag Balls");
                 enabled = false;
             }
         }        
@@ -116,14 +123,22 @@ public class BallsPoolBehavior : MonoBehaviour, IObsTypes, IColParent
 
     public void OnCollision(Collision collision)
     {
-        if (collision.gameObject.layer == PlayerLayer)
+        if (SoundLayers == (SoundLayers | (1 << collision.gameObject.layer)) && !PlayerInteractions.Dead)
         {
-            HitBalls.Play();
+            AudioManager.AudMan.Play("Hit Balls");
+            ContactCount++;
+
+            if (collision.transform.position.z < transform.position.z + Offset.z)
+            {
+                AudioManager.AudMan.Play("Drag Balls");
+                Debug.Log("Drag !");
+
+            }
         }
     }
 
     public void OnExitCollision(Collision collision)
     {
-
+        
     }
 }
