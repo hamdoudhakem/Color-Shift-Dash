@@ -56,8 +56,14 @@ MonoBehaviour:
   <obsType>k__BackingField: 4
   NeededMat: {fileID: 2100000, guid: 977085e6b2fc1de49b0aeddb18097348, type: 2}
   NumPerLine: 5
-  Offset: {x: 0, y: 0, z: 7.35}
-  BoxSize: {x: 6.275, y: 3.09, z: 0.04}
+  PlayerLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  Offset: {x: 0, y: 0.5, z: 3.675}
+  BoxSize: {x: 6.3, y: 0.5, z: 3.675}
+  SoundLayers:
+    serializedVersion: 2
+    m_Bits: 264
 --- !u!1001 &5154997642554387704
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -49,7 +49,7 @@ public class DoorMovement : MonoBehaviour
             if ((transform.position - Target).magnitude <= .2f)
             {
                 Side = Direction.Left;
-                DrObs.SwitchSound.Play();
+                AudioManager.AudMan.Play("Doors");
             }
 
         }
@@ -62,7 +62,7 @@ public class DoorMovement : MonoBehaviour
             if ((transform.position - Target).magnitude <= .2f)
             {
                 Side = Direction.Right;
-                DrObs.SwitchSound.Play();
+                AudioManager.AudMan.Play("Doors");
             }
         }
         

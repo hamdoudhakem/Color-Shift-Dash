@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BallsPoolBehavior : MonoBehaviour, IObsTypes, IColParent
+public class BallsPoolBehavior : MonoBehaviour, IObsTypes
 {
     [field: SerializeField]
     public ObsTypes obsType { get; set; }
 
-    public Material NeededMat;     
-    [Tooltip("How many Balls having the same color as the player ther will be per line")] [Range(5 , 25)]
+    public Material NeededMat;
+    [Tooltip("How many Balls having the same color as the player ther will be per line")]
+    [Range(5, 25)]
     public int NumPerLine;
 
     [Header("Constrains Player Y axe")]
@@ -23,18 +24,28 @@ public class BallsPoolBehavior : MonoBehaviour, IObsTypes, IColParent
     public LayerMask SoundLayers;
 
     private bool IsIn;
-    private Collider[] cols;
-    private int ContactCount;    
+    private Collider[] cols, lastCols;
+    [HideInInspector] public int MovingBalls {
+
+        get => movingBalls;
+
+        set
+        {
+            movingBalls = value;
+            CheckDragSound();
+        } 
+    }
+    private int movingBalls;
 
     void Start()
     {
         //PlayerLayer = LayerMask.NameToLayer("Player");
         //SoundLayers = PlayerLayer | LayerMask.NameToLayer("Color Obst");
-        ContactCount = 0;
+        movingBalls = 0;
         IsIn = false;
 
         //Variables for coloring balls
-        int x = StaticData.ChooseMat(NeededMat), y = StaticData.ChooseMat(NeededMat);    
+        int x = StaticData.ChooseMat(NeededMat), y = StaticData.ChooseMat(NeededMat);
 
         int offset = Random.Range(0, transform.GetChild(0).childCount - NumPerLine);
         Direction StartSide = Random.Range(0, 2) == 0 ? Direction.Right : Direction.Left;
@@ -42,17 +53,17 @@ public class BallsPoolBehavior : MonoBehaviour, IObsTypes, IColParent
         //I give it this transform to stop the bug of this variable being unassigned
         Transform line = transform;
 
-        for(int i = 0; i < transform.childCount; i++)
+        for (int i = 0; i < transform.childCount; i++)
         {
-            if(i < transform.childCount)
+            if (i < transform.childCount)
             {
                 line = transform.GetChild(i);
             }
 
 
-            ColorLine(line , x , y , offset);            
+            ColorLine(line, x, y, offset);
 
-            if(offset >= line.childCount - NumPerLine)
+            if (offset >= line.childCount - NumPerLine)
             {
                 StartSide = Direction.Left;
             }
@@ -64,15 +75,15 @@ public class BallsPoolBehavior : MonoBehaviour, IObsTypes, IColParent
             offset += (int)StartSide;
 
         }
-        
+
     }
 
-    void ColorLine(Transform line, int x, int y , int offset)
+    void ColorLine(Transform line, int x, int y, int offset)
     {
         for (int j = 0; j < line.childCount; j++)
         {
             Transform Ball = line.GetChild(j);
-            Ball.GetComponent<Collided>().ColProcess = this;
+            Ball.GetComponent<BallMoving>().BallsPool = this;
 
             if (j < offset)
             {
@@ -90,17 +101,16 @@ public class BallsPoolBehavior : MonoBehaviour, IObsTypes, IColParent
     }
 
     void OnDrawGizmos()
-    {
-        Gizmos.DrawCube(transform.position, BoxSize * 2);
+    {      
         Gizmos.DrawCube(transform.position + Offset, BoxSize * 2);
     }
 
     void Update()
     {
-        if (!IsIn)
-        {
-            cols = Physics.OverlapBox(transform.position, BoxSize, new Quaternion(), PlayerLayer);
+        cols = Physics.OverlapBox(transform.position + Offset, BoxSize, new Quaternion(), PlayerLayer);
 
+        if (!IsIn)
+        {           
             if (cols.Length > 0)
             {
                 cols[0].GetComponent<Rigidbody>().constraints |= RigidbodyConstraints.FreezePositionY;
@@ -110,35 +120,31 @@ public class BallsPoolBehavior : MonoBehaviour, IObsTypes, IColParent
         }
         else
         {
-            cols = Physics.OverlapBox(transform.position + Offset, BoxSize, new Quaternion(), PlayerLayer);
-
-            if (cols.Length > 0)
+            if (cols.Length <= 0)
             {
-                cols[0].GetComponent<Rigidbody>().constraints &= ~RigidbodyConstraints.FreezePositionY;
-                AudioManager.AudMan.Stop("Drag Balls");
+                if(lastCols[0] != null)
+                {
+                    lastCols[0].GetComponent<Rigidbody>().constraints &= ~RigidbodyConstraints.FreezePositionY;
+                }
                 enabled = false;
             }
-        }        
+        }
+
+        lastCols = cols;
     }
 
-    public void OnCollision(Collision collision)
+    void CheckDragSound()
     {
-        if (SoundLayers == (SoundLayers | (1 << collision.gameObject.layer)) && !PlayerInteractions.Dead)
+        if(MovingBalls > 0)
         {
-            AudioManager.AudMan.Play("Hit Balls");
-            ContactCount++;
-
-            if (collision.transform.position.z < transform.position.z + Offset.z)
-            {
-                AudioManager.AudMan.Play("Drag Balls");
-                Debug.Log("Drag !");
-
-            }
+            AudioManager.AudMan.Play("Drag Balls");
+            Debug.Log("Draging");
+        }
+        else
+        {
+            AudioManager.AudMan.Stop("Drag Balls");
+            Debug.Log("Stoped Draging");
         }
     }
 
-    public void OnExitCollision(Collision collision)
-    {
-        
-    }
 }
