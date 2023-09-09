@@ -1017,7 +1017,7 @@ MonoBehaviour:
   StartDistance: 4.26
   BoxSize: {x: 9.58, y: 6.02, z: 0.18}
   PassSize: 5.35
-  Speed: 0.055
+  Speed: 0.08
   Delay: 0.95
   DoorsNum: 8
-  SwitchSound: {fileID: 0}
+  SoundDis: 15

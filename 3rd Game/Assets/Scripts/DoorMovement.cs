@@ -33,39 +33,36 @@ public class DoorMovement : MonoBehaviour
         Mat = Meshes[0].material;
     }    
 
-    void Update()
+    void FixedUpdate()
     {
-        if (PlayerInteractions.Dead)
+        if (!PlayerInteractions.Dead)
         {
-            return;
-        }
-
-        if (Side == Direction.Right)
-        {
-            Target = new Vector3(RightX, transform.position.y, transform.position.z);
-
-            transform.position = Vector3.MoveTowards(transform.position, Target, DrObs.Speed);
-
-            if ((transform.position - Target).magnitude <= .2f)
+            if (Side == Direction.Right)
             {
-                Side = Direction.Left;
-                AudioManager.AudMan.Play("Doors");
+                Target = new Vector3(RightX, transform.position.y, transform.position.z);
+
+                transform.position = Vector3.MoveTowards(transform.position, Target, DrObs.Speed);
+
+                if ((transform.position - Target).magnitude <= .2f)
+                {
+                    Side = Direction.Left;
+                    AudioManager.AudMan.Play("Doors");
+                }
+
             }
-
-        }
-        else if (Side == Direction.Left)
-        {
-            Target = new Vector3(LeftX, transform.position.y, transform.position.z);
-
-            transform.position = Vector3.MoveTowards(transform.position, Target, DrObs.Speed);
-
-            if ((transform.position - Target).magnitude <= .2f)
+            else if (Side == Direction.Left)
             {
-                Side = Direction.Right;
-                AudioManager.AudMan.Play("Doors");
+                Target = new Vector3(LeftX, transform.position.y, transform.position.z);
+
+                transform.position = Vector3.MoveTowards(transform.position, Target, DrObs.Speed);
+
+                if ((transform.position - Target).magnitude <= .2f)
+                {
+                    Side = Direction.Right;
+                    AudioManager.AudMan.Play("Doors");
+                }
             }
-        }
-        
+        }               
     }  
 
     public void SetPosition()

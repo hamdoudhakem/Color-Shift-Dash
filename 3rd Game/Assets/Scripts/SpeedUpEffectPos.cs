@@ -13,7 +13,7 @@ public class SpeedUpEffectPos : MonoBehaviour
         SpeedUpEf = transform.GetChild(0);
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (SpeedUpEf.gameObject.activeSelf)
         {

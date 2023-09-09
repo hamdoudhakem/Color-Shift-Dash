@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,7 +19,7 @@ public class DoorsObstBehavior : MonoBehaviour, IObsTypes
     public float Speed;
     [Tooltip("THe Time Between every Door Repositioning in seconds")]
     public float Delay;
-    [Tooltip("How Many doors the Player will have to pass")] [Range(1 , 10)]
+    [Tooltip("How Many doors the Player will have to pass")] [Range(2 , 10)]
     public int DoorsNum;
 
     //[Tooltip("How Many doors will move from the started Before the player Reached the Start Distance")]
@@ -26,12 +27,12 @@ public class DoorsObstBehavior : MonoBehaviour, IObsTypes
 
     private DoorMovement[] Doors;
     private float DoorDis;
-    private bool Stop;
-    private float OffsetX;    
-    
+    private bool StartRemaiDoors;
+    private float OffsetX; 
+
     void Start()
     {
-        Stop = false;
+        StartRemaiDoors = false;
 
         //getting each door 
         Doors = new DoorMovement[transform.childCount];
@@ -43,18 +44,15 @@ public class DoorsObstBehavior : MonoBehaviour, IObsTypes
 
         //I will only get the doors that are active in case the Number
         //of doors i want is between 2 (Min) and 3 (cause the prefab contents 4 doors)
-        for (int i = 0; i < Doors.Length; i++)
+        for (int i = 0; i < Mathf.Clamp(DoorsNum,2, transform.childCount); i++)
         {
             Transform child = transform.GetChild(i);
 
             Doors[i] = child.GetComponent<DoorMovement>();            
             Doors[i].DrObs = this;
-
-            if (child.gameObject.activeSelf)
-            {
-                Doors[i].SetPosition();
-                Doors[i].OffsetX = OffsetX;
-            }                     
+            
+            Doors[i].SetPosition();
+            Doors[i].OffsetX = OffsetX;                        
             
         }
 
@@ -66,20 +64,25 @@ public class DoorsObstBehavior : MonoBehaviour, IObsTypes
     {
         Gizmos.DrawCube(transform.position + Vector3.back * StartDistance, BoxSize * 2);
     }
+
     void Update()
     {
-        if(!Stop && Physics.OverlapBox(transform.position + Vector3.back * StartDistance ,
-                               BoxSize , new Quaternion() ,PlayerLayer).Length > 0)
-        {
-            Stop = true;
-            StartCoroutine(DoIt());
-        }
+        if (!StartRemaiDoors)
+        {          
+            Collider[] cols = Physics.OverlapBox(transform.position + Vector3.back * StartDistance, BoxSize, new Quaternion(), PlayerLayer);                              
+
+            if (cols.Length > 0)
+            {
+                StartRemaiDoors = true;
+                StartCoroutine(DoIt());
+            }
+        }              
 
         if (PlayerInteractions.Dead)
         {
             StopAllCoroutines();
         }
-    }
+    }   
 
     IEnumerator DoIt()
     {

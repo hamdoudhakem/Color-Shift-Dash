@@ -240,13 +240,13 @@ public class PlayerMovement : MonoBehaviour
         ChangeFieldOfView(DefaultView);        
         yield return new WaitForEndOfFrame();
 
-        rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, DefaultForSpeed);
+        rb.velocity = new Vector3(0, rb.velocity.y, DefaultForSpeed);
 
         //Stop The Player Gradually
         do
         {
-            rb.velocity += rb.velocity.z * Time.deltaTime * StopRate * Vector3.back;
-            yield return new WaitForEndOfFrame();
+            rb.velocity += rb.velocity.z * Time.fixedDeltaTime * StopRate * Vector3.back;
+            yield return new WaitForFixedUpdate();
 
         } while (rb.velocity.z > 0.3f);
 
