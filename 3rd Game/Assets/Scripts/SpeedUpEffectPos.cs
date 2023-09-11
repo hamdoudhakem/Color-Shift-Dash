@@ -6,11 +6,14 @@ public class SpeedUpEffectPos : MonoBehaviour
 {
     private Transform SpeedUpEf;
     private Transform Player;
+    private Vector3 BaseOffset;
 
     void Start()
     {
         Player = GetComponent<CameraMovement>().Player;
         SpeedUpEf = transform.GetChild(0);
+
+        BaseOffset = SpeedUpEf.position - transform.position;
     }
 
     void FixedUpdate()
@@ -19,7 +22,7 @@ public class SpeedUpEffectPos : MonoBehaviour
         {
             float offset = Player.position.x - transform.position.x;
 
-            SpeedUpEf.localPosition = new Vector3(-offset / 2, SpeedUpEf.localPosition.y, SpeedUpEf.localPosition.z);
+            SpeedUpEf.transform.position = transform.position + BaseOffset + (offset / 2) * Vector3.right;
         }        
     }
 }

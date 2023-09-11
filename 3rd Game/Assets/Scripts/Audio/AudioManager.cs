@@ -111,31 +111,5 @@ public class AudioManager : MonoBehaviour
             s.source.UnPause();
         }
     }
-
-    public void SetVolume(string name,float NewVol)
-    {
-        Sound s = sounds.Find(sound => sound.name.Contains(name));
-
-        if (s == null)
-        {
-            Debug.LogWarning("Sound :" + name + " doesn't Exist!");
-            return;
-        }
-
-        s.source.volume = NewVol;        
-    }
-
-    public float GetVolume(string name)
-    {
-        Sound s = sounds.Find(sound => sound.name.Contains(name));
-
-        if (s == null)
-        {
-            Debug.LogWarning("Sound :" + name + " doesn't Exist!");
-            return -1;
-        }
-
-        return s.source.volume;
-    }
   
 }
