@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using EZCameraShake;
 
-public class FallingBallsBehavior : MonoBehaviour , IObsTypes
+public class FallingBallsBehavior : MonoBehaviour , IObsTypes, IColParent
 {
     [field: SerializeField]
     public ObsTypes obsType { get; set; }
@@ -36,28 +37,27 @@ public class FallingBallsBehavior : MonoBehaviour , IObsTypes
         RightSideIndicator = 0;
         LeftSideIndicator = 0;
 
+        //Find and Assign The Offset
+        Physics.Raycast(transform.GetChild(1).position, Vector3.down, out RaycastHit hit, 30f, GroundLayer);
+
+        OffsetX = hit.transform.localScale.x / 4;
+
         //Fill The Balls Array and a Meshes array in case The transparency is used to reset to Start Material
         Balls = new Rigidbody[transform.childCount];
-        Meshes = new MeshRenderer[transform.childCount];
+        Meshes = new MeshRenderer[transform.childCount];        
 
         for (int i = 0; i < Balls.Length; i++)
         {
             Balls[i] = transform.GetChild(i).GetComponent<Rigidbody>();
             Meshes[i] = Balls[i].GetComponent<MeshRenderer>();
+            ChooseSide(Balls[i].transform);
+
+            Balls[i].GetComponent<Collided>().ColProcess = this;
         }
 
         Mat = Meshes[0].material;
 
-        BallDis = Mathf.Abs(Balls[1].position.z - Balls[0].position.z);
-
-        Physics.Raycast(Balls[1].transform.position, Vector3.down ,out RaycastHit hit, 30f, GroundLayer);
-
-        OffsetX = hit.transform.localScale.x / 4;
-
-        for (int i = 0; i < Balls.Length; i++)
-        {
-            ChooseSide(Balls[i].transform);
-        }
+        BallDis = Mathf.Abs(Balls[1].position.z - Balls[0].position.z); 
     }
 
     void OnDrawGizmos()
@@ -78,7 +78,7 @@ public class FallingBallsBehavior : MonoBehaviour , IObsTypes
         {
             StopAllCoroutines();
         }
-    }
+    }      
 
     IEnumerator DoIt()
     {
@@ -143,5 +143,21 @@ public class FallingBallsBehavior : MonoBehaviour , IObsTypes
         RightSideIndicator = 0;
         tran.localPosition = new Vector3(-OffsetX, tran.localPosition.y, tran.localPosition.z);
         LeftSideIndicator += 1;
+    }
+
+    public void OnCollision(Collision collision)
+    {
+        int TouchedLayer = (int)Mathf.Pow(2,collision.gameObject.layer);
+
+        if (TouchedLayer == PlayerLayer || TouchedLayer == GroundLayer)
+        {
+            AudioManager.AudMan.Play("Ball Falls", true);
+            CameraShaker.Instance.ShakeOnce(4, 4, .1f, .5f);
+        }
+    }
+
+    public void OnExitCollision(Collision collision)
+    {
+
     }
 }

@@ -14,7 +14,7 @@ public class ProgressDisplay : MonoBehaviour
     void Start()
     {
         EndLine = FinishLine.position.z - FinishLine.GetComponent<Collider>().bounds.extents.z;
-        Player = Camera.main.GetComponent<CameraMovement>().Player;
+        Player = Camera.main.transform.parent.GetComponent<CameraMovement>().Player;
         text = GetComponent<TextMeshProUGUI>();
     }
 
