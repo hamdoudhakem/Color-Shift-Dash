@@ -190,6 +190,7 @@ public class PlayerMovement : MonoBehaviour
     public IEnumerator SpeedUp(float BoostValue, float BoostTime, bool TakeInput)
     {
         AudioManager.AudMan.Play("Boost" , true);
+        AudioManager.AudMan.Stop("Deboost");
 
         //Boost Effects
         StackedBoosts++;

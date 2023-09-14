@@ -24,6 +24,8 @@ public class GroundSwitcher : MonoBehaviour, IObsTypes
     {
         Grs = new GameObject[transform.childCount];
 
+        Switched = GetComponent<AudioSource>();
+
         for(int i = 0; i < transform.childCount; i++)
         {
             Grs[i] = transform.GetChild(i).gameObject;

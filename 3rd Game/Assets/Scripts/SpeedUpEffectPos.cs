@@ -18,14 +18,19 @@ public class SpeedUpEffectPos : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!PlayerInteractions.Dead)
+        if (SpeedUpEf.gameObject.activeSelf)
         {
-            if (SpeedUpEf.gameObject.activeSelf)
+            if (!PlayerInteractions.Dead)
             {
                 float offset = Player.position.x - transform.position.x;
 
                 SpeedUpEf.transform.position = transform.position + BaseOffset + (offset / 2) * Vector3.right;
             }
-        }       
+            else
+            {
+                SpeedUpEf.gameObject.SetActive(false);
+            }
+        }
+        
     }
 }

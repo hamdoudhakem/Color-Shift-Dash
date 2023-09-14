@@ -40,11 +40,7 @@ public class SplasherBehavior : MonoBehaviour ,IObsTypes
     public float Range;
     public float FireRate;
     [Tooltip("How Many Shots before this stops working")] [Range(1 , 6)]
-    public int ShotNumber;
-
-    [Header("Sounds")]
-    public AudioSource Move;
-    public AudioSource Splashed;
+    public int ShotNumber;  
 
     private float CoolDown;
     private bool Moving;
@@ -85,9 +81,10 @@ public class SplasherBehavior : MonoBehaviour ,IObsTypes
                     if (Physics.OverlapBox(Pos, CheckSize, new Quaternion(), GroundLayer).Length > 0)                    
                     {
                         Target = new Vector3(hit.transform.position.x, transform.position.y, transform.position.z);
-                        Moving = true;
                         Mesh.material = StaticData.Materials[Random.Range(0, StaticData.Materials.Count)];
-                        Move.Play();
+
+                        Moving = true;
+                        AudioManager.AudMan.Play("Splasher Moving");
                     }
                 }
             }
@@ -95,17 +92,20 @@ public class SplasherBehavior : MonoBehaviour ,IObsTypes
             {
                 CoolDown -= Time.deltaTime;
             }
-        }
-        else
+        }                     
+    }
+
+    void FixedUpdate()
+    {
+        if (Moving)
         {
             transform.position = Vector3.Lerp(transform.position, Target, MovingSpeed);
 
-            if((transform.position - Target).magnitude <= .2f)
+            if ((transform.position - Target).magnitude <= .2f)
             {
                 SplashBallBehavior ball = Instantiate(SplashBall, Barrel.position + BarrelOffset, new Quaternion()).GetComponent<SplashBallBehavior>();
 
                 //Setting The Ball's Data
-                ball.Splashed = Splashed;
                 ball.Speed = BallSpeed;
                 ball.MaxDistance = MaxDistance;
                 ball.transform.localScale *= ScalingFac;
@@ -116,9 +116,9 @@ public class SplasherBehavior : MonoBehaviour ,IObsTypes
                 ShotNum++;
                 Moving = false;
                 CoolDown = FireRate;
+                AudioManager.AudMan.Stop("Splasher Moving");
+
             }
         }
-       
-       
     }
 }

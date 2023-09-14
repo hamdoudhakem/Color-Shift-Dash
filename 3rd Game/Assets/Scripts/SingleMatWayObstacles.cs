@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class SingleMatWayObstacles : MonoBehaviour, IObsTypes
@@ -25,5 +24,5 @@ public class SingleMatWayObstacles : MonoBehaviour, IObsTypes
                 transform.GetChild(i).GetComponent<MeshRenderer>().material = StaticData.Materials[j];
             }
         }
-    }    
+    }   
 }

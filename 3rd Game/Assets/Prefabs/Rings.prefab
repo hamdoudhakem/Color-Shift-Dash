@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 527264066607049872}
   m_Layer: 8
   m_Name: Ring 1.0 (1)
-  m_TagString: Untagged
+  m_TagString: Ring
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -156,7 +156,7 @@ GameObject:
   - component: {fileID: 2833710967419071812}
   m_Layer: 8
   m_Name: Ring 1.0
-  m_TagString: Untagged
+  m_TagString: Ring
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295

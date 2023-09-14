@@ -12,6 +12,7 @@ TagManager:
   - Skyboxes
   - Box
   - Ball
+  - Ring
   layers:
   - Default
   - TransparentFX

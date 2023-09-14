@@ -177,7 +177,14 @@ public class PlayerInteractions : MonoBehaviour
         if (col.gameObject.GetComponent<MeshRenderer>().material.color != Mat.material.color)
         {          
             Die();
-        }        
+        }
+        else
+        {
+            if(col.tag == "Ring")
+            {
+                AudioManager.AudMan.Play("Ring Passed", true);
+            }
+        }     
     }
 
     void Die()

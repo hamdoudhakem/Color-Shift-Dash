@@ -28,17 +28,15 @@ public class CannonsObs : MonoBehaviour, IObsTypes
     [Tooltip("The Speed at which the Cannon Ball Goes")]
     public float Speed;
     [Tooltip("How Much this will increase the scale of the projected Cannon Balls")] [Range(1 , 2)]
-    public float UpScalingFac;
-    [Header("Sound")]
-    public AudioSource Fire;
-    public AudioSource Crashed;
+    public float UpScalingFac;  
 
     private float TimeLeft;
     [Tooltip("The Distance at which the cannons will not fire as to let the player choose a cannon to destroy")]
     private float SafeDistance;   
     private bool used;
     private List<Transform> ParRugs;
-    private Dictionary<Transform, Transform> Rug2x;    
+    private Dictionary<Transform, Transform> Rug2x;
+    private Transform Player;
 
     void Start()
     {
@@ -111,9 +109,13 @@ public class CannonsObs : MonoBehaviour, IObsTypes
                 //To see if the player is now pressing 1 of the triggers to disable a cannon
                 if (Physics.OverlapBox(transform.position + new Vector3(0, 4, -SafeDistance), OverBoxSize, new Quaternion(), PlayerLayer).Length <= 0)
                 {
-                    if (Physics.BoxCast(transform.position + Vector3.up * 4, OverBoxSize, Vector3.back, out RaycastHit hit, new Quaternion(), FireDistance, PlayerLayer))
+                    if (Physics.BoxCast(transform.position + Vector3.up * 4, OverBoxSize,Vector3.back,out RaycastHit hit, new Quaternion(), FireDistance, PlayerLayer))
                     {
-                        Fire.Play();
+                        if(Player == null)
+                        {
+                            Player = hit.transform;
+                        }
+
                         TimeLeft = FireRate;
 
                         int i = Randomize ? Random.Range(0 , ParRugs.Count) : ChooseCloseToPlayer(hit.transform), j;
@@ -121,20 +123,14 @@ public class CannonsObs : MonoBehaviour, IObsTypes
                         j = (Random.Range(1, 3) + i) % ParRugs.Count;
 
                         CanBallBehavior obj = Instantiate(CanBall, ParRugs[i].position + new Vector3(-0.1f, 1), new Quaternion()).GetComponent<CanBallBehavior>();
-
-                        obj.transform.localScale *= UpScalingFac;
-                        obj.MaxDistance = MaxDistance;
-                        obj.Crashed = Crashed;
-                        obj.Speed = Speed;                        
-                        obj.Set();
+                                            
+                        SetUpCanBall(obj);
 
                         obj = Instantiate(CanBall, ParRugs[j].position + new Vector3(-0.1f, 1), new Quaternion()).GetComponent<CanBallBehavior>();
 
-                        obj.transform.localScale *= UpScalingFac;
-                        obj.MaxDistance = MaxDistance;
-                        obj.Crashed = Crashed;
-                        obj.Speed = Speed;
-                        obj.Set();
+                        SetUpCanBall(obj);
+
+                        AudioManager.AudMan.Play("Cannon Fire", true);
 
                     }
                 }
@@ -145,6 +141,15 @@ public class CannonsObs : MonoBehaviour, IObsTypes
                 TimeLeft -= Time.deltaTime;
             }
         }      
+    }
+
+    private void SetUpCanBall(CanBallBehavior obj)
+    {
+        obj.transform.localScale *= UpScalingFac;
+        obj.MaxDistance = MaxDistance;
+        obj.Player = Player;
+        obj.Speed = Speed;
+        obj.Set();        
     }
 
     int ChooseCloseToPlayer(Transform player)
@@ -168,7 +173,7 @@ public class CannonsObs : MonoBehaviour, IObsTypes
 
     public void DestCan(Transform Rug)
     {
-        if(used == false)
+        if(!used)
         {
             used = true;
 

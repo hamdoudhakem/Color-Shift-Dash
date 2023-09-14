@@ -13,11 +13,12 @@ public class CanBallBehavior : MonoBehaviour
     [HideInInspector] public float Speed;
     [Tooltip("The Maximum Distance between this Cannon Ball and the Cannon at which the ball is gonna self destroy")]
     [HideInInspector] public float MaxDistance;
+    [HideInInspector] public Transform Player;
 
     private Rigidbody rb;
     private float StartZ;
     private bool AlreadyDoneFor;
-    [HideInInspector] public AudioSource Crashed;
+    
 
     public void Set()
     {
@@ -33,10 +34,13 @@ public class CanBallBehavior : MonoBehaviour
   
     void CheckDis()
     {
-        if(StartZ - transform.position.z > MaxDistance)
+      
+        if (StartZ - transform.position.z > MaxDistance 
+            || !PlayerInteractions.Dead && Player.position.z - transform.position.z >= 1)
         {
             Destroy(gameObject);
-        }
+        }       
+       
     }
 
     void OnCollisionEnter(Collision collision)
@@ -44,7 +48,7 @@ public class CanBallBehavior : MonoBehaviour
         if (!AlreadyDoneFor)
         {
             AlreadyDoneFor = true;
-            Crashed.Play();
+            AudioManager.AudMan.Play("Cannon Ball Crashed");
 
             //Debug.Log("I Collided with something that is : " + collision.transform.name);
             Instantiate(CanBallDesEffect, transform.position, new Quaternion());
