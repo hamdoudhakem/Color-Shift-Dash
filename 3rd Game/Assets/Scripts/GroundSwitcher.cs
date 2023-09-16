@@ -60,10 +60,19 @@ public class GroundSwitcher : MonoBehaviour, IObsTypes
 
     void Update()
     {
-        if (Physics.OverlapBox(transform.position + Offset, Size ,new Quaternion(),PlayerLayer).Length > 0) 
+        if (!ScreensEventHandlers.IsPaused)
         {
-            CancelInvoke();
+            Switched.UnPause();
+
+            if (Physics.OverlapBox(transform.position + Offset, Size, new Quaternion(), PlayerLayer).Length > 0)
+            {
+                CancelInvoke();
+            }
         }
+        else
+        {
+            Switched.Pause();
+        }      
 
     }
 

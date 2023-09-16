@@ -85,23 +85,35 @@ public class DoorsObstBehavior : MonoBehaviour, IObsTypes
 
     void Update()
     {
-        if (!StartRemaiDoors)
-        {          
-            Collider[] cols = Physics.OverlapBox(transform.position + Vector3.back * StartDistance, BoxSize, new Quaternion(), PlayerLayer);                              
-
-            if (cols.Length > 0)
-            {
-                Player = cols[0].transform;
-                StartRemaiDoors = true;                
-
-                InvokeRepeating("UpdateAudPos", AudUpdateTime, AudUpdateTime);
-                
-                StartCoroutine(DoIt());
-            }
-        }             
-
-        if (PlayerInteractions.Dead)
+        if (!PlayerInteractions.Dead)
         {
+            if (!ScreensEventHandlers.IsPaused)
+            {
+                AudSource.UnPause();
+
+                if (!StartRemaiDoors)
+                {
+                    Collider[] cols = Physics.OverlapBox(transform.position + Vector3.back * StartDistance, BoxSize, new Quaternion(), PlayerLayer);
+
+                    if (cols.Length > 0)
+                    {
+                        Player = cols[0].transform;
+                        StartRemaiDoors = true;
+
+                        InvokeRepeating("UpdateAudPos", AudUpdateTime, AudUpdateTime);
+
+                        StartCoroutine(DoIt());
+                    }
+                }
+            }
+            else
+            {
+                AudSource.Pause();
+            }
+        }
+        else                    
+        {
+            CancelInvoke();
             StopAllCoroutines();
         }
     }   
@@ -134,9 +146,12 @@ public class DoorsObstBehavior : MonoBehaviour, IObsTypes
 
     private void UpdateAudPos()
     {
-        DoorMovement door = Min(Doors, door => Mathf.Abs(Player.position.z - door.transform.position.z));
+        if(Player != null)
+        {
+            DoorMovement door = Min(Doors, door => Mathf.Abs(Player.position.z - door.transform.position.z));
 
-        AudSource.transform.position = door.transform.position;
+            AudSource.transform.position = door.transform.position;
+        }        
     }
 
     public T Min<T>(T[] hits, System.Func<T, float> selector)

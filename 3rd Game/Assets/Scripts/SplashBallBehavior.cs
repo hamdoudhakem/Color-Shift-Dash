@@ -32,7 +32,7 @@ public class SplashBallBehavior : MonoBehaviour
     }         
 
     void OnCollisionEnter(Collision collision)
-    {
+    {        
         AudioManager.AudMan.Play("Color Ball Collided", true);
 
         Ball.SetActive(false);

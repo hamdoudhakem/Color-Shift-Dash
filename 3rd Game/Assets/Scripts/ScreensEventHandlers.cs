@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class ScreensEventHandlers : MonoBehaviour
 {
+    public static bool IsPaused;
+
     public GameObject PauseMenu;
     public SettingsManager SettingsMan;
     public Animator LoadScreen;
@@ -16,6 +18,7 @@ public class ScreensEventHandlers : MonoBehaviour
 
     void Start()
     {
+        IsPaused = false;
         SettingsMan.LoadSettings();
         LoadingScene = false;
         Invoke("Disable", LoadTime);
@@ -28,14 +31,20 @@ public class ScreensEventHandlers : MonoBehaviour
 
     public void Pause_EventHandler()
     {
+        AudioManager.AudMan.PauseAll();
         PauseMenu.SetActive(true);
         Time.timeScale = 0;
+
+        IsPaused = true;
     }
 
     public void Resume_EventHandler()
     {
+        AudioManager.AudMan.UnPauseAll();
         PauseMenu.SetActive(false);
         Time.timeScale = 1;
+
+        IsPaused = false;
     }
 
     public void RestartLevel_EventHandler()
@@ -55,6 +64,7 @@ public class ScreensEventHandlers : MonoBehaviour
     {
         if (!LoadingScene)
         {
+            Time.timeScale = 1;
             AsyncOperation asyncOp = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
             StartLoadScreen();
 

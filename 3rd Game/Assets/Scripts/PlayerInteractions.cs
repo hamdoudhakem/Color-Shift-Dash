@@ -64,9 +64,12 @@ public class PlayerInteractions : MonoBehaviour
 
     void Update()
     {
-        if(Origin - transform.position.y >= FallLimit)
+        if (!ScreensEventHandlers.IsPaused)
         {
-            Die();
+            if (Origin - transform.position.y >= FallLimit)
+            {
+                Die();
+            }
         }
     }
 

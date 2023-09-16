@@ -75,10 +75,10 @@ public class SplasherBehavior : MonoBehaviour ,IObsTypes
             if (CoolDown <= 0)
             {
                 if (Physics.BoxCast(StartPos + Vector3.back, CastSize, Vector3.back, out RaycastHit hit, new Quaternion(), Range, PlayerLayer))
-                {                    
+                {
                     Vector3 Pos = new Vector3(hit.transform.position.x, GroundCheck.position.y, transform.position.z);
 
-                    if (Physics.OverlapBox(Pos, CheckSize, new Quaternion(), GroundLayer).Length > 0)                    
+                    if (Physics.OverlapBox(Pos, CheckSize, new Quaternion(), GroundLayer).Length > 0)
                     {
                         Target = new Vector3(hit.transform.position.x, transform.position.y, transform.position.z);
                         Mesh.material = StaticData.Materials[Random.Range(0, StaticData.Materials.Count)];
@@ -92,7 +92,8 @@ public class SplasherBehavior : MonoBehaviour ,IObsTypes
             {
                 CoolDown -= Time.deltaTime;
             }
-        }                     
+        }
+
     }
 
     void FixedUpdate()
@@ -117,6 +118,7 @@ public class SplasherBehavior : MonoBehaviour ,IObsTypes
                 Moving = false;
                 CoolDown = FireRate;
                 AudioManager.AudMan.Stop("Splasher Moving");
+                AudioManager.AudMan.Play("Splasher Fire",true);
 
             }
         }

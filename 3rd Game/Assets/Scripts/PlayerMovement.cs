@@ -41,9 +41,11 @@ public class PlayerMovement : MonoBehaviour
     private float LastTargetSpeed;
 
     private bool Grounded , LastGrounded;
+    private bool Boosted;
 
     void Start()
     {
+        Boosted = false;
         Grounded = true;
         LastGrounded = true;
         LastTargetSpeed = 0;
@@ -62,57 +64,70 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        Grounded = Physics.OverlapBox(transform.position + Vector3.down * .5f, GroundedSize, new Quaternion(), GroundLayer, QueryTriggerInteraction.Ignore).Length > 0;
-
-        if (Grounded && rb.velocity.z > .3f)
+        if (!ScreensEventHandlers.IsPaused)
         {
-            if (!LastGrounded)
+            Grounded = Physics.OverlapBox(transform.position + Vector3.down * .5f, GroundedSize, new Quaternion(), GroundLayer, QueryTriggerInteraction.Ignore).Length > 0;
+
+            if (Grounded && rb.velocity.z > .3f)
             {
-                AudioManager.AudMan.Play("Landed");
+                if (!LastGrounded)
+                {
+                    AudioManager.AudMan.Play("Landed");
+                }
+
+                AudioManager.AudMan.Play("Rolling");
+
+            }
+            else
+            {
+                AudioManager.AudMan.Stop("Rolling");
             }
 
-            AudioManager.AudMan.Play("Rolling");
-
-        }
-        else
-        {
-            AudioManager.AudMan.Stop("Rolling");
-        }
-
-        if (RemainingTime > 0)
-        {
-            RemainingTime -= Time.deltaTime;
-
-            if (RemainingTime < 0)
+            if(!Grounded && Boosted)
             {
-                StopSliding = true;
+                AudioManager.AudMan.Play("Air Resistance");
             }
-        }
-
-        //Friction Simulation
-        if (StopSliding)
-        {
-            //Debug.Log("Before friction : " + rb.velocity.x);
-            rb.velocity -= Time.deltaTime * (rb.velocity.x / 5) * FrictionValue * Vector3.right;
-            //Debug.Log("after friction  :" + rb.velocity.x);
-
-            if (Mathf.Abs(rb.velocity.x) < .1f)
+            else
             {
-                StopSliding = false;
+                AudioManager.AudMan.Stop("Air Resistance");
+
             }
-        }
 
-        if (ChangeViewField)
-        {
-            Cam.fieldOfView = Mathf.Lerp(Cam.fieldOfView, TargetView, ViewChangeSpeed);
-
-            if (Mathf.Abs(Cam.fieldOfView - TargetView) < .2f)
+            if (RemainingTime > 0)
             {
-                ChangeViewField = false;
-            }
-        }
+                RemainingTime -= Time.deltaTime;
 
-        LastGrounded = Grounded;
+                if (RemainingTime < 0)
+                {
+                    StopSliding = true;
+                }
+            }
+
+            //Friction Simulation
+            if (StopSliding)
+            {
+                //Debug.Log("Before friction : " + rb.velocity.x);
+                rb.velocity -= Time.deltaTime * (rb.velocity.x / 5) * FrictionValue * Vector3.right;
+                //Debug.Log("after friction  :" + rb.velocity.x);
+
+                if (Mathf.Abs(rb.velocity.x) < .1f)
+                {
+                    StopSliding = false;
+                }
+            }
+
+            if (ChangeViewField)
+            {
+                Cam.fieldOfView = Mathf.Lerp(Cam.fieldOfView, TargetView, ViewChangeSpeed);
+
+                if (Mathf.Abs(Cam.fieldOfView - TargetView) < .2f)
+                {
+                    ChangeViewField = false;
+                }
+            }
+
+            LastGrounded = Grounded;
+        }      
     }
 
     void FixedUpdate()
@@ -193,6 +208,7 @@ public class PlayerMovement : MonoBehaviour
         AudioManager.AudMan.Stop("Deboost");
 
         //Boost Effects
+        Boosted = true;
         StackedBoosts++;
         BoostEffect.SetActive(true);
         ChangeFieldOfView(DefaultView - ViewChange);
@@ -219,6 +235,7 @@ public class PlayerMovement : MonoBehaviour
         //Cancel Boost Effects
         if(StackedBoosts == 0)
         {
+            Boosted = false;
             BoostEffect.SetActive(false);
             ChangeFieldOfView(DefaultView);
         }

@@ -11,7 +11,7 @@ public class SettingsManager : MonoBehaviour
 
     public void Sound_EventHandler(float NewVal)
     {
-        AudMix.SetFloat("Volume" ,NewVal);
+        AudMix.SetFloat("Volume" ,(Mathf.Log10(NewVal) * 20) + 20);
 
         PlayerData.Sound = NewVal;
 
@@ -20,7 +20,7 @@ public class SettingsManager : MonoBehaviour
 
     public void LoadSettings()
     {
-        AudMix.SetFloat("Volume", PlayerData.Sound);
+        AudMix.SetFloat("Volume", (Mathf.Log10(PlayerData.Sound) * 20) + 20);
 
         volume.value = PlayerData.Sound;
     }
