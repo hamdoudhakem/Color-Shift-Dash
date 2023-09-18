@@ -16,20 +16,23 @@ public class CannonsObs : MonoBehaviour, IObsTypes
     public GameObject CanBall;
     public LayerMask PlayerLayer;
     [Tooltip("How Much Time Passes between every Shot (in seconds)")]
-    public float FireRate;    
-    [Tooltip("How Many Cannons There Are (Right Now I Have 4 cannons)")] 
-    public int CannonsNum;
+    public float FireRate;       
     [Tooltip("The Distance from which the player needs to be from the Cannons for them to start Shooting")]
     public float FireDistance;    
     [Tooltip("The Size of the Overlap Box that will prevente the Cannon from Shooting at times")]
     public Vector3 OverBoxSize;
+    [Tooltip("The Offset from the Rugs near the cannons that will lead to the firing point")]
+    public Vector3 OffsetFirePoint;
     [Tooltip("The Maximum Distance between this Cannon Ball and the Cannon at which the ball is gonna self destroy")]
     public float MaxDistance;
     [Tooltip("The Speed at which the Cannon Ball Goes")]
     public float Speed;
     [Tooltip("How Much this will increase the scale of the projected Cannon Balls")] [Range(1 , 2)]
-    public float UpScalingFac;  
+    public float UpScalingFac;
 
+    [Tooltip("How Many Cannons There Are (Right Now I Have 4 cannons)")]
+    private int CannonsNum;
+    private int CanBallsPerFire;
     private float TimeLeft;
     [Tooltip("The Distance at which the cannons will not fire as to let the player choose a cannon to destroy")]
     private float SafeDistance;   
@@ -38,10 +41,16 @@ public class CannonsObs : MonoBehaviour, IObsTypes
     private Dictionary<Transform, Transform> Rug2x;
     private Transform Player;
 
+    private List<CanBallBehavior> CannonBalls;
+
     void Start()
     {
         TimeLeft = 0;
+        CanBallsPerFire = 2;
+
         used = false;
+        CannonsNum = transform.childCount / 2;
+        
         ParRugs = new List<Transform>();
         Rug2x = new Dictionary<Transform, Transform>();
 
@@ -85,8 +94,9 @@ public class CannonsObs : MonoBehaviour, IObsTypes
         }
 
         SafeDistance = ParRugs[0].position.z - transform.GetChild(CannonsNum).position.z;
+        CreatBaseCanBalls();
         
-    }
+    }    
 
     void OnDrawGizmos()
     {
@@ -122,13 +132,46 @@ public class CannonsObs : MonoBehaviour, IObsTypes
 
                         j = (Random.Range(1, 3) + i) % ParRugs.Count;
 
-                        CanBallBehavior obj = Instantiate(CanBall, ParRugs[i].position + new Vector3(-0.1f, 1), new Quaternion()).GetComponent<CanBallBehavior>();
-                                            
-                        SetUpCanBall(obj);
+                        //To see if I will activate one of my Created balls or will creat a new ones
+                        int index = 0;
 
-                        obj = Instantiate(CanBall, ParRugs[j].position + new Vector3(-0.1f, 1), new Quaternion()).GetComponent<CanBallBehavior>();
+                        do
+                        {
+                            if (!CannonBalls[index].gameObject.activeSelf)
+                            {
+                                break;
+                            }
 
-                        SetUpCanBall(obj);
+                            index += CanBallsPerFire;
+
+                        } while (index < CannonBalls.Count);
+
+                        if(index < CannonBalls.Count)
+                        {
+                            CanBallBehavior obj = CannonBalls[index];
+
+                            obj.transform.position = ParRugs[i].position + OffsetFirePoint;
+
+                            SetUpCanBall(obj);
+
+                            obj = CannonBalls[index + 1];
+
+                            obj.transform.position = ParRugs[j].position + OffsetFirePoint;
+
+                            SetUpCanBall(obj);
+                        }
+                        else
+                        {
+                            CanBallBehavior obj = Instantiate(CanBall, ParRugs[i].position + OffsetFirePoint, new Quaternion()).GetComponent<CanBallBehavior>();
+
+                            SetCanBallVars(obj, false); 
+                            SetUpCanBall(obj);
+
+                            obj = Instantiate(CanBall, ParRugs[j].position + OffsetFirePoint, new Quaternion()).GetComponent<CanBallBehavior>();
+
+                            SetCanBallVars(obj, false);
+                            SetUpCanBall(obj);
+                        }                       
 
                         AudioManager.AudMan.Play("Cannon Fire", true);
 
@@ -143,14 +186,42 @@ public class CannonsObs : MonoBehaviour, IObsTypes
         }      
     }
 
-    private void SetUpCanBall(CanBallBehavior obj)
+    #region Setting Up The Cannon Balls
+
+    private void CreatBaseCanBalls()
+    {
+        CannonBalls = new List<CanBallBehavior>(CannonsNum);
+
+        for (int i = 0; i < CannonsNum; i++)
+        {
+            CanBallBehavior Ball = Instantiate(CanBall, ParRugs[i].position + OffsetFirePoint, new Quaternion(), transform).GetComponent<CanBallBehavior>();
+
+            SetCanBallVars(Ball, true);            
+
+            Ball.gameObject.SetActive(false);
+
+            CannonBalls.Add(Ball);
+        }
+    }
+
+    private void SetCanBallVars(CanBallBehavior obj , bool NeededBall)
     {
         obj.transform.localScale *= UpScalingFac;
+        obj.NeededCanBall = NeededBall;
         obj.MaxDistance = MaxDistance;
-        obj.Player = Player;
         obj.Speed = Speed;
-        obj.Set();        
     }
+
+    private void SetUpCanBall(CanBallBehavior obj)
+    {
+        obj.Player = Player;
+
+        obj.gameObject.SetActive(true);
+
+        obj.Set();
+    }
+
+    #endregion
 
     int ChooseCloseToPlayer(Transform player)
     {

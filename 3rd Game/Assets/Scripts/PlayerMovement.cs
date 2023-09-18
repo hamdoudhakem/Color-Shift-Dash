@@ -114,17 +114,7 @@ public class PlayerMovement : MonoBehaviour
                 {
                     StopSliding = false;
                 }
-            }
-
-            if (ChangeViewField)
-            {
-                Cam.fieldOfView = Mathf.Lerp(Cam.fieldOfView, TargetView, ViewChangeSpeed);
-
-                if (Mathf.Abs(Cam.fieldOfView - TargetView) < .2f)
-                {
-                    ChangeViewField = false;
-                }
-            }
+            }           
 
             LastGrounded = Grounded;
         }      
@@ -135,6 +125,23 @@ public class PlayerMovement : MonoBehaviour
         if (MoveForward)
         {
             rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, ForwardSpeed);
+        }
+
+        if (ChangeViewField)
+        {
+            Cam.fieldOfView = Mathf.Lerp(Cam.fieldOfView, TargetView, ViewChangeSpeed);
+
+            float Remaining = Mathf.Abs(Cam.fieldOfView - TargetView);
+
+            if (Remaining < .2f)
+            {
+                ChangeViewField = false;                
+            }
+            
+            if((Remaining * 100 / ViewChange) <= 15 && TargetView == DefaultView)
+            {
+                BoostEffect.SetActive(false);
+            }
         }
     }
 
@@ -235,8 +242,7 @@ public class PlayerMovement : MonoBehaviour
         //Cancel Boost Effects
         if(StackedBoosts == 0)
         {
-            Boosted = false;
-            BoostEffect.SetActive(false);
+            Boosted = false;            
             ChangeFieldOfView(DefaultView);
         }
         

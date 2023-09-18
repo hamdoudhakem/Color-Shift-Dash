@@ -10,7 +10,7 @@ public class PlayerData
 
     public static int CurrentLv = 1;
 
-    public static float Sound = 20;
+    public static float Sound = 1;
 
     public static Dictionary<int, int> LvXStars = new Dictionary<int, int>() { {1 , 0} };
 

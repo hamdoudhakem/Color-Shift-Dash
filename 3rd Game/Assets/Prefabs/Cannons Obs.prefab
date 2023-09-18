@@ -2057,14 +2057,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   FireRate: 1.5
-  CannonsNum: 4
   FireDistance: 30.13
   OverBoxSize: {x: 7.77, y: 10.96, z: 2.72}
+  OffsetFirePoint: {x: -0.1, y: 1, z: 0}
   MaxDistance: 20
   Speed: 5
   UpScalingFac: 1
-  Fire: {fileID: 0}
-  Crashed: {fileID: 0}
 --- !u!1 &4157973332231096504
 GameObject:
   m_ObjectHideFlags: 0

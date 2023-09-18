@@ -9,6 +9,8 @@ public class CanBallBehavior : MonoBehaviour
     [Tooltip("How Much Times passes between each Distance Check (in seconds)")]
     public float CheckRate;
 
+    [Tooltip("This Tells if this can Ball Should be Desactivated or destroyed by the end")]
+    [HideInInspector] public bool NeededCanBall;
     [Tooltip("The Speed at which the Cannon Ball Goes")]
     [HideInInspector] public float Speed;
     [Tooltip("The Maximum Distance between this Cannon Ball and the Cannon at which the ball is gonna self destroy")]
@@ -18,7 +20,6 @@ public class CanBallBehavior : MonoBehaviour
     private Rigidbody rb;
     private float StartZ;
     private bool AlreadyDoneFor;
-    
 
     public void Set()
     {
@@ -33,12 +34,11 @@ public class CanBallBehavior : MonoBehaviour
 
   
     void CheckDis()
-    {
-      
+    {      
         if (StartZ - transform.position.z > MaxDistance 
             || !PlayerInteractions.Dead && Player.position.z - transform.position.z >= 1)
         {
-            Destroy(gameObject);
+            DestOrDisactivate();
         }       
        
     }
@@ -52,9 +52,22 @@ public class CanBallBehavior : MonoBehaviour
 
             //Debug.Log("I Collided with something that is : " + collision.transform.name);
             Instantiate(CanBallDesEffect, transform.position, new Quaternion());
-            Destroy(gameObject);
+
+            DestOrDisactivate();
         }
         
+    }
+
+    void DestOrDisactivate()
+    {
+        if (NeededCanBall)
+        {
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
 
