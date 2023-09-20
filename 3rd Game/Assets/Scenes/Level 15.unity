@@ -528,7 +528,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8446eba618867084f8604a3dfbb029b7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1047,6 +1047,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24be51dbb6c336746aafb19638b1af7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UseTransparency: 0
+  ConcernedTypes: 
+  ConcernedLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  TransparWhiteMat: {fileID: 0}
   SideLimit: 3.5
   OutOfSight: 1.76
   Player: {fileID: 1004793451}
@@ -1739,7 +1745,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8446eba618867084f8604a3dfbb029b7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1909,7 +1915,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8446eba618867084f8604a3dfbb029b7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3151,6 +3157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86b76ca8c912b6e4dba8931603f83621, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <obsType>k__BackingField: 0
   NeededColor: {fileID: 2100000, guid: 977085e6b2fc1de49b0aeddb18097348, type: 2}
 --- !u!4 &3200519790195056822
 Transform:

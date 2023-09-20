@@ -285,7 +285,7 @@ GameObject:
   - component: {fileID: 2434541895943831043}
   - component: {fileID: 3063268361186698431}
   - component: {fileID: 3063268361186698430}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Splasher
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -358,6 +358,7 @@ MonoBehaviour:
   Range: 30
   FireRate: 2
   ShotNumber: 2
+  InitialBallsNum: 2
 --- !u!1 &3301103367617964940
 GameObject:
   m_ObjectHideFlags: 0

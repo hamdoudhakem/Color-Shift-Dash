@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3402328968281590825}
   - component: {fileID: 635983237082183907}
   - component: {fileID: 2239101294650352737}
-  - component: {fileID: 2239101294650352739}
   m_Layer: 0
   m_Name: Ramp
   m_TagString: Untagged
@@ -97,22 +96,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.99999994, y: 0.16440439, z: 1.4062437}
   m_Center: {x: 0.00000004171208, y: -0.41779807, z: -0.29687682}
---- !u!114 &2239101294650352739
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1428638417436891446}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72860fbf1a7f30c4e96d21e3eb5ca23d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OverlapBox: {x: 13.2, y: 6.68, z: 0.15}
-  PlayerMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!1 &2239101294332922008
 GameObject:
   m_ObjectHideFlags: 0
