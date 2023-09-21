@@ -30,6 +30,10 @@ public class CannonsObs : MonoBehaviour, IObsTypes
     [Tooltip("How Much this will increase the scale of the projected Cannon Balls")] [Range(1 , 2)]
     public float UpScalingFac;
 
+    [Header("Performances")]
+    [Tooltip("how Many times between each player position check to see if I should Disable This Script or not yet")]
+    public float PlayerPosCheckDelay;
+
     [Tooltip("How Many Cannons There Are (Right Now I Have 4 cannons)")]
     private int CannonsNum;
     private int CanBallsPerFire;
@@ -124,6 +128,7 @@ public class CannonsObs : MonoBehaviour, IObsTypes
                         if(Player == null)
                         {
                             Player = hit.transform;
+                            InvokeRepeating("CheckObstPassed", PlayerPosCheckDelay, PlayerPosCheckDelay);                           
                         }
 
                         TimeLeft = FireRate;
@@ -261,5 +266,12 @@ public class CannonsObs : MonoBehaviour, IObsTypes
         }
     }
 
-
+    void CheckObstPassed()
+    {
+        if(Player.position.z - transform.position.z >= 3)
+        {
+            enabled = false;
+            CancelInvoke("CheckObstPassed");
+        }
+    }
 }

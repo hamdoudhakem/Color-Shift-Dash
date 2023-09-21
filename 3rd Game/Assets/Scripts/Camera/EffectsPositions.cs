@@ -14,7 +14,7 @@ public class EffectsPositions : MonoBehaviour
     {
         Player = transform.parent.GetComponent<CameraMovement>().Player;
         SpeedUpEf = transform.GetChild(0);
-
+        
         BaseOffset = SpeedUpEf.position - transform.position;
     }
 

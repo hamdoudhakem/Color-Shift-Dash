@@ -53,6 +53,7 @@ SpriteAtlas:
   m_PackedSprites:
   - {fileID: 21300000, guid: 0c3c788016f06db4fa4c39433fe3af6c, type: 3}
   - {fileID: 21300000, guid: 1aaa1901461dada4b978d56cd46f22f3, type: 3}
+  - {fileID: 21300000, guid: 69115e01b670da346a91491ff47a0ed2, type: 3}
   - {fileID: 21300000, guid: 4cc81a21e1db0da4295aba555e29b384, type: 3}
   - {fileID: 21300000, guid: 2a064c5120e8bfa4bbd2383e8f569de8, type: 3}
   - {fileID: 21300000, guid: c87525a1036b85045b18a08a79286d6d, type: 3}
@@ -78,6 +79,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: af1a3134f76c7d74d9c76232f1bf9ce9, type: 3}
   - {fileID: 21300000, guid: 190c5334a4d1cf04bb43c5040f090398, type: 3}
   - {fileID: 21300000, guid: cec793442b5d35647a7554869c958b51, type: 3}
+  - {fileID: 21300000, guid: d89af8440d6c21444b4a19c83dbbdb1c, type: 3}
   - {fileID: 21300000, guid: ca769c4465d502b478424e322dc6a24b, type: 3}
   - {fileID: 21300000, guid: cd14e754fe5886d4c9a93adbf7401db8, type: 3}
   - {fileID: 21300000, guid: 120af17437d75844d8f6be3a85cdeb1c, type: 3}
@@ -89,6 +91,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: d5eb141578fa1e5498d1c77b9d889308, type: 3}
   - {fileID: 21300000, guid: 9e197a1515abdbc4b91281eee95e8b33, type: 3}
   - {fileID: 21300000, guid: ea17bb15006be534b82d529ef079bdcb, type: 3}
+  - {fileID: 21300000, guid: c25ff3a5346b2dc40addf2969ea0b2b0, type: 3}
   - {fileID: 21300000, guid: bacbedb5eaae7044aa6dceae777ead13, type: 3}
   - {fileID: 21300000, guid: 4fc167464dddcd14488913990dcf685c, type: 3}
   - {fileID: 21300000, guid: adf19f966e0379040bb823cbe5375f3f, type: 3}
@@ -101,6 +104,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: f380d1a73180b624fb3f040a7335e0af, type: 3}
   - {fileID: 21300000, guid: 3dc4b9a7251e1d94b8538862354047c2, type: 3}
   - {fileID: 21300000, guid: 7435eca79d50bff479ab2d0bec59fc67, type: 3}
+  - {fileID: 21300000, guid: c5a395b78583efd4bbdf49268ae37b42, type: 3}
   - {fileID: 21300000, guid: cdf888d7c40fbf74cb67cd74bb3f846e, type: 3}
   - {fileID: 21300000, guid: 425254e72c2889d489a9195402835189, type: 3}
   - {fileID: 21300000, guid: 20ee9b28f41e9134286e94ac8b990b85, type: 3}
@@ -131,10 +135,12 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 57bb1bbb43554d345ba24e9f28f21acd, type: 3}
   - {fileID: 21300000, guid: 874b343cf51efe745b644be33893b09a, type: 3}
   - {fileID: 21300000, guid: c7cd7e3cb0066224094fc7ccddb1523b, type: 3}
+  - {fileID: 21300000, guid: 4c2e169cec9f385458a398fc79246f3c, type: 3}
   - {fileID: 21300000, guid: 92e8a9dc8f85e2640b8f72529ed480d4, type: 3}
   - {fileID: 21300000, guid: 766d9cdcb19d92b43b40bd3c1255f137, type: 3}
   - {fileID: 21300000, guid: 2ea5bd1d6173ad143ad3365a677f9f05, type: 3}
   - {fileID: 21300000, guid: d3da4e1d323244d47b3cca4ed4d1bbe4, type: 3}
+  - {fileID: 21300000, guid: 95fe542dd3f2b5d49ab4e687401799d8, type: 3}
   - {fileID: 21300000, guid: a8bf463d0bcbdd440b693618eccf4027, type: 3}
   - {fileID: 21300000, guid: b9a1563df5702784d9d47003fb9ce20e, type: 3}
   - {fileID: 21300000, guid: c45822dd0d148ae4c80084e497c39961, type: 3}
@@ -150,6 +156,7 @@ SpriteAtlas:
   m_PackedSpriteNamesToIndex:
   - share
   - background V2 (1)
+  - 270-2709698_neumob-speed-up-icon-png (5) (1)
   - King
   - Graffiti-Transparent-PNG (1)
   - Arrow
@@ -175,6 +182,7 @@ SpriteAtlas:
   - Loved More
   - Menu Button
   - Avengers
+  - Speed Up x3 Texture (3)
   - Stylish 1
   - background V3
   - minus
@@ -186,6 +194,7 @@ SpriteAtlas:
   - Restart Button
   - arrow_up
   - Pause Panel
+  - Speed Up x2 Texture (2)
   - background Blue
   - Stars 2
   - play
@@ -198,6 +207,7 @@ SpriteAtlas:
   - Crazy
   - Star
   - background V2 (2)
+  - 270-2709698_neumob-speed-up-icon-png (5)
   - Transparent Sprites
   - Wet
   - Graffiti-Transparent-PNG 1
@@ -228,10 +238,12 @@ SpriteAtlas:
   - Earth
   - checkmark
   - Flame 1
+  - Speed Up x3 Texture (4)
   - Title Frame
   - Mars
   - Graffiti-Transparent-PNG (10)
   - Graffiti-Transparent-PNG
+  - Speed Up x2 Texture (2) (1)
   - speaker
   - Settings Button
   - star

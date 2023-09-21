@@ -67,6 +67,7 @@ public class GroundSwitcher : MonoBehaviour, IObsTypes
             if (Physics.OverlapBox(transform.position + Offset, Size, new Quaternion(), PlayerLayer).Length > 0)
             {
                 CancelInvoke();
+                enabled = false;
             }
         }
         else

@@ -44,6 +44,11 @@ public class SplasherBehavior : MonoBehaviour ,IObsTypes
     [Tooltip("How Many Ball's Should I Instantiate at the start that I will keep recycling")] [Range(1, 6)]
     public int InitialBallsNum;
 
+    [Header("Performances")]
+    [Tooltip("The Delay between each Player position check to see if i should Disable this Script or not")]
+    public float PlayerPosCheckDelay;
+
+    private Transform Player;
     private float CoolDown;
     private bool Moving;
     private Vector3 Target;
@@ -83,6 +88,12 @@ public class SplasherBehavior : MonoBehaviour ,IObsTypes
                 if (Physics.BoxCast(StartPos + Vector3.back, CastSize, Vector3.back, out RaycastHit hit, new Quaternion(), Range, PlayerLayer))
                 {
                     Vector3 Pos = new Vector3(hit.transform.position.x, GroundCheck.position.y, transform.position.z);
+
+                    if(Player == null)
+                    {
+                        Player = hit.transform;
+                        InvokeRepeating("CheckObstPassed", PlayerPosCheckDelay, PlayerPosCheckDelay);
+                    }
 
                     if (Physics.OverlapBox(Pos, CheckSize, new Quaternion(), GroundLayer).Length > 0)
                     {
@@ -161,6 +172,15 @@ public class SplasherBehavior : MonoBehaviour ,IObsTypes
         ball.Speed = BallSpeed;
         ball.MaxDistance = MaxDistance;
         ball.transform.localScale *= ScalingFac;
+    }
+
+    void CheckObstPassed()
+    {
+        if(Player.position.z - transform.position.z >= 3)
+        {
+            enabled = false;
+            CancelInvoke("CheckObstPassed");
+        }
     }
 
 }

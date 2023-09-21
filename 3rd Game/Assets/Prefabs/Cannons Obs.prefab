@@ -2063,6 +2063,7 @@ MonoBehaviour:
   MaxDistance: 20
   Speed: 5
   UpScalingFac: 1
+  PlayerPosCheckDelay: 0.3
 --- !u!1 &4157973332231096504
 GameObject:
   m_ObjectHideFlags: 0

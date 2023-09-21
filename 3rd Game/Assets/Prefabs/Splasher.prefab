@@ -359,6 +359,7 @@ MonoBehaviour:
   FireRate: 2
   ShotNumber: 2
   InitialBallsNum: 2
+  PlayerPosCheckDelay: 0.3
 --- !u!1 &3301103367617964940
 GameObject:
   m_ObjectHideFlags: 0
