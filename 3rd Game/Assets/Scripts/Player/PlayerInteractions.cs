@@ -29,8 +29,8 @@ public class PlayerInteractions : MonoBehaviour
 
     private LayerMask ColorSwitch , ColorObst , FinishLine , SpeedBoost , StarLayer;
     private MeshRenderer Mat;
-    private PlayerMovement Pm;   
-    private AudioManager AudMan;
+    private PlayerMovement Pm;
+    private EffectsBehavior Effs;
     private bool AlreadyIn;
 
     void Awake()
@@ -42,6 +42,8 @@ public class PlayerInteractions : MonoBehaviour
         Origin = transform.position.y;
         Pm = GetComponent<PlayerMovement>();
         Mat = GetComponent<MeshRenderer>();
+        Effs = Camera.main.GetComponent<EffectsBehavior>();
+
         ColorSwitch = LayerMask.NameToLayer("Color Switch");
         ColorObst = LayerMask.NameToLayer("Color Obst");
         FinishLine = LayerMask.NameToLayer("Finish Line");

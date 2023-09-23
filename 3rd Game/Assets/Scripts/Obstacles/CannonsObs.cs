@@ -259,6 +259,8 @@ public class CannonsObs : MonoBehaviour, IObsTypes
 
             ParRugs.Remove(Rug2x[Rug]);
 
+            AudioManager.AudMan.Play("Cannon Gone", true);
+
             //for(int i = 0; i < 3; i++)
             //{
             //    Debug.Log($"The Number {i} at pos {ParRugs[i].position} there are {ParRugs.Count}");
@@ -268,10 +270,11 @@ public class CannonsObs : MonoBehaviour, IObsTypes
 
     void CheckObstPassed()
     {
-        if(Player.position.z - transform.position.z >= 3)
+        if(Player == null || Player.position.z - transform.position.z >= 3)
         {
             enabled = false;
             CancelInvoke("CheckObstPassed");
         }
+      
     }
 }

@@ -176,7 +176,7 @@ public class SplasherBehavior : MonoBehaviour ,IObsTypes
 
     void CheckObstPassed()
     {
-        if(Player.position.z - transform.position.z >= 3)
+        if(Player == null || Player.position.z - transform.position.z >= 3)
         {
             enabled = false;
             CancelInvoke("CheckObstPassed");

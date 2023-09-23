@@ -10,12 +10,15 @@ public class FallingBallsBehavior : MonoBehaviour , IObsTypes, IColParent
 
     public LayerMask PlayerLayer;
     public LayerMask GroundLayer;
+    public GameObject FallenEffect;
     [Tooltip("The Distance the Player Needs To Be for the Falling to start happening")]
     public float StartDistance;
     [Tooltip("The Offset from this Object Center to the Overlap Box Center")]
     public Vector2 Offset;
     [Tooltip("The Size of the Overlap Box that Will Check for the Player presence")]
     public Vector3 BoxSize;
+    [Tooltip("The Distance the player will need to be from a falling ball to hear it's fallen sound")]
+    public float SoundRadius;
     [Tooltip("The Delay between the Each Fall of the Ball In Seconds")]
     public float Delay;
     [Tooltip("How Many Falls there Will Be")] [Range(3 , 10)]
@@ -26,16 +29,24 @@ public class FallingBallsBehavior : MonoBehaviour , IObsTypes, IColParent
     private float OffsetX;
     [Tooltip("This is Stop The Falling from Being one Sided Like All falling goes Right")]
     private int RightSideIndicator , LeftSideIndicator;
-    private bool Started;
+    private bool Started;  
 
     private MeshRenderer[] Meshes;
     private Material Mat;
 
+    private ParticleSystem[] Effects;
+    private int BaseEffectsInsta, CurEffIndex;
+    private Transform Player;
+    private float BallHalfSize;
+ 
     void Start()
     {
         Started = false;
         RightSideIndicator = 0;
         LeftSideIndicator = 0;
+        BaseEffectsInsta = 2;
+        CurEffIndex = 0;
+        BallHalfSize = (transform.GetChild(0).lossyScale.y / 2) - .1f;
 
         //Find and Assign The Offset
         Physics.Raycast(transform.GetChild(1).position, Vector3.down, out RaycastHit hit, 30f, GroundLayer);
@@ -57,8 +68,10 @@ public class FallingBallsBehavior : MonoBehaviour , IObsTypes, IColParent
 
         Mat = Meshes[0].material;
 
-        BallDis = Mathf.Abs(Balls[1].position.z - Balls[0].position.z); 
-    }
+        BallDis = Mathf.Abs(Balls[1].position.z - Balls[0].position.z);
+
+        CreatBaseEffects();
+    }   
 
     void OnDrawGizmos()
     {
@@ -67,11 +80,18 @@ public class FallingBallsBehavior : MonoBehaviour , IObsTypes, IColParent
 
     void Update()
     {
-        if(!Started && Physics.OverlapBox(transform.position + Vector3.back * StartDistance + (Vector3)Offset ,
-                              BoxSize ,new Quaternion() ,PlayerLayer).Length > 0)
+        if(!Started)
         {
-            Started = true;
-            StartCoroutine(DoIt());
+            Collider[] cols = Physics.OverlapBox(transform.position + Vector3.back * StartDistance + (Vector3)Offset,
+                              BoxSize, new Quaternion(), PlayerLayer);
+
+            if(cols.Length > 0)
+            {
+                Player = cols[0].transform;
+                Started = true;
+                StartCoroutine(DoIt());
+            }
+           
         }
 
         if (PlayerInteractions.Dead)
@@ -87,8 +107,6 @@ public class FallingBallsBehavior : MonoBehaviour , IObsTypes, IColParent
             if(i < Balls.Length)
             {
                 Balls[i].useGravity = true;
-
-                //ChooseSide(Balls[i].transform);
 
                 yield return new WaitForSeconds(Delay);
             }
@@ -106,6 +124,8 @@ public class FallingBallsBehavior : MonoBehaviour , IObsTypes, IColParent
             
         }
     }
+
+    #region Positioning Balls Methods
 
     void ChooseSide(Transform tran)
     {
@@ -145,14 +165,32 @@ public class FallingBallsBehavior : MonoBehaviour , IObsTypes, IColParent
         LeftSideIndicator += 1;
     }
 
+    #endregion
+
+    #region IColParent Interface Methods
+
     public void OnCollision(Collision collision)
     {
         int TouchedLayer = (int)Mathf.Pow(2,collision.gameObject.layer);
 
         if (TouchedLayer == PlayerLayer || TouchedLayer == GroundLayer)
         {
-            AudioManager.AudMan.Play("Ball Falls", true);
-            CameraShaker.Instance.ShakeOnce(4, 4, .1f, .5f);
+            ContactPoint cont = collision.GetContact(0);
+            Transform currBall = cont.thisCollider.transform;
+           
+            //To See if I *LANDED* Only then will I Have the Right to shake and make sound
+            if (cont.point.y < currBall.position.y - BallHalfSize)
+            {
+                //To See if the player Is Too fare away to make any sound or shake
+                if(Player != null && Player.position.z - currBall.position.z < SoundRadius)
+                {
+                    AudioManager.AudMan.Play("Ball Falls", true);
+                    CameraShaker.Instance.ShakeOnce(4, 4, .1f, .5f);
+                    ActivateEff(collision.GetContact(0).point);
+                }
+                
+            }
+            
         }
     }
 
@@ -160,4 +198,39 @@ public class FallingBallsBehavior : MonoBehaviour , IObsTypes, IColParent
     {
 
     }
+
+    #endregion
+
+    #region Fall Effect Methods
+
+    void CreatBaseEffects()
+    {
+        Effects = new ParticleSystem[BaseEffectsInsta];
+
+        for (int i = 0; i < BaseEffectsInsta; i++)
+        {
+            ParticleSystem part = Instantiate(FallenEffect, transform.position, new Quaternion(),transform).GetComponent<ParticleSystem>();
+
+            part.gameObject.SetActive(false);
+
+            part.transform.Rotate(-90, 0, 0);
+
+            Effects[i] = part;
+        }
+    }
+
+    void ActivateEff(Vector3 pos)
+    {
+        ParticleSystem part = Effects[CurEffIndex % BaseEffectsInsta];
+
+        CurEffIndex++;
+
+        part.transform.position = pos + Vector3.up * .12f;
+
+        part.gameObject.SetActive(true);
+
+        part.Play();
+    }
+
+    #endregion
 }

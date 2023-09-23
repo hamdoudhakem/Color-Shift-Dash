@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
-public class EffectsPositions : MonoBehaviour
+public class EffectsBehavior : MonoBehaviour
 {
     public Transform Trail;
+    public VisualEffect TrailParticles;
+    public VisualEffect DeathBall;
 
     private Transform SpeedUpEf;
     private Transform Player;
@@ -20,23 +23,24 @@ public class EffectsPositions : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (SpeedUpEf.gameObject.activeSelf)
+        if (!PlayerInteractions.Dead)
         {
-            if (!PlayerInteractions.Dead)
+            if (SpeedUpEf.gameObject.activeSelf)
             {
                 float offset = Player.position.x - transform.position.x;
 
                 SpeedUpEf.transform.position = transform.position + BaseOffset + (offset / 2) * Vector3.right;
             }
-            else
-            {
-                SpeedUpEf.gameObject.SetActive(false);
-            }
-        }
 
-        if (!PlayerInteractions.Dead)
-        {
             Trail.position = Player.position;
+
         }
-    }
+        else
+        {
+            SpeedUpEf.gameObject.SetActive(false);
+            DeathBall.gameObject.SetActive(true);
+            enabled = false;
+        }
+    }       
+    
 }

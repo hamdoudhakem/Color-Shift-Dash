@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5083039578269223790}
   - component: {fileID: 5083039578269223789}
   - component: {fileID: 5083039578269223785}
+  - component: {fileID: 7361168219524739810}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Obstacle
@@ -112,6 +113,18 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7361168219524739810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5083039578269223784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdfc55a43d388c544b1309ab1afc5d03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5083039578928624794
 GameObject:
   m_ObjectHideFlags: 0
@@ -125,6 +138,7 @@ GameObject:
   - component: {fileID: 5083039578928624793}
   - component: {fileID: 5083039578928624799}
   - component: {fileID: 5083039578928624792}
+  - component: {fileID: 2273692439615657088}
   m_Layer: 0
   m_Name: Sphere (2)
   m_TagString: Obstacle
@@ -224,6 +238,18 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2273692439615657088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5083039578928624794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdfc55a43d388c544b1309ab1afc5d03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5083039579105523998
 GameObject:
   m_ObjectHideFlags: 0
@@ -277,9 +303,12 @@ MonoBehaviour:
   GroundLayer:
     serializedVersion: 2
     m_Bits: 64
+  FallenEffect: {fileID: 1621061870609794672, guid: 14367bb2d675f3f418141541f579ed8e,
+    type: 3}
   StartDistance: 11.51
   Offset: {x: 0, y: 10.02}
   BoxSize: {x: 7.655, y: 13.14, z: 1.15}
+  SoundRadius: 30
   Delay: 1.35
   FallNum: 7
 --- !u!1 &5083039579438249701
@@ -295,6 +324,7 @@ GameObject:
   - component: {fileID: 5083039579438249704}
   - component: {fileID: 5083039579438249710}
   - component: {fileID: 5083039579438249707}
+  - component: {fileID: 414534396760327552}
   m_Layer: 0
   m_Name: Sphere (1)
   m_TagString: Obstacle
@@ -394,3 +424,15 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &414534396760327552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5083039579438249701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdfc55a43d388c544b1309ab1afc5d03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
