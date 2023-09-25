@@ -21,6 +21,7 @@ public class PlayerInteractions : MonoBehaviour
     public float BoostValueLv2;
     [Tooltip("The Duraction of the Speed Boost (In Seconds)")]
     public float SpeedBoostTime;
+    public List<TrailProperties> Trails;
 
     [Header("Events")]
     public UnityEvent<int> ShowStar;
@@ -49,8 +50,11 @@ public class PlayerInteractions : MonoBehaviour
         FinishLine = LayerMask.NameToLayer("Finish Line");
         SpeedBoost = LayerMask.NameToLayer("Speed Boost");
         StarLayer = LayerMask.NameToLayer("Star");
-        Mat.material.color = StartCol.color;
 
+        Mat.material.color = StartCol.color;
+        ChangeTrail();
+
+        //Save System Stuff
         int CurLv = SceneManager.GetActiveScene().buildIndex;
 
         IndexsOfObtainedStars = PlayerData.LvXStars[CurLv] > 1
@@ -80,6 +84,8 @@ public class PlayerInteractions : MonoBehaviour
         if (other.gameObject.layer == ColorSwitch)
         {
             Mat.material.color = other.GetComponent<MeshRenderer>().material.color;
+
+            ChangeTrail();
 
             AudioManager.AudMan.Play("Color Switch" , true);
         }
@@ -148,7 +154,7 @@ public class PlayerInteractions : MonoBehaviour
         }
 
         AlreadyIn = false;
-    }
+    }   
 
     void OnCollisionEnter(Collision collision)
     {
@@ -216,5 +222,31 @@ public class PlayerInteractions : MonoBehaviour
         yield return new WaitForSeconds(Time);
 
         star.SetActive(false);
+    }
+
+    void ChangeTrail()
+    {
+        Material mat = Effs.trailRendrer.material;
+
+        float intMul = Mathf.Pow(2, Trails[0].Intensity1);
+        Color col = Trails[0].Color1.linear;
+
+        Debug.Log("COlor 1 is (gamma)" + mat.GetColor("_Color1").gamma + " /(linear) : " + mat.GetColor("_Color1").linear);
+
+        mat.SetColor("Color 1", col * intMul);
+       
+
+        //// if not using gamma color space, convert from linear to gamma
+        //# ifndef UNITY_COLORSPACE_GAMMA
+        //        emissiveColor.rgb = LinearToGammaSpace(emissiveColor.rgb);
+        //#endif
+
+        //// apply intensity exposure
+        //emissiveColor.rgb *= pow(2.0, _foggedIntensity);
+
+        //// if not using gamma color space, convert back to linear
+        //# ifndef UNITY_COLORSPACE_GAMMA
+        //        emissiveColor.rgb = GammaToLinearSpace(emissiveColor.rgb);
+        //#endif
     }
 }

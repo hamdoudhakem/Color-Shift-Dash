@@ -1548,8 +1548,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -998.0000610351563,
-            "y": 32.9999885559082,
+            "x": -974.0,
+            "y": -17.0000057220459,
             "width": 121.0,
             "height": 34.0
         }
@@ -1578,18 +1578,18 @@
     "m_Guid": {
         "m_GuidSerialized": "1aaf75b1-b0f3-4c85-9eef-a8417b528ec2"
     },
-    "m_Name": "Color01",
+    "m_Name": "Color 1",
     "m_DefaultReferenceName": "Color_4a409e79c3f14667aa2c79a5f8fdb012",
-    "m_OverrideReferenceName": "",
+    "m_OverrideReferenceName": "_Color1",
     "m_GeneratePropertyBlock": true,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
-    "hlslDeclarationOverride": 0,
+    "hlslDeclarationOverride": 2,
     "m_Hidden": false,
     "m_Value": {
-        "r": 1.0,
-        "g": 0.0,
-        "b": 0.0,
+        "r": 0.5188679099082947,
+        "g": 0.3353061378002167,
+        "b": 0.3353061378002167,
         "a": 1.0
     },
     "m_ColorMode": 1
@@ -1845,7 +1845,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
     "m_ObjectId": "645caad0f7e644b3b6915a34d895aa85",
     "m_Id": 0,
-    "m_DisplayName": "Color01",
+    "m_DisplayName": "Color 1",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -2076,7 +2076,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
     "m_ObjectId": "7e035c651fec4a838d61a1880d9e8af4",
     "m_Id": 0,
-    "m_DisplayName": "Color02",
+    "m_DisplayName": "Color 2",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -2693,7 +2693,7 @@
     "m_Guid": {
         "m_GuidSerialized": "5fc262e2-afd4-47a7-91de-80cabe037e42"
     },
-    "m_Name": "Color02",
+    "m_Name": "Color 2",
     "m_DefaultReferenceName": "Color_b1c9ddfae6ce407f88c547f3a3468b7b",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
@@ -2867,8 +2867,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -998.0000610351563,
-            "y": -16.99997901916504,
+            "x": -972.0,
+            "y": -59.00001525878906,
             "width": 119.00000762939453,
             "height": 34.0
         }

@@ -1087,7 +1087,7 @@ GameObject:
   - component: {fileID: 314968816}
   - component: {fileID: 314968815}
   m_Layer: 0
-  m_Name: Trail 1
+  m_Name: Trail Rendrer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1931,7 +1931,7 @@ Transform:
   - {fileID: 1423640800}
   - {fileID: 786412307}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &465055707
 MonoBehaviour:
@@ -3627,6 +3627,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Trail: {fileID: 931849654}
+  trailRendrer: {fileID: 314968815}
   TrailParticles: {fileID: 119462607}
   DeathBall: {fileID: 1311081962}
 --- !u!114 &963194231
@@ -3767,6 +3768,17 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4874573282488446278, guid: 1f33452a7cd905b46bb2ef2dd9cc91e1,
+        type: 3}
+      propertyPath: Trails.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4874573282488446278, guid: 1f33452a7cd905b46bb2ef2dd9cc91e1,
+        type: 3}
+      propertyPath: Trails.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: cf20070da4ea6044a89a31bb98ce47c2,
+        type: 2}
     - target: {fileID: 4874573282488446278, guid: 1f33452a7cd905b46bb2ef2dd9cc91e1,
         type: 3}
       propertyPath: Won.m_PersistentCalls.m_Calls.Array.size
@@ -4601,7 +4613,7 @@ RectTransform:
   - {fileID: 1448944133}
   - {fileID: 172113311}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -11345,7 +11357,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &1672456177
 Transform:
@@ -12028,7 +12040,7 @@ PrefabInstance:
     - target: {fileID: 6847751455238337519, guid: 643e522db7909f242aa100283161327c,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6847751455238337519, guid: 643e522db7909f242aa100283161327c,
         type: 3}

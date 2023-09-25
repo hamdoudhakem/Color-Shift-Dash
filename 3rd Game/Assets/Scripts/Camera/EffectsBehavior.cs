@@ -6,6 +6,7 @@ using UnityEngine.VFX;
 public class EffectsBehavior : MonoBehaviour
 {
     public Transform Trail;
+    public TrailRenderer trailRendrer;
     public VisualEffect TrailParticles;
     public VisualEffect DeathBall;
 
