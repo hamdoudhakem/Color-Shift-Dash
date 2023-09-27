@@ -228,25 +228,23 @@ public class PlayerInteractions : MonoBehaviour
     {
         Material mat = Effs.trailRendrer.material;
 
-        float intMul = Mathf.Pow(2, Trails[0].Intensity1);
-        Color col = Trails[0].Color1.linear;
+        TrailProperties trail = Trails.Find(trail => trail.ConcernedMat.color == Mat.material.color);
 
-        Debug.Log("COlor 1 is (gamma)" + mat.GetColor("_Color1").gamma + " /(linear) : " + mat.GetColor("_Color1").linear);
+        SetTrail(trail, mat);        
+    }
+ 
+    void SetTrail(TrailProperties trail, Material mat)
+    {
+        //Setting Particles Color
+        Effs.TrailParticles.SetVector4("Particles Color", Mat.material.color);
 
-        mat.SetColor("Color 1", col * intMul);
-       
+        //Setting the trail Material colors
+        mat.SetColor("_Color1", trail.Color1);
+        mat.SetColor("_Color2", trail.Color2);
 
-        //// if not using gamma color space, convert from linear to gamma
-        //# ifndef UNITY_COLORSPACE_GAMMA
-        //        emissiveColor.rgb = LinearToGammaSpace(emissiveColor.rgb);
-        //#endif
-
-        //// apply intensity exposure
-        //emissiveColor.rgb *= pow(2.0, _foggedIntensity);
-
-        //// if not using gamma color space, convert back to linear
-        //# ifndef UNITY_COLORSPACE_GAMMA
-        //        emissiveColor.rgb = GammaToLinearSpace(emissiveColor.rgb);
-        //#endif
+        //Setting Trail Rendrer Valus
+        Effs.trailRendrer.startWidth = trail.width;
+        Effs.trailRendrer.endWidth = trail.width;
+        Effs.trailRendrer.time = trail.Time;
     }
 }

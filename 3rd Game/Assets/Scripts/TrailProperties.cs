@@ -8,9 +8,7 @@ public class TrailProperties : ScriptableObject
     [Header("Trail Material Stuff")]
 
     public Color Color1;
-    public Color Color2;
-    [Tooltip("The Intensity Value for the Colors on the Trail Material")]
-    public float Intensity1, Intensity2;    
+    public Color Color2;   
 
     [Header("Trail Rendrer Stuff")]
 

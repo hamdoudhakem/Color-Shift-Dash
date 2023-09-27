@@ -740,10 +740,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -551.9999389648438,
-            "y": 692.0,
-            "width": 208.0,
-            "height": 301.9999694824219
+            "x": -450.0,
+            "y": 501.0000305175781,
+            "width": 208.00001525878907,
+            "height": 302.0
         }
     },
     "m_Slots": [
@@ -888,10 +888,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1417.0001220703125,
-            "y": -113.00000762939453,
-            "width": 145.00001525878907,
-            "height": 130.0
+            "x": -1475.0,
+            "y": -339.0000305175781,
+            "width": 208.00001525878907,
+            "height": 314.0
         }
     },
     "m_Slots": [
@@ -901,7 +901,7 @@
     ],
     "synonyms": [],
     "m_Precision": 0,
-    "m_PreviewExpanded": false,
+    "m_PreviewExpanded": true,
     "m_PreviewMode": 0,
     "m_CustomColors": {
         "m_SerializableColors": []
@@ -2695,7 +2695,7 @@
     },
     "m_Name": "Color 2",
     "m_DefaultReferenceName": "Color_b1c9ddfae6ce407f88c547f3a3468b7b",
-    "m_OverrideReferenceName": "",
+    "m_OverrideReferenceName": "_Color2",
     "m_GeneratePropertyBlock": true,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
@@ -3157,9 +3157,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -184.2470245361328,
-            "y": 827.7530517578125,
-            "width": 208.0,
+            "x": -89.00003051757813,
+            "y": 803.0,
+            "width": 208.00001525878907,
             "height": 326.0
         }
     },
@@ -3421,10 +3421,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -2308.000244140625,
-            "y": 479.0000305175781,
-            "width": 145.0,
-            "height": 130.0
+            "x": -2357.0,
+            "y": 378.0000305175781,
+            "width": 208.00001525878907,
+            "height": 314.0
         }
     },
     "m_Slots": [

@@ -169,6 +169,16 @@ MonoBehaviour:
   BoostValueLv1: 6
   BoostValueLv2: 8
   SpeedBoostTime: 2
+  Trails:
+  - {fileID: 11400000, guid: cf20070da4ea6044a89a31bb98ce47c2, type: 2}
+  - {fileID: 11400000, guid: 1d48ad128bf277f4f9aaef84a4344c54, type: 2}
+  - {fileID: 11400000, guid: 8b276655d47e1d94b87c36fbf0902c7a, type: 2}
+  - {fileID: 11400000, guid: 5d85f7395e772aa4581ade2911d7e00d, type: 2}
+  - {fileID: 11400000, guid: d4dc7afbf54eb484b9c2ea89782d94e9, type: 2}
+  - {fileID: 11400000, guid: 1547c9e8c05403a4f92abc0d2c599563, type: 2}
+  - {fileID: 11400000, guid: ad1583f4fe9525e4688f9587b3940e3b, type: 2}
+  - {fileID: 11400000, guid: ec1f3a4e978e0ae4b92bb999d91d156c, type: 2}
+  - {fileID: 11400000, guid: fc2d6e8115ec63d47a4e467475e1eff7, type: 2}
   ShowStar:
     m_PersistentCalls:
       m_Calls: []

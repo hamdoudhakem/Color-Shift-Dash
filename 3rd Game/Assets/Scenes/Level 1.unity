@@ -3770,17 +3770,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4874573282488446278, guid: 1f33452a7cd905b46bb2ef2dd9cc91e1,
         type: 3}
-      propertyPath: Trails.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4874573282488446278, guid: 1f33452a7cd905b46bb2ef2dd9cc91e1,
-        type: 3}
-      propertyPath: Trails.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: cf20070da4ea6044a89a31bb98ce47c2,
-        type: 2}
-    - target: {fileID: 4874573282488446278, guid: 1f33452a7cd905b46bb2ef2dd9cc91e1,
-        type: 3}
       propertyPath: Won.m_PersistentCalls.m_Calls.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -11367,8 +11356,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1672456176}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0, z: 49.063}
-  m_LocalScale: {x: 12.3, y: 0.5658, z: 143.59175}
+  m_LocalPosition: {x: 0, y: -0.0003, z: 47.9254}
+  m_LocalScale: {x: 12.3, y: 0.5658, z: 146.0512}
   m_Children: []
   m_Father: {fileID: 465055706}
   m_RootOrder: 1
@@ -11652,7 +11641,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1847485010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12502,6 +12491,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Finish Line
+      objectReference: {fileID: 0}
+    - target: {fileID: 2302202095082303089, guid: bd07d31523e90564d8154e70593283bf,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2302202095082303093, guid: bd07d31523e90564d8154e70593283bf,
         type: 3}

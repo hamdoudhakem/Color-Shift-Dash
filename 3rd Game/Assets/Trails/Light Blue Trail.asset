@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c12c26131dbdcbf40bd8592e033e0869, type: 3}
-  m_Name: Gray Trail
+  m_Name: Light Blue Trail
   m_EditorClassIdentifier: 
-  ConcernedMat: {fileID: 2100000, guid: 977085e6b2fc1de49b0aeddb18097348, type: 2}
-  Color1: {r: 0.7490196, g: 0.3137255, b: 0.20392157, a: 1}
-  Color2: {r: 0.7490196, g: 0.47843137, b: 0.3529412, a: 1}
+  ConcernedMat: {fileID: 2100000, guid: f3faf308e32250445b5a2b57e34e6ff9, type: 2}
+  Color1: {r: 1.4443976, g: 2.8231406, b: 12.539997, a: 1}
+  Color2: {r: 7.4237437, g: 9.081473, b: 10.955428, a: 1}
   Time: 1
-  width: 0.5
+  width: 0.86
