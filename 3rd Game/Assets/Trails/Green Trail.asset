@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Green Trail
   m_EditorClassIdentifier: 
   ConcernedMat: {fileID: 2100000, guid: 566bf3f94c861a84a98277f754835622, type: 2}
-  Color1: {r: 3.3109283, g: 6.1313486, b: 1.31824, a: 1}
+  Color1: {r: 0.423526, g: 0.784308, b: 0.168622, a: 1}
   Color2: {r: 3.9372551, g: 2.5355098, b: 0, a: 1}
-  Time: 1
-  width: 0.833
+  Intensity1: 2.9667
+  Intensity2: 2.3941
+  Time: 0.8
+  width: 0.644

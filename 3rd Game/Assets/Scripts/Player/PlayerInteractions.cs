@@ -239,12 +239,13 @@ public class PlayerInteractions : MonoBehaviour
         Effs.TrailParticles.SetVector4("Particles Color", Mat.material.color);
 
         //Setting the trail Material colors
-        mat.SetColor("_Color1", trail.Color1);
-        mat.SetColor("_Color2", trail.Color2);
+        mat.SetColor("_Color1", trail.Color1 * Mathf.Pow(2 , trail.Intensity1));
+        mat.SetColor("_Color2", trail.Color2 * Mathf.Pow(2, trail.Intensity2));
 
         //Setting Trail Rendrer Valus
         Effs.trailRendrer.startWidth = trail.width;
         Effs.trailRendrer.endWidth = trail.width;
         Effs.trailRendrer.time = trail.Time;
     }
+   
 }

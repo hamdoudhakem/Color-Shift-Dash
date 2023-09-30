@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Blue Trail
   m_EditorClassIdentifier: 
   ConcernedMat: {fileID: 2100000, guid: 9dedf68c75cceed4da3a07474b82e659, type: 2}
-  Color1: {r: 0.19607843, g: 0.05490196, b: 0.7490196, a: 1}
-  Color2: {r: 0.5686275, g: 0.32941177, b: 0.7490196, a: 1}
+  Color1: {r: 0.19216, g: 0.05490196, b: 0.7490196, a: 1}
+  Color2: {r: 0.5686275, g: 0.32549, b: 0.7490196, a: 1}
+  Intensity1: 4.9543
+  Intensity2: 3.2475
   Time: 1
   width: 0.5

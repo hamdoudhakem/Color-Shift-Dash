@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Red Trail
   m_EditorClassIdentifier: 
   ConcernedMat: {fileID: 2100000, guid: 39fba26b27258cf439eb965a0e97f35c, type: 2}
-  Color1: {r: 0.7490196, g: 0.3137255, b: 0.20392157, a: 1}
-  Color2: {r: 0.7490196, g: 0.3372549, b: 0.3372549, a: 1}
+  Color1: {r: 0.7490196, g: 0.01176471, b: 0, a: 1}
+  Color2: {r: 0.7490196, g: 0.2392157, b: 0.02352941, a: 1}
+  Intensity1: 4.2
+  Intensity2: 1.184122
   Time: 1
-  width: 0.5
+  width: 0.568

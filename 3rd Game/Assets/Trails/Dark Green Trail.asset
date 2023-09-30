@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Dark Green Trail
   m_EditorClassIdentifier: 
   ConcernedMat: {fileID: 2100000, guid: 0f5126bc092b3d94da8dcbe8d3010de4, type: 2}
-  Color1: {r: 1.5362496, g: 6.6687202, b: 1.1871021, a: 1}
+  Color1: {r: 0.17254, g: 0.749035, b: 0.1333362, a: 1}
   Color2: {r: 11.984314, g: 0.3764706, b: 0.0627451, a: 1}
-  Time: 0.9
-  width: 0.5
+  Intensity1: 3.1543
+  Intensity2: 4
+  Time: 0.77
+  width: 0.41

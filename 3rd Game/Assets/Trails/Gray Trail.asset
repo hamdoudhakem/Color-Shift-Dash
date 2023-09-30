@@ -15,5 +15,7 @@ MonoBehaviour:
   ConcernedMat: {fileID: 2100000, guid: 977085e6b2fc1de49b0aeddb18097348, type: 2}
   Color1: {r: 0.7490196, g: 0.3137255, b: 0.20392157, a: 1}
   Color2: {r: 0.7490196, g: 0.47843137, b: 0.3529412, a: 1}
+  Intensity1: 3
+  Intensity2: 3
   Time: 1
   width: 0.5

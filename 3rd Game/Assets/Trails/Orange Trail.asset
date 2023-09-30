@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Orange Trail
   m_EditorClassIdentifier: 
   ConcernedMat: {fileID: 2100000, guid: 4f66cbc5ad2968c4fb5a05c48e8c5038, type: 2}
-  Color1: {r: 0.7490196, g: 0.3137255, b: 0.20392157, a: 1}
-  Color2: {r: 0.7490196, g: 0.3372549, b: 0.3372549, a: 1}
+  Color1: {r: 0.749029, g: 0.067557, b: 0, a: 1}
+  Color2: {r: 0.7490196, g: 0.3324255, b: 0.0980774, a: 1}
+  Intensity1: 3.2145
+  Intensity2: 2.99
   Time: 1
-  width: 0.5
+  width: 0.617
