@@ -2053,6 +2053,7 @@ MonoBehaviour:
   <obsType>k__BackingField: 6
   Randomize: 1
   CanBall: {fileID: 6273298746923397291, guid: cc031143dd01f924baa12628fe7a87bd, type: 3}
+  FireEff: {fileID: 1272088982009631473, guid: 07011256123df314384db97d2f77eab1, type: 3}
   PlayerLayer:
     serializedVersion: 2
     m_Bits: 8

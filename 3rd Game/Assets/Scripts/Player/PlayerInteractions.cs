@@ -246,6 +246,7 @@ public class PlayerInteractions : MonoBehaviour
         Effs.trailRendrer.startWidth = trail.width;
         Effs.trailRendrer.endWidth = trail.width;
         Effs.trailRendrer.time = trail.Time;
+        
     }
    
 }

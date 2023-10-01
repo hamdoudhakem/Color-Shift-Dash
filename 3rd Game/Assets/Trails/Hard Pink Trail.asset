@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConcernedMat: {fileID: 2100000, guid: 66d0f711fe81f5441a490125dd2abf6a, type: 2}
   Color1: {r: 0.9529375, g: 0, b: 0.262737, a: 1}
-  Color2: {r: 1, g: 1, b: 1, a: 1}
+  Color2: {r: 0.7490196, g: 0, b: 0.2705882, a: 1}
   Intensity1: 3
   Intensity2: 2
   Time: 1

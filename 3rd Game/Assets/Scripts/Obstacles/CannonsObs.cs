@@ -14,6 +14,7 @@ public class CannonsObs : MonoBehaviour, IObsTypes
 
     [Tooltip("The Cannon Ball Game Object")]
     public GameObject CanBall;
+    public GameObject FireEff;
     public LayerMask PlayerLayer;
     [Tooltip("How Much Time Passes between every Shot (in seconds)")]
     public float FireRate;       
@@ -46,6 +47,7 @@ public class CannonsObs : MonoBehaviour, IObsTypes
     private Transform Player;
 
     private List<CanBallBehavior> CannonBalls;
+    private ParticleSystem[] FireEffs;
 
     void Start()
     {
@@ -98,9 +100,11 @@ public class CannonsObs : MonoBehaviour, IObsTypes
         }
 
         SafeDistance = ParRugs[0].position.z - transform.GetChild(CannonsNum).position.z;
+
+        //Setting Up Stuff and this Needs to Be done After everything Written Up Here
         CreatBaseCanBalls();
-        
-    }    
+        CreatBaseFireEff();
+    }   
 
     void OnDrawGizmos()
     {
@@ -160,11 +164,15 @@ public class CannonsObs : MonoBehaviour, IObsTypes
 
                             SetUpCanBall(obj);
 
+                            SetFireEff(obj.transform, 0);
+
                             obj = CannonBalls[index + 1];
 
                             obj.transform.position = ParRugs[j].position + OffsetFirePoint;
 
                             SetUpCanBall(obj);
+
+                            SetFireEff(obj.transform, 1); 
                         }
                         else
                         {
@@ -173,10 +181,14 @@ public class CannonsObs : MonoBehaviour, IObsTypes
                             SetCanBallVars(obj, false); 
                             SetUpCanBall(obj);
 
+                            SetFireEff(obj.transform, 0);
+
                             obj = Instantiate(CanBall, ParRugs[j].position + OffsetFirePoint, new Quaternion()).GetComponent<CanBallBehavior>();
 
                             SetCanBallVars(obj, false);
                             SetUpCanBall(obj);
+
+                            SetFireEff(obj.transform, 1);
                         }                       
 
                         AudioManager.AudMan.Play("Cannon Fire", true);
@@ -229,6 +241,28 @@ public class CannonsObs : MonoBehaviour, IObsTypes
 
     #endregion
 
+    #region Firing Effect Related
+
+    void CreatBaseFireEff()
+    {
+        FireEffs = new ParticleSystem[CanBallsPerFire];
+
+        for(int i =0; i < FireEffs.Length; i++)
+        {
+            FireEffs[i] = Instantiate(FireEff, transform.position, new Quaternion(), transform).GetComponent<ParticleSystem>();
+
+            FireEffs[i].Stop();
+        }
+    }  
+
+    void SetFireEff(Transform startPoint, int EffIndex)
+    {
+        FireEffs[EffIndex].transform.position = startPoint.position;
+        FireEffs[EffIndex].Play();        
+    }
+
+    #endregion
+
     int ChooseCloseToPlayer(Transform player)
     {
         int index = 0;
@@ -272,6 +306,11 @@ public class CannonsObs : MonoBehaviour, IObsTypes
     {
         if(Player == null || Player.position.z - transform.position.z >= 3)
         {
+            foreach(ParticleSystem part in FireEffs)
+            {
+                part.gameObject.SetActive(false);
+            }
+
             enabled = false;
             CancelInvoke("CheckObstPassed");
         }
