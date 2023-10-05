@@ -34,7 +34,7 @@ public class PlayerInteractions : MonoBehaviour
     private EffectsBehavior Effs;
     private bool AlreadyIn;
 
-    void Awake()
+    void Start()
     {
         AlreadyIn = false;
         StarsNum = 0;
@@ -181,7 +181,16 @@ public class PlayerInteractions : MonoBehaviour
         {            
             Die();
         }
-    }      
+    }
+
+    IEnumerator DisbaleStar(GameObject star, float Time)
+    {
+        yield return new WaitForSeconds(Time);
+
+        star.SetActive(false);
+    }
+
+    #region Death Related
 
     void DeathCheck(Collider col)
     {             
@@ -217,12 +226,9 @@ public class PlayerInteractions : MonoBehaviour
         Destroy(gameObject);
     }
 
-    IEnumerator DisbaleStar(GameObject star,float Time)
-    {
-        yield return new WaitForSeconds(Time);
-
-        star.SetActive(false);
-    }
+    #endregion
+      
+    #region Trail Related
 
     void ChangeTrail()
     {
@@ -248,5 +254,6 @@ public class PlayerInteractions : MonoBehaviour
         Effs.trailRendrer.time = trail.Time;
         
     }
-   
+
+    #endregion
 }

@@ -16,20 +16,20 @@ MonoBehaviour:
   m_AdvancedMode: 0
   shadows:
     m_OverrideState: 0
-    m_Value: {x: 1, y: 1, z: 1, w: 0}
+    m_Value: {x: 1, y: 0.9876975, z: 0.9969245, w: -0.010111155}
   midtones:
     m_OverrideState: 0
     m_Value: {x: 1, y: 1, z: 1, w: 0}
   highlights:
-    m_OverrideState: 0
-    m_Value: {x: 1, y: 1, z: 1, w: 0}
+    m_OverrideState: 1
+    m_Value: {x: 0.9320934, y: 0.98243135, z: 1, w: 0.04328277}
   shadowsStart:
     m_OverrideState: 0
     m_Value: 0
     min: 0
   shadowsEnd:
     m_OverrideState: 0
-    m_Value: 0.3
+    m_Value: 0.67
     min: 0
   highlightsStart:
     m_OverrideState: 0
@@ -54,16 +54,16 @@ MonoBehaviour:
   active: 1
   m_AdvancedMode: 0
   threshold:
-    m_OverrideState: 0
-    m_Value: 0.9
+    m_OverrideState: 1
+    m_Value: 0.92
     min: 0
   intensity:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: 0.19
     min: 0
   scatter:
-    m_OverrideState: 0
-    m_Value: 0.7
+    m_OverrideState: 1
+    m_Value: 0.399
     min: 0
     max: 1
   clamp:
@@ -104,7 +104,6 @@ MonoBehaviour:
   m_Name: Earth
   m_EditorClassIdentifier: 
   components:
-  - {fileID: 6469563773709090716}
   - {fileID: -2387364678317038990}
   - {fileID: 7618489152930890093}
   - {fileID: 342584129159157948}
@@ -125,11 +124,11 @@ MonoBehaviour:
   active: 1
   m_AdvancedMode: 0
   postExposure:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: 0.34
   contrast:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: 1.27
     min: -100
     max: 100
   colorFilter:
@@ -148,42 +147,6 @@ MonoBehaviour:
     m_Value: 0
     min: -100
     max: 100
---- !u!114 &6469563773709090716
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 899c54efeace73346a0a16faa3afe726, type: 3}
-  m_Name: Vignette
-  m_EditorClassIdentifier: 
-  active: 1
-  m_AdvancedMode: 0
-  color:
-    m_OverrideState: 0
-    m_Value: {r: 0, g: 0, b: 0, a: 1}
-    hdr: 0
-    showAlpha: 0
-    showEyeDropper: 1
-  center:
-    m_OverrideState: 0
-    m_Value: {x: 0.5, y: 0.5}
-  intensity:
-    m_OverrideState: 0
-    m_Value: 0
-    min: 0
-    max: 1
-  smoothness:
-    m_OverrideState: 0
-    m_Value: 0.2
-    min: 0.01
-    max: 1
-  rounded:
-    m_OverrideState: 0
-    m_Value: 0
 --- !u!114 &6854425594683691709
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -199,9 +162,9 @@ MonoBehaviour:
   active: 1
   m_AdvancedMode: 0
   master:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value:
-      <length>k__BackingField: 2
+      <length>k__BackingField: 3
       m_Loop: 0
       m_ZeroValue: 0
       m_Range: 1
@@ -211,8 +174,17 @@ MonoBehaviour:
         - serializedVersion: 3
           time: 0
           value: 0
-          inSlope: 1
+          inSlope: 0
           outSlope: 1
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 0.5386819
+          value: 0.5121951
+          inSlope: 0.8216457
+          outSlope: 0.8216457
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
@@ -220,8 +192,8 @@ MonoBehaviour:
         - serializedVersion: 3
           time: 1
           value: 1
-          inSlope: 1
-          outSlope: 1
+          inSlope: 2.4640558
+          outSlope: 0
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
@@ -389,8 +361,8 @@ MonoBehaviour:
   active: 1
   m_AdvancedMode: 0
   temperature:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: -12
     min: -100
     max: 100
   tint:
