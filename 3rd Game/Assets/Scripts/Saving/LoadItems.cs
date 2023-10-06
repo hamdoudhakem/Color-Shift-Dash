@@ -10,7 +10,7 @@ public class LoadItems : MonoBehaviour
     public List<VolumeProfile> Profile;
 
     //Needs to be in Awake ('cause of the skin/color change order)
-    void Awake()
+    void Start()
     {
         Debug.Log("I Will Assign The Skybox, Skin and Instansiate the right Post Processing");
 
