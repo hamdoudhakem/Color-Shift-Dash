@@ -126,6 +126,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 9a92f99a849dea0499cc2598f6011c8e, type: 3}
   - {fileID: 21300000, guid: 64f15a9abb877ab4c82dfab0ede1c47d, type: 3}
   - {fileID: 21300000, guid: bd4e35aaceceae14ca314aac5a87d061, type: 3}
+  - {fileID: 21300000, guid: d423ecbaf09ed2441a26db8e352a4210, type: 3}
   - {fileID: 21300000, guid: 0ac274da743a5ab49a17c782a85c7f2d, type: 3}
   - {fileID: 21300000, guid: d31115fa9cb67004b96bc76f48802b9f, type: 3}
   - {fileID: 21300000, guid: b7fa950b4725a4c4b9dfc334809da3e9, type: 3}
@@ -231,6 +232,7 @@ SpriteAtlas:
   - Clouded Sun Glow
   - Lv Frame 2
   - Mega Sun
+  - Graffiti Upgraded
   - repeat
   - arrow_left
   - Cold Skin
