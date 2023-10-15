@@ -1,3 +1,4 @@
+using EZCameraShake;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -164,7 +165,7 @@ public class PlayerInteractions : MonoBehaviour
         }
         else if (collision.gameObject.layer == FinishLine)
         {
-            if(StarsNum < 3)
+            if(IndexsOfObtainedStars.Count == StarsNum)
             {
                 StarsNum++;
                 ShowStar.Invoke(StarsNum);
@@ -218,6 +219,8 @@ public class PlayerInteractions : MonoBehaviour
         AudioManager.AudMan.Play("Died");        
 
         Lost.Invoke();
+
+        CameraShaker.Instance.ShakeOnce(7, 5, .1f, .5f);
 
         Instantiate(ParticleEffect, transform.position, new Quaternion()).transform.Rotate(Vector3.right * -90);
 

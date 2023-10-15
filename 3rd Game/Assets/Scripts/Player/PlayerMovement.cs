@@ -1,10 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class PlayerMovement : MonoBehaviour
 {
     public Camera Cam;
+    [HideInInspector] public LensDistortion Lens;
+    public ParticleSystem LandEff;
     [Tooltip("The Amount of friction applied after the player gets his hands of the screen")]
     [Range(1, 20)]
     [SerializeField] private float FrictionValue;
@@ -18,10 +23,14 @@ public class PlayerMovement : MonoBehaviour
     public float SwipeLv2;
     [Tooltip("The Side Speed Lv 1 and Lv 2")]
     public float  lv0Speed ,lv1Speed, lv2Speed;
-    [Tooltip("how much the side speed will change each frame (using lerp so % based)")] [Range(0 , 1)]
+    [Tooltip("how much the side speed will change each frame Going from a Speed Lv to another(using lerp so % based)")] [Range(0 , 1)]
     public float ChangeRate0To1, ChangeRate1To2;
     [Tooltip("How much time it will take for the player to stop when on the Finish line (1 is 1 second , 2 is 1/2 second)")] [Range(0 , 10f)]
     public float StopRate;
+    [Tooltip("The New Value I Will Set for The Lens Distortion Intensity when Speeding Up")]
+    public float LensDis;
+    [Tooltip("The New Value I Will Set for The Lens Distortion Intensity when Speeding Up")]
+    public float LensDisChangeSpeed;
     [Tooltip("How much the Camera view field will narrow when using a speed boost")]
     public float ViewChange;
     [Tooltip("THe Speed at which the Camera view field will change")]
@@ -35,8 +44,9 @@ public class PlayerMovement : MonoBehaviour
     private GameObject BoostEffect;
 
     private int StackedBoosts;
-    private bool ChangeViewField;
-    private float DefaultView, TargetView;
+
+    private bool ChangeLensDis, ChangeViewField;
+    private float DefaultView, TargetView , TargetLensDis;
     private float DefaultForSpeed;
     private float LastTargetSpeed;
 
@@ -50,16 +60,21 @@ public class PlayerMovement : MonoBehaviour
         LastGrounded = true;
         LastTargetSpeed = 0;
         ChangeViewField = false;
+        ChangeLensDis = false;
         MoveForward = true;
         InputMove = true;
         StopSliding = false;
         StackedBoosts = 0;
         DefaultForSpeed = ForwardSpeed;
-
-        DefaultView = Cam.fieldOfView;
-
+     
         rb = GetComponent<Rigidbody>();
         BoostEffect = Cam.transform.GetChild(0).gameObject;
+
+        DefaultView = Cam.fieldOfView;
+        Lens = (LensDistortion)FindObjectOfType<Volume>().profile.components.Find(comp => comp is LensDistortion);
+
+        LandEff = Instantiate(LandEff.gameObject, transform.position, Quaternion.Euler(Vector3.left * 90)).GetComponent<ParticleSystem>();
+        LandEff.Stop();
     }
 
     void Update()
@@ -73,6 +88,8 @@ public class PlayerMovement : MonoBehaviour
                 if (!LastGrounded)
                 {
                     AudioManager.AudMan.Play("Landed");
+                    LandEff.transform.position = transform.position + Vector3.down * 0.4f;
+                    LandEff.Play();
                 }
 
                 AudioManager.AudMan.Play("Rolling");
@@ -127,6 +144,8 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, ForwardSpeed);
         }
 
+        #region Visual Effects For Speeding Up
+
         if (ChangeViewField)
         {
             Cam.fieldOfView = Mathf.Lerp(Cam.fieldOfView, TargetView, ViewChangeSpeed);
@@ -135,6 +154,7 @@ public class PlayerMovement : MonoBehaviour
 
             if (Remaining < .2f)
             {
+                Cam.fieldOfView = TargetView;
                 ChangeViewField = false;                
             }
             
@@ -143,6 +163,21 @@ public class PlayerMovement : MonoBehaviour
                 BoostEffect.SetActive(false);
             }
         }
+
+        if (ChangeLensDis)
+        {
+            Lens.intensity.value = Mathf.Lerp(Lens.intensity.value, TargetLensDis, LensDisChangeSpeed);
+
+            float Remaining = Mathf.Abs(Lens.intensity.value - TargetLensDis);
+
+            if (Remaining < .06f)
+            {
+                Lens.intensity.value = TargetLensDis;
+                ChangeLensDis = false;
+            }                       
+        }
+
+        #endregion
     }
 
     public void Move(float Dif)
@@ -217,8 +252,8 @@ public class PlayerMovement : MonoBehaviour
         //Boost Effects
         Boosted = true;
         StackedBoosts++;
-        BoostEffect.SetActive(true);
-        ChangeFieldOfView(DefaultView - ViewChange);
+        BoostEffect.SetActive(true); 
+        BoostingEffects(DefaultView + ViewChange, LensDis);
 
         //We Will Change the Input Move and Forward Speed temporarely
         InputMove = TakeInput;
@@ -242,17 +277,20 @@ public class PlayerMovement : MonoBehaviour
         //Cancel Boost Effects
         if(StackedBoosts == 0)
         {
-            Boosted = false;            
-            ChangeFieldOfView(DefaultView);
+            Boosted = false;
+            BoostingEffects(DefaultView , 0);
         }
         
     }
 
-    private void ChangeFieldOfView(float ViewB)
+    private void BoostingEffects(float TargetFieldOfView, float TargetLensDistortion)
     {
-        TargetView = ViewB;
+        TargetView = TargetFieldOfView;
+        TargetLensDis = TargetLensDistortion;
+
         ChangeViewField = true;
-    }
+        ChangeLensDis = true;
+    }      
 
     public IEnumerator Stop()
     {
@@ -261,7 +299,7 @@ public class PlayerMovement : MonoBehaviour
         MoveForward = false;
         InputMove = false;
         BoostEffect.SetActive(false);
-        ChangeFieldOfView(DefaultView);        
+        BoostingEffects(DefaultView, 0);
         yield return new WaitForEndOfFrame();
 
         rb.velocity = new Vector3(0, rb.velocity.y, DefaultForSpeed);

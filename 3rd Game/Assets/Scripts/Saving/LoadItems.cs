@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class LoadItems : MonoBehaviour
 {
@@ -13,26 +14,27 @@ public class LoadItems : MonoBehaviour
     ///Needs to be in Awake ('cause of the skin/color change order)
     ///</summary>
     void Start()
-    {
+    {             
         Debug.Log("I Will Assign The Skybox, Skin and Instansiate the right Post Processing");
 
-        SetSkin(GetComponent<CameraMovement>().Player.GetComponent<MeshRenderer>());
+        SetSkin(GetComponent<CameraMovement>().Player.GetComponent<MeshFilter>());
 
         RenderSettings.skybox = Skybox;
 
         //Loading the Post-rocessing
         Volume PostPro = FindObjectOfType<Volume>();
-        
-        PostPro.profile = Profile;
-    }
 
-    void SetSkin(MeshRenderer mr)
+        PostPro.profile = Profile;
+              
+    }    
+
+    void SetSkin(MeshFilter mr)
     {
-        mr.GetComponent<MeshFilter>().mesh = PlayerSkin.mesh;
+        mr.mesh = PlayerSkin.mesh;
 
         if (PlayerSkin.CustMaterials)
         {
-            mr.materials = PlayerSkin.Materials;
+            mr.GetComponent<MeshRenderer>().materials = PlayerSkin.Materials;
         }
     }
 }

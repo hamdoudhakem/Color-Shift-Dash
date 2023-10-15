@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce341fc0fdf69c24a8ab850c694dbafb, type: 3}
   m_Name: Bowling Ball
   m_EditorClassIdentifier: 
-  mesh: {fileID: 0}
+  SkinName: Bowling Ball
+  mesh: {fileID: 4711208715938537054, guid: 114ab3eb13347574d95455d6c7f413b8, type: 3}
   CustMaterials: 1
-  Materials: []
+  Materials:
+  - {fileID: 2100000, guid: 72a55a3566dfcfe40b9e162b99a11318, type: 2}
+  - {fileID: 2100000, guid: 6a3b7b7a5894b5d469f980c4de70edc5, type: 2}
