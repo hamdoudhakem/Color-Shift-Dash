@@ -10,7 +10,6 @@ public class DoorMovement : MonoBehaviour
 
     private Vector3 Target;
     private float LeftX, RightX;
-    [HideInInspector] public float OffsetX;     
 
     public Direction Side { get; set; }
 
@@ -19,8 +18,8 @@ public class DoorMovement : MonoBehaviour
 
     void Start()
     {
-        RightX = transform.position.x + OffsetX;
-        LeftX = transform.position.x - OffsetX;
+        RightX = transform.position.x + DrObs.OffsetX;
+        LeftX = transform.position.x - DrObs.OffsetX;
 
         //Preparing The Meshes to reassign there material later
         Meshes = new MeshRenderer[transform.childCount];
@@ -37,6 +36,15 @@ public class DoorMovement : MonoBehaviour
     {
         if (!PlayerInteractions.Dead)
         {
+            //Because at First the Player won't be assigned
+            if(DrObs.Player != null)
+            {
+                if (DrObs.Player.position.z - transform.position.z >= DrObs.DoorsDis * 2)
+                {
+                    enabled = false;
+                }
+            }       
+
             if (Side == Direction.Right)
             {
                 Target = new Vector3(RightX, transform.position.y, transform.position.z);
@@ -62,6 +70,10 @@ public class DoorMovement : MonoBehaviour
                     DrObs.AudSource.Play();
                 }
             }
+        }
+        else
+        {
+            enabled = false;
         }               
     }  
 

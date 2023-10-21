@@ -9,6 +9,8 @@ public class DoorsObstBehavior : MonoBehaviour, IObsTypes
     public ObsTypes obsType { get; set; }
 
     public LayerMask PlayerLayer, GroundLayer;
+    [Tooltip("The Z axe difference between each door in the Default state (not when I separate the Doors by a lot on) which I will use to disable the doors when they are left behind ")]
+    public float DoorsDis;
     [Tooltip("The Distance that the player needs to be from this Obs to start moving the Doors")]
     public float StartDistance;
     [Tooltip("The SIze of the Overlap Box that will Check for the player")]
@@ -17,24 +19,30 @@ public class DoorsObstBehavior : MonoBehaviour, IObsTypes
     public float PassSize;
     [Tooltip("The Movement Speed of the Doors")]
     public float Speed;
-    [Tooltip("THe Time Between every Door Repositioning in seconds")]
+    [Tooltip("How much delay between the activation of the 3rd and 4th door so they aren't simetrical")]
     public float Delay;
     [Tooltip("How Many doors the Player will have to pass")] [Range(2 , 10)]
     public int DoorsNum;
+
     [Header("Sound")]
     public AudioSource AudSource;
     [Tooltip("How Much Time Passes Between Each Call of the function that will Update the Audio Source position")]
     public float AudUpdateTime;
 
-    private Transform Player;
+    private bool StartRePosDoors;
+    private int CurRePosDoor;
+
+    public Transform Player { get; private set; }
+    public float OffsetX { get; private set; }
+
     private DoorMovement[] Doors;
-    private float DoorDis;
-    private bool StartRemaiDoors;
-    private float OffsetX;
+    private bool StartRemaiDoors;    
 
     void Start()
     {
+        StartRePosDoors = false;
         StartRemaiDoors = false;
+        CurRePosDoor = transform.childCount - 1;
 
         //getting each door (I put a -1 because of the Audio Source)
         Doors = new DoorMovement[transform.childCount - 1];
@@ -53,12 +61,10 @@ public class DoorsObstBehavior : MonoBehaviour, IObsTypes
             Doors[i].DrObs = this;
             
             Doors[i].SetPosition();
-            Doors[i].OffsetX = OffsetX;                        
             
         }
 
         StartingSides();
-        DoorDis = Doors[1].transform.position.z - Doors[0].transform.position.z;
     }
 
     private void StartingSides()
@@ -78,10 +84,12 @@ public class DoorsObstBehavior : MonoBehaviour, IObsTypes
         Doors[1].enabled = true;
     }
 
+
     void OnDrawGizmos()
     {
         Gizmos.DrawCube(transform.position + Vector3.back * StartDistance, BoxSize * 2);
     }
+
 
     void Update()
     {
@@ -102,8 +110,25 @@ public class DoorsObstBehavior : MonoBehaviour, IObsTypes
 
                         InvokeRepeating("UpdateAudPos", AudUpdateTime, AudUpdateTime);
 
-                        StartCoroutine(DoIt());
+                        StartRePosDoors = true;
+                        StartCoroutine(ActivateRemaiDoors());
                     }
+                }
+
+                if (StartRePosDoors)
+                {
+                    if (CurRePosDoor < DoorsNum)
+                    {                      
+                        if (Player.position.z >= Doors[(CurRePosDoor + 1) % Doors.Length].transform.position.z)
+                        {
+                            ReposDoor();
+                            CurRePosDoor++;
+                        }
+                    }
+                    else
+                    {
+                        StartRePosDoors = false;
+                    }                    
                 }
             }
             else
@@ -116,33 +141,34 @@ public class DoorsObstBehavior : MonoBehaviour, IObsTypes
             CancelInvoke();
             StopAllCoroutines();
         }
-    }   
+    }
 
-    IEnumerator DoIt()
+    #region Starting Remaining Doors and Repositioning them Related Stuff
+
+    IEnumerator ActivateRemaiDoors()
     {
-        for(int i = 2; i < DoorsNum; i++)
-        {
-            yield return new WaitForSeconds(Delay);
-
-            if(i < Doors.Length)
-            {
-                if (Random.Range(0, 2) == 0)
-                    Doors[i].Side = Direction.Right;
-                else
-                    Doors[i].Side = Direction.Left;
-
-
-                Doors[i].enabled = true;
-            }
+        for(int i = 2; i < DoorsNum && i < Doors.Length; i++)
+        {           
+            if (Random.Range(0, 2) == 0)
+                Doors[i].Side = Direction.Right;
             else
-            {
-                Doors[i % Doors.Length].transform.position += DoorDis * Doors.Length * Vector3.forward;
+                Doors[i].Side = Direction.Left;
 
-                Doors[i % Doors.Length].ResetMats();
-            }
-            
+
+            Doors[i].enabled = true;
+
+            yield return new WaitForSeconds(Delay);
         }
     }
+
+    void ReposDoor()
+    {
+        Doors[CurRePosDoor % Doors.Length].transform.position += DoorsDis * Doors.Length * Vector3.forward;
+
+        Doors[CurRePosDoor % Doors.Length].ResetMats();
+    } 
+
+    #endregion
 
     private void UpdateAudPos()
     {

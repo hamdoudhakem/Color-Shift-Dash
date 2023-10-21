@@ -239,7 +239,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   DrObs: {fileID: 0}
-  OffsetX: 0
 --- !u!1 &2600186385023206161
 GameObject:
   m_ObjectHideFlags: 0
@@ -289,7 +288,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   DrObs: {fileID: 0}
-  OffsetX: 0
 --- !u!1 &2600186385117316397
 GameObject:
   m_ObjectHideFlags: 0
@@ -624,7 +622,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   DrObs: {fileID: 0}
-  OffsetX: 0
 --- !u!1 &2600186385981123807
 GameObject:
   m_ObjectHideFlags: 0
@@ -674,7 +671,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   DrObs: {fileID: 0}
-  OffsetX: 0
 --- !u!1 &2600186386028252659
 GameObject:
   m_ObjectHideFlags: 0
@@ -1015,6 +1011,7 @@ MonoBehaviour:
   GroundLayer:
     serializedVersion: 2
     m_Bits: 64
+  DoorsDis: 9.5
   StartDistance: 4.26
   BoxSize: {x: 9.58, y: 6.02, z: 0.18}
   PassSize: 5.35
@@ -1022,7 +1019,7 @@ MonoBehaviour:
   Delay: 0.95
   DoorsNum: 8
   AudSource: {fileID: 4255685687000988919}
-  AudUpdateTime: 0.25
+  AudUpdateTime: 0.35
 --- !u!1 &8098309700071130442
 GameObject:
   m_ObjectHideFlags: 0
