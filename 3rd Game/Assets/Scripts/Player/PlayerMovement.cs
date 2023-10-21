@@ -78,7 +78,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void Update()
-    {
+    {        
         if (!ScreensEventHandlers.IsPaused)
         {
             Grounded = Physics.OverlapBox(transform.position + Vector3.down * .5f, GroundedSize, new Quaternion(), GroundLayer, QueryTriggerInteraction.Ignore).Length > 0;

@@ -1,0 +1,306 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2270249668450733380
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2270249668450733382}
+  - component: {fileID: 2270249668450733383}
+  - component: {fileID: 2270249668450733433}
+  m_Layer: 0
+  m_Name: Audio Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2270249668450733382
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2270249668450733380}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2270249668450733383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2270249668450733380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58b0773cd8745514eafadae30d6da3f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mixer: {fileID: 24300002, guid: 888a8709fccf9684882039d092dda6ce, type: 2}
+  sounds:
+  - name: Rolling
+    Clip: {fileID: 8300000, guid: d9471611956d0fa4cad3efae4aceeaa6, type: 3}
+    volume: 0.07
+    pitch: 2
+    SpacialBlend: 0
+    loop: 1
+    source: {fileID: 0}
+  - name: Landed
+    Clip: {fileID: 8300000, guid: 0f950d363b85f2143b479d3fda18a203, type: 3}
+    volume: 0.16
+    pitch: 1
+    SpacialBlend: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Hit Boxes
+    Clip: {fileID: 8300000, guid: 238adf48df769fb4a9e6bd9bc54b7bc2, type: 3}
+    volume: 0.1
+    pitch: 1
+    SpacialBlend: 0.5
+    loop: 0
+    source: {fileID: 0}
+  - name: Drag Boxes
+    Clip: {fileID: 8300000, guid: 656e65d016bea844a895b6d9bc846a2e, type: 3}
+    volume: 0.25
+    pitch: 1
+    SpacialBlend: 0.5
+    loop: 1
+    source: {fileID: 0}
+  - name: Died
+    Clip: {fileID: 8300000, guid: 2ae708412b23c03478298d84920695e7, type: 3}
+    volume: 0.1
+    pitch: 1
+    SpacialBlend: 0.5
+    loop: 0
+    source: {fileID: 0}
+  - name: Lost
+    Clip: {fileID: 8300000, guid: 0cd9dcb6275073340a9b3da3739e0e14, type: 3}
+    volume: 0.1
+    pitch: 1
+    SpacialBlend: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Won
+    Clip: {fileID: 8300000, guid: 36279e0100ff7104bae9d4e8b0b34adf, type: 3}
+    volume: 0.2
+    pitch: 1
+    SpacialBlend: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Star
+    Clip: {fileID: 8300000, guid: 46e3e7e857c7f154dbb6831b104e397d, type: 3}
+    volume: 0.25
+    pitch: 1
+    SpacialBlend: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Color Switch
+    Clip: {fileID: 8300000, guid: 1dceda84f6a199149a65bbd8e95b842e, type: 3}
+    volume: 0.15
+    pitch: 1
+    SpacialBlend: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Boost
+    Clip: {fileID: 8300000, guid: 9168ebd0b2ff05944a3f62d253a8e3f4, type: 3}
+    volume: 0.05
+    pitch: 1
+    SpacialBlend: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Deboost
+    Clip: {fileID: 8300000, guid: 428c2409b41e71848a906f87ba825d66, type: 3}
+    volume: 0.05
+    pitch: 1
+    SpacialBlend: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Hit Balls
+    Clip: {fileID: 8300000, guid: b958ce6b53d72974eab429957fb252a3, type: 3}
+    volume: 0.1
+    pitch: 1
+    SpacialBlend: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Drag Balls
+    Clip: {fileID: 8300000, guid: 6acaebf88944fad45b51b5a6d36adbfa, type: 3}
+    volume: 0.07
+    pitch: 1
+    SpacialBlend: 0
+    loop: 1
+    source: {fileID: 0}
+  - name: Ball Falls
+    Clip: {fileID: 8300000, guid: cdee214d6ba14b241a882da113f39927, type: 3}
+    volume: 0.2
+    pitch: 1
+    SpacialBlend: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Ring Passed
+    Clip: {fileID: 8300000, guid: 2bbb7acba5e979b489e465905c0c1d9d, type: 3}
+    volume: 0.2
+    pitch: 1
+    SpacialBlend: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Cannon Fire
+    Clip: {fileID: 8300000, guid: 347e63638ac616f408df90b478cb9bc3, type: 3}
+    volume: 0.075
+    pitch: 1
+    SpacialBlend: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Cannon Ball Crashed
+    Clip: {fileID: 8300000, guid: fec8a6c43a47e8d4784fbf7a2a4eba47, type: 3}
+    volume: 0.2
+    pitch: 1
+    SpacialBlend: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Cannon Gone
+    Clip: {fileID: 8300000, guid: 67c794b6b9e141342938f7dd799b23b0, type: 3}
+    volume: 0.1
+    pitch: 1
+    SpacialBlend: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Splasher Fire
+    Clip: {fileID: 8300000, guid: 6cb2970abf8eb1b488877b09a9a7d950, type: 3}
+    volume: 0.1
+    pitch: 1
+    SpacialBlend: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Splasher Moving
+    Clip: {fileID: 8300000, guid: bc6adb93a6020ca4da010c586bc7b205, type: 3}
+    volume: 0.1
+    pitch: 1
+    SpacialBlend: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Color Ball Collided
+    Clip: {fileID: 8300000, guid: 2c2ff79e182427e4b9d0a90568597289, type: 3}
+    volume: 0.1
+    pitch: 1
+    SpacialBlend: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Air Resistance
+    Clip: {fileID: 8300000, guid: 4a462e962fec8de468d2a386f5522399, type: 3}
+    volume: 0.03
+    pitch: 1
+    SpacialBlend: 0
+    loop: 1
+    source: {fileID: 0}
+  - name: Buy
+    Clip: {fileID: 0}
+    volume: 0.5
+    pitch: 1
+    SpacialBlend: 0
+    loop: 0
+    source: {fileID: 0}
+--- !u!82 &2270249668450733433
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2270249668450733380}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 888a8709fccf9684882039d092dda6ce,
+    type: 2}
+  m_audioClip: {fileID: 8300000, guid: 585fed68ed652094e8388fefab440066, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 0.13
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
