@@ -28,7 +28,7 @@ public class CannonsObs : MonoBehaviour, IObsTypes
     public float MaxDistance;
     [Tooltip("The Speed at which the Cannon Ball Goes")]
     public float Speed;
-    [Tooltip("How Much this will increase the scale of the projected Cannon Balls")] [Range(1 , 2)]
+    [Tooltip("How Much this will increase the scale of the projected Cannon Balls")] [Range(.5f , 2)]
     public float UpScalingFac;
 
     [Header("Performances")]
