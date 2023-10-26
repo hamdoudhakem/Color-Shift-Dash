@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce341fc0fdf69c24a8ab850c694dbafb, type: 3}
   m_Name: Golf Ball
   m_EditorClassIdentifier: 
-  mesh: {fileID: 0}
-  CustMaterials: 1
+  SkinName: Golf Ball
+  mesh: {fileID: 289301614986012343, guid: 619875986b26b7c46b0edf1a247234c9, type: 3}
+  CustMaterials: 0
   Materials: []

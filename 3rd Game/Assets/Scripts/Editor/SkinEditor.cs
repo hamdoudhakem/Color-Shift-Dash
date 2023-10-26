@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(Skin))]
+//[CustomEditor(typeof(Skin))]
 [CanEditMultipleObjects]
 public class SkinEditor : Editor
 {

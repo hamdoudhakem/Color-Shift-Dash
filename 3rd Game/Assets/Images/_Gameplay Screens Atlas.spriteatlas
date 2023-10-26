@@ -93,7 +93,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 5b67d00510130664fab4ade722ed8a14, type: 3}
   - {fileID: 21300000, guid: d5eb141578fa1e5498d1c77b9d889308, type: 3}
   - {fileID: 21300000, guid: 9e197a1515abdbc4b91281eee95e8b33, type: 3}
-  - {fileID: 21300000, guid: ea17bb15006be534b82d529ef079bdcb, type: 3}
   - {fileID: 21300000, guid: b6a44845de1342748b8a462a2f34a4ae, type: 3}
   - {fileID: 21300000, guid: 4b150a558ea24f8468bef83964288a5a, type: 3}
   - {fileID: 21300000, guid: c25ff3a5346b2dc40addf2969ea0b2b0, type: 3}
@@ -166,6 +165,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 77887c8fe073671478b7b402b30fbea5, type: 3}
   - {fileID: 21300000, guid: f265789f1ee6ca446a7b7bb339b733e2, type: 3}
   - {fileID: 21300000, guid: f965d7af4dbf55346a4e219f7ca1d41f, type: 3}
+  - {fileID: 21300000, guid: 348686cff6da2044082b4977a41ad615, type: 3}
   - {fileID: 21300000, guid: e10076dfef6ea354f867149d8488bb00, type: 3}
   - {fileID: 21300000, guid: 9abf8eff13c66f74cbbe524729a9e698, type: 3}
   m_PackedSpriteNamesToIndex:
@@ -211,7 +211,6 @@ SpriteAtlas:
   - Mid
   - Restart Button
   - arrow_up
-  - Pause Panel
   - Tenis Ball
   - Bowling Ball
   - Speed Up x2 Texture (2)
@@ -284,6 +283,7 @@ SpriteAtlas:
   - Cloudy Morning
   - 8 Ball Pool
   - Water Skin
+  - Pause Panel
   - Graffiti-Transparent-PNG (12)
   - Heart (8)
   m_RenderDataMap: {}

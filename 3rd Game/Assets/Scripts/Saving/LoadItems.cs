@@ -17,7 +17,9 @@ public class LoadItems : MonoBehaviour
     {             
         Debug.Log("I Will Assign The Skybox, Skin and Instansiate the right Post Processing");
 
-        SetSkin(GetComponent<CameraMovement>().Player.GetComponent<MeshFilter>());
+        Transform Player = GetComponent<CameraMovement>().Player;
+
+        SetSkin(Player.GetComponent<MeshFilter>());
 
         RenderSettings.skybox = Skybox;
 
@@ -25,8 +27,9 @@ public class LoadItems : MonoBehaviour
         Volume PostPro = FindObjectOfType<Volume>();
 
         PostPro.profile = Profile;
-              
-    }    
+
+        Player.GetComponent<PlayerMovement>().Lens = (LensDistortion)PostPro.profile.components.Find(comp => comp is LensDistortion);
+    }
 
     void SetSkin(MeshFilter mr)
     {

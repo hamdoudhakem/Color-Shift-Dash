@@ -80,7 +80,9 @@ public class ShopManager : MonoBehaviour
 
     public void SwitchTabs(TextMeshProUGUI Header)
     {
-        if(Header.text == SkinsHeader.text)
+        MainMenuAudioMan.MaAud.SelectOrEquip.Play();
+
+        if (Header.text == SkinsHeader.text)
         {
             Skins.gameObject.SetActive(true);
             Skyboxes.gameObject.SetActive(false);
@@ -101,6 +103,8 @@ public class ShopManager : MonoBehaviour
     public void BuyOrEquipSkin(TextMeshProUGUI Item)
     {
         string skinName = Item.transform.parent.name;
+
+        MainMenuAudioMan.MaAud.SelectOrEquip.Play();
 
         if (PlayerData.Skins.Contains(skinName))
         {
@@ -151,6 +155,8 @@ public class ShopManager : MonoBehaviour
     {
         string skyboxName = Item.transform.parent.name;
 
+        MainMenuAudioMan.MaAud.SelectOrEquip.Play();
+
         if (PlayerData.Skyboxes.Contains(skyboxName))
         {           
             LastEquipedSkybox.text = "Equip";
@@ -188,6 +194,8 @@ public class ShopManager : MonoBehaviour
 
         PlayerData.Money -= Cost;
         MoneyDisplay.text = PlayerData.Money.ToString();
+
+        MainMenuAudioMan.MaAud.Buy.Play();
 
         string type = ItemToBuy.transform.parent.parent.tag;
 

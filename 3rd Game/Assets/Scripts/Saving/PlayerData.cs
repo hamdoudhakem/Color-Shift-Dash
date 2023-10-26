@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerData
 {
     //Data for Use
-    public static int Money = 900;
+    public static int Money = 900/*0*/;
 
     public static int CurrentLv = 1;
 

@@ -112,6 +112,11 @@ public class SwipeLvs : MonoBehaviour
         TargetSlider = new Vector2(SlidersPos[index] , Sliders.position.y);
         Siding = true;
 
+        if (Mathf.Abs(Sliders.position.x - TargetSlider.x) >= 20)
+        {
+            MainMenuAudioMan.MaAud.SwitchLvTab.Play();
+        }
+
     }
 
     private void SaveEachSliderPos()

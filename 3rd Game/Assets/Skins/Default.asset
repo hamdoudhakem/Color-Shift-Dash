@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce341fc0fdf69c24a8ab850c694dbafb, type: 3}
   m_Name: Default
   m_EditorClassIdentifier: 
-  mesh: {fileID: 0}
-  CustMaterials: 1
+  SkinName: 
+  mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  CustMaterials: 0
   Materials: []
