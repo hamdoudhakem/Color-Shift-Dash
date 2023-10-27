@@ -141,7 +141,8 @@ MonoBehaviour:
   ChangeRate0To1: 0.61
   ChangeRate1To2: 0.358
   StopRate: 10
-  LensDis: -0.35
+  LensDisLv1: -0.35
+  LensDisLv2: -0.4
   LensDisChangeSpeed: 0.03
   ViewChange: 8
   ViewChangeSpeed: 0.1

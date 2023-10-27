@@ -134,5 +134,7 @@ public class SwipeLvs : MonoBehaviour
         //Cause When I touch the Return Button it considers it a touching
         Touching = false;
         gameObject.SetActive(false);
+
+        MainMenuAudioMan.MaAud.Click.Play();
     }
 }

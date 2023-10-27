@@ -97,6 +97,7 @@ public class PlayerInteractions : MonoBehaviour
         else if (other.gameObject.layer == SpeedBoost)
         {
             float BoostVal = 0, BoostTimeVal = SpeedBoostTime;
+            int BoostLv = 1;
             bool TakeInput = true;
             BoostProperties Bp = other.GetComponent<BoostProperties>();
 
@@ -104,11 +105,13 @@ public class PlayerInteractions : MonoBehaviour
             if (other.tag == "Boost lv 1")
             {
                 BoostVal = BoostValueLv1;
+                BoostLv = 1;
             }
             else if (other.tag == "Boost lv 2")
             {
                 BoostVal = BoostValueLv2;
                 TakeInput = false;
+                BoostLv = 2;
             }
 
             if (Bp.OverideBoostVal)
@@ -121,7 +124,7 @@ public class PlayerInteractions : MonoBehaviour
                 BoostTimeVal = Bp.OveridedBoostTime;
             }
 
-            StartCoroutine(Pm.SpeedUp(BoostVal, BoostTimeVal, TakeInput));
+            StartCoroutine(Pm.SpeedUp(BoostVal, BoostTimeVal, TakeInput, BoostLv));
 
         }
         else if (other.tag == "Cannon Stuff")

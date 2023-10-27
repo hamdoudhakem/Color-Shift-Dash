@@ -10,6 +10,9 @@ public class PlayerMovement : MonoBehaviour
     public Camera Cam;
     [HideInInspector] public LensDistortion Lens;
     public ParticleSystem LandEff;
+
+    [Header("Speed Values")]
+
     [Tooltip("The Amount of friction applied after the player gets his hands of the screen")]
     [Range(1, 20)]
     [SerializeField] private float FrictionValue;
@@ -27,14 +30,20 @@ public class PlayerMovement : MonoBehaviour
     public float ChangeRate0To1, ChangeRate1To2;
     [Tooltip("How much time it will take for the player to stop when on the Finish line (1 is 1 second , 2 is 1/2 second)")] [Range(0 , 10f)]
     public float StopRate;
+
+    [Header("Boosting Effects")]
+
     [Tooltip("The New Value I Will Set for The Lens Distortion Intensity when Speeding Up")]
-    public float LensDis;
-    [Tooltip("The New Value I Will Set for The Lens Distortion Intensity when Speeding Up")]
+    public float LensDisLv1;
+    public float LensDisLv2;
+    [Tooltip("The Speed At which the Lens Distortion will change it's value from one to another")] [Range(0,1)]
     public float LensDisChangeSpeed;
     [Tooltip("How much the Camera view field will narrow when using a speed boost")]
     public float ViewChange;
     [Tooltip("THe Speed at which the Camera view field will change")]
     public float ViewChangeSpeed;
+
+    [Space]
     public LayerMask GroundLayer;
     public Vector3 GroundedSize;
 
@@ -244,7 +253,7 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.DrawCube(transform.position + Vector3.down * .5f, GroundedSize * 2);
     }
 
-    public IEnumerator SpeedUp(float BoostValue, float BoostTime, bool TakeInput)
+    public IEnumerator SpeedUp(float BoostValue, float BoostTime, bool TakeInput, int BoostLv)
     {
         AudioManager.AudMan.Play("Boost" , true);
         AudioManager.AudMan.Stop("Deboost");
@@ -252,7 +261,14 @@ public class PlayerMovement : MonoBehaviour
         //Boost Effects
         Boosted = true;
         StackedBoosts++;
-        BoostEffect.SetActive(true); 
+        BoostEffect.SetActive(true);
+
+        //Changing The Lens Distortion
+        float LensDis = LensDisLv1;
+        if(BoostLv == 2)
+        {
+            LensDis = LensDisLv2;
+        }
         BoostingEffects(DefaultView + ViewChange, LensDis);
 
         //We Will Change the Input Move and Forward Speed temporarely

@@ -89,7 +89,7 @@ MonoBehaviour:
     loop: 0
     source: {fileID: 0}
   - name: Won
-    Clip: {fileID: 8300000, guid: 36279e0100ff7104bae9d4e8b0b34adf, type: 3}
+    Clip: {fileID: 8300000, guid: 445d1998a453c034c8c80cd20b91d0f4, type: 3}
     volume: 0.2
     pitch: 1
     SpacialBlend: 0

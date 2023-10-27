@@ -13,7 +13,7 @@ public class SettingsManager : MonoBehaviour
     {
         float sound = (Mathf.Log10(NewVal) * 20) + 20;
 
-        Debug.Log("Sound Became : " + sound);
+        //Debug.Log("Sound Became : " + sound);
 
         AudMix.SetFloat("Volume" ,sound != -60 ? sound : -80);
 
