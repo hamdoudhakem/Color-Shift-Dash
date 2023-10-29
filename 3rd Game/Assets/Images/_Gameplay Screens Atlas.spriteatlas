@@ -46,6 +46,7 @@ SpriteAtlas:
     - {fileID: 102900000, guid: ecacee4baacb81240a1198254137c6c1, type: 3}
     - {fileID: 102900000, guid: 210d51586277b6e4c879d1e8d43cfa53, type: 3}
     - {fileID: 102900000, guid: 73a7ada040ec5ac489644586456af941, type: 3}
+    - {fileID: 102900000, guid: 32e30ca0b65bc3446ba2ea37c78d82dc, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -112,6 +113,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 15f3d6c7cc688ca468028632752baec5, type: 3}
   - {fileID: 21300000, guid: cdf888d7c40fbf74cb67cd74bb3f846e, type: 3}
   - {fileID: 21300000, guid: 425254e72c2889d489a9195402835189, type: 3}
+  - {fileID: 21300000, guid: 7f802ff7ce42df1488ed1a60810727bb, type: 3}
   - {fileID: 21300000, guid: 20ee9b28f41e9134286e94ac8b990b85, type: 3}
   - {fileID: 21300000, guid: a9d38168bfb05214a9928ff1b38de3d1, type: 3}
   - {fileID: 21300000, guid: 01d7b388e7827ca45a56bd1b632ffde1, type: 3}
@@ -160,8 +162,10 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 7777479e4fca27247885953736335621, type: 3}
   - {fileID: 21300000, guid: 5d0101be2114cca41b6f261106f73e9e, type: 3}
   - {fileID: 21300000, guid: 1f7454be9890465448c4a5aea8c9add1, type: 3}
+  - {fileID: 21300000, guid: 3fd43abe671958140b35ef11f9bec8f5, type: 3}
   - {fileID: 21300000, guid: 48779cee2a45c9d4db3961253e40d6f2, type: 3}
   - {fileID: 21300000, guid: dae0b85ff830c2a45a71424a80f19f3f, type: 3}
+  - {fileID: 21300000, guid: ba764e6f2f69a544080d33be5b7e375b, type: 3}
   - {fileID: 21300000, guid: 77887c8fe073671478b7b402b30fbea5, type: 3}
   - {fileID: 21300000, guid: f265789f1ee6ca446a7b7bb339b733e2, type: 3}
   - {fileID: 21300000, guid: f965d7af4dbf55346a4e219f7ca1d41f, type: 3}
@@ -230,6 +234,7 @@ SpriteAtlas:
   - Zebra
   - Transparent Sprites
   - Wet
+  - Glow
   - Graffiti-Transparent-PNG 1
   - texture-PNG-by-PhotoshopSupply6 (1)
   - arrow_right
@@ -278,8 +283,10 @@ SpriteAtlas:
   - Cosmos
   - Star
   - Fluff Ball Day
+  - Glow (1)
   - Daile
   - Volley Ball
+  - Pop (circles) (1)
   - Cloudy Morning
   - 8 Ball Pool
   - Water Skin
