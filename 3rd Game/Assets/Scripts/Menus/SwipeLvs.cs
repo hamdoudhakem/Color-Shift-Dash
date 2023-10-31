@@ -3,6 +3,8 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class SwipeLvs : MonoBehaviour
 {
@@ -16,7 +18,7 @@ public class SwipeLvs : MonoBehaviour
     private float SliderDif;
     private List<float> SlidersPos;
     private Vector2 StartPos, UpdatingPos, TargetSlider;
-    private bool Touching, AlreadySet = false , Siding;     
+    private bool Touching, AlreadySet = false , Siding;
 
     void Start()
     {
@@ -116,7 +118,6 @@ public class SwipeLvs : MonoBehaviour
         {
             MainMenuAudioMan.MaAud.SwitchLvTab.Play();
         }
-
     }
 
     private void SaveEachSliderPos()
