@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using EZCameraShake;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -46,6 +47,8 @@ public class PlayerMovement : MonoBehaviour
     [Space]
     public LayerMask GroundLayer;
     public Vector3 GroundedSize;
+
+    private CameraShakeInstance Shake;
 
     [HideInInspector] public bool MoveForward, InputMove;
     [HideInInspector] public Rigidbody rb;
@@ -253,6 +256,8 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.DrawCube(transform.position + Vector3.down * .5f, GroundedSize * 2);
     }
 
+    #region Speed Up Related
+
     public IEnumerator SpeedUp(float BoostValue, float BoostTime, bool TakeInput, int BoostLv)
     {
         AudioManager.AudMan.Play("Boost" , true);
@@ -262,6 +267,7 @@ public class PlayerMovement : MonoBehaviour
         Boosted = true;
         StackedBoosts++;
         BoostEffect.SetActive(true);
+        Shake = CameraShaker.Instance.StartShake(.5f, 2.5f, .3f);
 
         //Changing The Lens Distortion
         float LensDis = LensDisLv1;
@@ -295,6 +301,7 @@ public class PlayerMovement : MonoBehaviour
         {
             Boosted = false;
             BoostingEffects(DefaultView , 0);
+            Shake.StartFadeOut(.5f);
         }
         
     }
@@ -306,7 +313,11 @@ public class PlayerMovement : MonoBehaviour
 
         ChangeViewField = true;
         ChangeLensDis = true;
-    }      
+    }
+
+    #endregion
+
+    #region Finishing Or Dying Related
 
     public IEnumerator Stop()
     {
@@ -316,6 +327,7 @@ public class PlayerMovement : MonoBehaviour
         InputMove = false;
         BoostEffect.SetActive(false);
         BoostingEffects(DefaultView, 0);
+        Shake.StartFadeOut(0);
         yield return new WaitForEndOfFrame();
 
         rb.velocity = new Vector3(0, rb.velocity.y, DefaultForSpeed);
@@ -330,4 +342,15 @@ public class PlayerMovement : MonoBehaviour
 
         rb.velocity = Vector3.zero;
     }
+
+    public void PlayerDied()
+    {
+        Lens.active = false;
+        if(Shake != null)
+        {
+            Shake.StartFadeOut(0);
+        }
+    }
+
+    #endregion
 }

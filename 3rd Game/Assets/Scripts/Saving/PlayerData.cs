@@ -24,12 +24,12 @@ public class PlayerData
 
     public static List<string> Skyboxes = new List<string>() { "Mega Sun" };
 
-    public static bool FirstTime = true;
+    public static Dictionary<int, bool> LvXTuToUsed = new Dictionary<int, bool>() { { 1, false } };
 
     //Data for Save
     public int MoneyData;
     public int CurrentLvData;
-    public bool FirstTimeData;
+    public Dictionary<int, bool> LvXTuToUsedData = new Dictionary<int, bool>();
     public Dictionary<int, int> LvXStarsData = new Dictionary<int, int>(); 
     public List<int>[] CollectedStarsIndexData = new List<int>[30];
     public string CurrentSkinData;
@@ -49,7 +49,7 @@ public class PlayerData
         CurrentSkinData = CurrentSkin;
         CurrentSkyboxData = CurrentSkybox;
         CollectedStarsIndexData = CollectedStarsIndex;
-        FirstTimeData = FirstTime;
+        LvXTuToUsedData = LvXTuToUsed;
     }
 
     public void Assign()
@@ -63,6 +63,6 @@ public class PlayerData
         CurrentSkin = CurrentSkinData;
         CurrentSkybox = CurrentSkyboxData;
         CollectedStarsIndex = CollectedStarsIndexData;
-        FirstTime = FirstTimeData;
+        LvXTuToUsed = LvXTuToUsedData;
     }
 }

@@ -36,9 +36,9 @@ public class AudioManager : MonoBehaviour
         AS.spatialBlend = s.SpacialBlend;
 
         AS.outputAudioMixerGroup = mixer;
-    }   
+    }
 
-    public void Play(string name, bool Override = false)
+    public void Play(string name, bool Override = false, bool UnPaused = false)
     {
         Sound s = sounds.Find(sound => sound.name.Contains(name));
 
@@ -48,7 +48,7 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        if (!Paused)
+        if (!Paused || UnPaused)
         {
             if (Override || !s.source.isPlaying)
             {

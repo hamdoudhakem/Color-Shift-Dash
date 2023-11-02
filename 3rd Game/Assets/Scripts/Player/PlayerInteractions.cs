@@ -223,6 +223,7 @@ public class PlayerInteractions : MonoBehaviour
 
         Lost.Invoke();
 
+        Pm.PlayerDied();
         CameraShaker.Instance.ShakeOnce(7, 5, .1f, .5f);
 
         Instantiate(ParticleEffect, transform.position, new Quaternion()).transform.Rotate(Vector3.right * -90);

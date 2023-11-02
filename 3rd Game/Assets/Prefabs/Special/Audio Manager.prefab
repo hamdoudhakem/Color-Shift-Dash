@@ -200,13 +200,6 @@ MonoBehaviour:
     SpacialBlend: 0
     loop: 1
     source: {fileID: 0}
-  - name: Buy
-    Clip: {fileID: 0}
-    volume: 0.5
-    pitch: 1
-    SpacialBlend: 0
-    loop: 0
-    source: {fileID: 0}
 --- !u!82 &2270249668450733433
 AudioSource:
   m_ObjectHideFlags: 0

@@ -31,19 +31,33 @@ public class ScreensEventHandlers : MonoBehaviour
 
     public void Pause_EventHandler()
     {
-        AudioManager.AudMan.PauseAll();
-        PauseMenu.SetActive(true);
-        Time.timeScale = 0;
+        Pause();
 
+        PauseMenu.SetActive(true);
+    }
+
+    //I Called It Using a the Tutorial Event So Let it be
+    public void Pause()
+    {
+        AudioManager.AudMan.PauseAll();
+
+        Time.timeScale = 0;
         IsPaused = true;
     }
 
     public void Resume_EventHandler()
     {
-        AudioManager.AudMan.UnPauseAll();
-        PauseMenu.SetActive(false);
-        Time.timeScale = 1;
+        UnPause();
 
+        PauseMenu.SetActive(false);
+    }
+
+    //I Called It Using a the Tutorial Event So Let it be
+    public void UnPause()
+    {
+        AudioManager.AudMan.UnPauseAll();
+
+        Time.timeScale = 1;
         IsPaused = false;
     }
 
