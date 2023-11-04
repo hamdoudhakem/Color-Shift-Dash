@@ -47,8 +47,10 @@ public class Tutorial : MonoBehaviour
     private Image[] IndexDots;
 
     /// <summary>
-    /// Every Point and it's the Coresponding Tuto (Slider UI) must have the Same getchild() Index
-    /// (They Must have the same order if the Point if 2nd child the TuTo must Also Be 2nd Child)
+    /// 1 - Every Point and it's the Coresponding Tuto (Slider UI) must have the Same getchild() Index
+    /// (They Must have the same order if the Point is 2nd child the TuTo must Also Be the 2nd Child)
+    /// 2 - The 2nd, 3rd and so on Tuto Sliders (Videos) must be smaller than the First one for  
+    /// the scaling up and down effect to work when switching between them 
     /// </summary>
 
     void Awake()
@@ -65,15 +67,15 @@ public class Tutorial : MonoBehaviour
         Siding = false;
         InTuto = false;
         CurSlide = 0;
-        CurPointIndex = 0; 
-        CurPoint = TutorialCheckPo.transform.GetChild(CurPointIndex);
+        CurPointIndex = 0;
+        UnusedIndexsDotsOpacity = -1;
+        CurPoint = TutorialCheckPo.GetChild(CurPointIndex);
     }
 
     void Update()
     {
         if (!InTuto)
         {
-
             if (Player.transform.position.z - CurPoint.position.z >= 0)
             {
                 InTuto = true;
@@ -88,18 +90,16 @@ public class Tutorial : MonoBehaviour
 
                 OrigScale = CurTuto.GetChild(0).localScale;
 
+                CurSlide = 0;
+
                 if (CurTuto.childCount > 1)
                 {
-                    CurSlide = 0;
                     DifBetwSlides = CurTuto.GetChild(1).position.x - CurTuto.GetChild(0).position.x;                    
-                }
-                else
-                {
-                    NextBut.SetActive(false);
-                }
+                }               
 
                 SetUpDotIndexs();
 
+                SetUpSwitchingButs();                
             }
         }
 
@@ -129,47 +129,14 @@ public class Tutorial : MonoBehaviour
                 }
             }
         }
-    }
-
-    private void SetUpDotIndexs()
-    {
-        IndexDots = new Image[CurTuto.childCount];
-
-        for (int i = 0; i < CurTuto.childCount; i++)
-        {
-            IndexDots[i] = SlidesIndexDots.GetChild(i).GetComponent<Image>();
-
-            IndexDots[i].gameObject.SetActive(true);
-        }
-
-        CurIndexDot = SlidesIndexDots.GetChild(0).GetComponent<Image>();
-
-        UnusedIndexsDotsOpacity = IndexDots[1].color.a;
-    }
-
-    private void ActivateSwitchingButtons()
-    {
-        if(CurSlide == 0)
-        {
-            NextBut.SetActive(true);
-            PrevBut.SetActive(false);
-        }
-        else if(CurSlide == CurTuto.childCount - 1)
-        {
-            PrevBut.SetActive(true);
-            NextBut.SetActive(false);
-        }
-        else
-        {
-            PrevBut.SetActive(true);
-            NextBut.SetActive(true);
-        }
-    }
+    }    
 
     public void NextSlide()
     {
         if(CurSlide < CurTuto.childCount - 1)
         {
+            CheckLastSlide();
+
             LastSlide = CurTuto.GetChild(CurSlide);
             NewSlide = CurTuto.GetChild(CurSlide + 1);
             NewSlide.gameObject.SetActive(true);
@@ -193,6 +160,8 @@ public class Tutorial : MonoBehaviour
     {
         if (CurSlide > 0)
         {
+            CheckLastSlide();
+
             LastSlide = CurTuto.GetChild(CurSlide);
             NewSlide = CurTuto.GetChild(CurSlide - 1);
             NewSlide.gameObject.SetActive(true);
@@ -210,7 +179,78 @@ public class Tutorial : MonoBehaviour
 
             UpdateIndexsDots();
         }
+    }       
+  
+
+    #region Setting Up and Updating Features (Buttons, Indexes Dots ...)
+
+    void SetUpSwitchingButs()
+    {
+        if(CurTuto.childCount == 1)
+        {
+            NextBut.SetActive(false);
+            PrevBut.SetActive(false);
+        }
+        else if (CurTuto.childCount > 1)
+        {
+            NextBut.SetActive(true);
+            PrevBut.SetActive(false);
+        }
     }
+
+    private void ActivateSwitchingButtons()
+    {
+        if (CurSlide == 0)
+        {
+            NextBut.SetActive(true);
+            PrevBut.SetActive(false);
+        }
+        else if (CurSlide == CurTuto.childCount - 1)
+        {
+            PrevBut.SetActive(true);
+            NextBut.SetActive(false);
+        }
+        else
+        {
+            PrevBut.SetActive(true);
+            NextBut.SetActive(true);
+        }
+    }
+
+    private void SetUpDotIndexs()
+    {
+        if(IndexDots == null)
+        {
+            //This Is In case I Still Haven't Seen the Tutorial
+            IndexDots = new Image[CurTuto.childCount];
+
+            for (int i = 0; i < CurTuto.childCount; i++)
+            {
+                IndexDots[i] = SlidesIndexDots.GetChild(i).GetComponent<Image>();
+
+                IndexDots[i].gameObject.SetActive(true);
+            }
+
+            CurIndexDot = SlidesIndexDots.GetChild(0).GetComponent<Image>();
+                        
+            UnusedIndexsDotsOpacity = IndexDots[1].color.a;
+            
+        }       
+        else
+        {
+            //This is in case I'm seeing the tutorial AGAIN
+            for (int i = 1; i < CurTuto.childCount; i++)
+            {               
+                IndexDots[i].gameObject.SetActive(true);
+
+                IndexDots[i].color = new Color(1, 1, 1, UnusedIndexsDotsOpacity);
+            }
+
+            IndexDots[0].color = Color.white;
+
+            CurIndexDot = IndexDots[0];
+        }
+    } 
 
     void UpdateIndexsDots()
     {
@@ -221,6 +261,21 @@ public class Tutorial : MonoBehaviour
         CurIndexDot = IndexDots[CurSlide];
     }
 
+    void CheckLastSlide()
+    {
+        //This Function is To Make sure that if the Player switches 2 times in a row the First Silde WILL
+        //Disactivate and so the The Video will always Play when the player reaches it (On awake)
+
+        if (LastSlide != null)
+        {
+            if (LastSlide.gameObject.activeSelf)
+            {
+                LastSlide.gameObject.SetActive(false);
+            }
+        }
+    }
+
+    #endregion
 
     public void GoToSlide(int NewSlide)
     {
@@ -256,9 +311,18 @@ public class Tutorial : MonoBehaviour
 
         CurTuto.GetChild(0).localScale = OrigScale;
 
-        for(int i = 0; i < IndexDots.Length; i++)
+        for(int i = 1; i < IndexDots.Length; i++)
         {
             IndexDots[i].gameObject.SetActive(false);
         }
+
+        CurPointIndex++;
+
+        if(CurPointIndex < TutorialCheckPo.childCount)
+        {
+            CurPoint = TutorialCheckPo.GetChild(CurPointIndex);
+        }
+
+        InTuto = false;
     }
 }
