@@ -12,7 +12,7 @@ public class Tutorial : MonoBehaviour
     public Transform Player;
     [Tooltip("I Will Use this Object to start the Coresponding Tuto Assigned to the reached Point")]
     public Transform Tutos;
-    public Transform TutorialCheckPo;
+    public float[] TutorialStartPoints;
 
     [Header("Features Helping Tutos Navigating")]
       [Tooltip("This objects is the one containing the Dots at the bottom which tells which slider I'm in")]
@@ -29,7 +29,6 @@ public class Tutorial : MonoBehaviour
     public UnityEvent GotOutTuto;
 
     private Transform CurTuto;
-    private Transform CurPoint;
     private int CurPointIndex;
     private bool InTuto;
     private float DifBetwSlides;
@@ -47,8 +46,8 @@ public class Tutorial : MonoBehaviour
     private Image[] IndexDots;
 
     /// <summary>
-    /// 1 - Every Point and it's the Coresponding Tuto (Slider UI) must have the Same getchild() Index
-    /// (They Must have the same order if the Point is 2nd child the TuTo must Also Be the 2nd Child)
+    /// 1 - Every Point and it's Coresponding Tuto (Slider UI) must have the Same getchild() Index
+    /// (They Must have the same order if the Point is 2nd in the array the TuTo must Also Be the 2nd Child)
     /// 2 - The 2nd, 3rd and so on Tuto Sliders (Videos) must be smaller than the First one for  
     /// the scaling up and down effect to work when switching between them 
     /// </summary>
@@ -57,7 +56,6 @@ public class Tutorial : MonoBehaviour
     {
         if (PlayerData.LvXTuToUsed[SceneManager.GetActiveScene().buildIndex])
         {
-            Destroy(TutorialCheckPo.gameObject);
             Destroy(gameObject);
         }
     }
@@ -69,63 +67,66 @@ public class Tutorial : MonoBehaviour
         CurSlide = 0;
         CurPointIndex = 0;
         UnusedIndexsDotsOpacity = -1;
-        CurPoint = TutorialCheckPo.GetChild(CurPointIndex);
     }
 
     void Update()
     {
-        if (!InTuto)
+        if (!PlayerInteractions.Dead)
         {
-            if (Player.transform.position.z - CurPoint.position.z >= 0)
+            if (!InTuto)
             {
-                InTuto = true;
-
-                GotInTuto.Invoke();
-
-                CurTuto = Tutos.GetChild(CurPointIndex);
-
-                CurTuto.gameObject.SetActive(true);
-
-                OrigTutoPos = CurTuto.position;
-
-                OrigScale = CurTuto.GetChild(0).localScale;
-
-                CurSlide = 0;
-
-                if (CurTuto.childCount > 1)
+                if (Player.transform.position.z - TutorialStartPoints[CurPointIndex] >= 0)
                 {
-                    DifBetwSlides = CurTuto.GetChild(1).position.x - CurTuto.GetChild(0).position.x;                    
-                }               
 
-                SetUpDotIndexs();
+                    InTuto = true;
 
-                SetUpSwitchingButs();                
+                    GotInTuto.Invoke();
+
+                    CurTuto = Tutos.GetChild(CurPointIndex);
+
+                    CurTuto.gameObject.SetActive(true);
+
+                    OrigTutoPos = CurTuto.position;
+
+                    OrigScale = CurTuto.GetChild(0).localScale;
+
+                    CurSlide = 0;
+
+                    if (CurTuto.childCount > 1)
+                    {
+                        DifBetwSlides = CurTuto.GetChild(1).position.x - CurTuto.GetChild(0).position.x;
+                    }
+
+                    SetUpDotIndexs();
+
+                    SetUpButs();
+                }
             }
-        }
 
-        if (Siding)
-        {
-            CurTuto.position = Vector3.Lerp(CurTuto.position, TargetPos, Speed);
-
-            LastSlide.localScale = Vector3.Lerp(LastSlide.localScale, LastSlideTargetScale, Speed);
-
-            NewSlide.localScale = Vector3.Lerp(NewSlide.localScale, NewSlideTargetScale, Speed);
-
-            if((CurTuto.position - TargetPos).magnitude < 3)
+            if (Siding)
             {
-                CurTuto.position = TargetPos;
+                CurTuto.position = Vector3.Lerp(CurTuto.position, TargetPos, Speed);
 
-                LastSlide.localScale = LastSlideTargetScale;
+                LastSlide.localScale = Vector3.Lerp(LastSlide.localScale, LastSlideTargetScale, Speed);
 
-                NewSlide.localScale = NewSlideTargetScale;
+                NewSlide.localScale = Vector3.Lerp(NewSlide.localScale, NewSlideTargetScale, Speed);
 
-                LastSlide.gameObject.SetActive(false);
-
-                Siding = false;
-
-                if(CurSlide == CurTuto.childCount - 1)
+                if ((CurTuto.position - TargetPos).magnitude < 3)
                 {
-                    ExitBut.SetActive(true);
+                    CurTuto.position = TargetPos;
+
+                    LastSlide.localScale = LastSlideTargetScale;
+
+                    NewSlide.localScale = NewSlideTargetScale;
+
+                    LastSlide.gameObject.SetActive(false);
+
+                    Siding = false;
+
+                    if (CurSlide == CurTuto.childCount - 1)
+                    {
+                        ExitBut.SetActive(true);
+                    }
                 }
             }
         }
@@ -184,10 +185,11 @@ public class Tutorial : MonoBehaviour
 
     #region Setting Up and Updating Features (Buttons, Indexes Dots ...)
 
-    void SetUpSwitchingButs()
+    void SetUpButs()
     {
         if(CurTuto.childCount == 1)
         {
+            ExitBut.SetActive(true);
             NextBut.SetActive(false);
             PrevBut.SetActive(false);
         }
@@ -219,9 +221,9 @@ public class Tutorial : MonoBehaviour
 
     private void SetUpDotIndexs()
     {
-        if(IndexDots == null)
-        {
-            //This Is In case I Still Haven't Seen the Tutorial
+        //This Is In case I Still Haven't Seen the Tutorial
+        if (IndexDots == null)
+        {           
             IndexDots = new Image[CurTuto.childCount];
 
             for (int i = 0; i < CurTuto.childCount; i++)
@@ -233,12 +235,16 @@ public class Tutorial : MonoBehaviour
 
             CurIndexDot = SlidesIndexDots.GetChild(0).GetComponent<Image>();
                         
-            UnusedIndexsDotsOpacity = IndexDots[1].color.a;
-            
+            if(IndexDots.Length > 1)
+            {
+                UnusedIndexsDotsOpacity = IndexDots[1].color.a;
+            }
+
         }       
         else
         {
             //This is in case I'm seeing the tutorial AGAIN
+
             for (int i = 1; i < CurTuto.childCount; i++)
             {               
                 IndexDots[i].gameObject.SetActive(true);
@@ -316,12 +322,19 @@ public class Tutorial : MonoBehaviour
             IndexDots[i].gameObject.SetActive(false);
         }
 
+        ExitBut.SetActive(false);
+
         CurPointIndex++;
 
-        if(CurPointIndex < TutorialCheckPo.childCount)
+        //This means that The Tutorial Ended
+        if(CurPointIndex >= TutorialStartPoints.Length)
         {
-            CurPoint = TutorialCheckPo.GetChild(CurPointIndex);
-        }
+            gameObject.SetActive(false);
+
+            PlayerData.LvXTuToUsed[SceneManager.GetActiveScene().buildIndex] = true;
+
+            SaveSystem.Save();
+        }       
 
         InTuto = false;
     }

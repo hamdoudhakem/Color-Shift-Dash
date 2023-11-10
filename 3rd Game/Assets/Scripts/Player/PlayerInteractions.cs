@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using static UnityEngine.ParticleSystem;
 
 public class PlayerInteractions : MonoBehaviour
 {
@@ -213,24 +214,31 @@ public class PlayerInteractions : MonoBehaviour
 
     void Die()
     {
-        Debug.Log("You Died !");        
+        //To not Go In 2 Times in Row
+        if (!Dead)
+        {
+            Debug.Log("You Died !");
 
-        Dead = true;
+            Dead = true;
 
-        AudioManager.AudMan.StopAll();
-        AudioManager.AudMan.Play("Lost");
-        AudioManager.AudMan.Play("Died");        
+            AudioManager.AudMan.StopAll();
+            AudioManager.AudMan.Play("Lost");
+            AudioManager.AudMan.Play("Died");
 
-        Lost.Invoke();
+            //Lost.Invoke();
 
-        Pm.PlayerDied();
-        CameraShaker.Instance.ShakeOnce(7, 5, .1f, .5f);
+            Pm.PlayerDied();
+            CameraShaker.Instance.ShakeOnce(7, 5, .1f, .5f);
 
-        Instantiate(ParticleEffect, transform.position, new Quaternion()).transform.Rotate(Vector3.right * -90);
+            ParticleSystem PS = Instantiate(ParticleEffect, transform.position, new Quaternion()).GetComponent<ParticleSystem>();
+            PS.transform.Rotate(Vector3.right * -90);
+            MainModule m = PS.main;
+            m.startColor = Mat.material.color;
 
-        Pm.StopAllCoroutines();
+            Pm.StopAllCoroutines();
 
-        Destroy(gameObject);
+            Destroy(gameObject);
+        }       
     }
 
     #endregion

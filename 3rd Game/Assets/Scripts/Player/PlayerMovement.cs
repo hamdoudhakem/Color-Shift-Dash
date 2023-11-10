@@ -43,6 +43,11 @@ public class PlayerMovement : MonoBehaviour
     public float ViewChange;
     [Tooltip("THe Speed at which the Camera view field will change")]
     public float ViewChangeSpeed;
+    [Tooltip("How Much The Camera Will Go Back When Speeding up")]
+    public float ZOffsetChange;
+    [Tooltip("How Fast the Z Camera Offset Will Change")]
+    public float ZOffsetChangeSpeed;
+
 
     [Space]
     public LayerMask GroundLayer;
@@ -57,10 +62,11 @@ public class PlayerMovement : MonoBehaviour
 
     private int StackedBoosts;
 
-    private bool ChangeLensDis, ChangeViewField;
-    private float DefaultView, TargetView , TargetLensDis;
+    private bool ChangeLensDis, ChangeViewField, ChangeCamOffset;    
+    private float DefaultView, TargetView , TargetLensDis, DefaultCamOffset, TargetCamOffset;
     private float DefaultForSpeed;
     private float LastTargetSpeed;
+    private CameraMovement CM;
 
     private bool Grounded , LastGrounded;
     private bool Boosted;
@@ -81,6 +87,8 @@ public class PlayerMovement : MonoBehaviour
      
         rb = GetComponent<Rigidbody>();
         BoostEffect = Cam.transform.GetChild(0).gameObject;
+        CM = Cam.transform.parent.GetComponent<CameraMovement>();
+        DefaultCamOffset = CM.Offset.z;
 
         DefaultView = Cam.fieldOfView;
         Lens = (LensDistortion)FindObjectOfType<Volume>().profile.components.Find(comp => comp is LensDistortion);
@@ -158,11 +166,13 @@ public class PlayerMovement : MonoBehaviour
 
         #region Visual Effects For Speeding Up
 
+        float Remaining;
+
         if (ChangeViewField)
         {
             Cam.fieldOfView = Mathf.Lerp(Cam.fieldOfView, TargetView, ViewChangeSpeed);
 
-            float Remaining = Mathf.Abs(Cam.fieldOfView - TargetView);
+            Remaining = Mathf.Abs(Cam.fieldOfView - TargetView);
 
             if (Remaining < .2f)
             {
@@ -180,13 +190,28 @@ public class PlayerMovement : MonoBehaviour
         {
             Lens.intensity.value = Mathf.Lerp(Lens.intensity.value, TargetLensDis, LensDisChangeSpeed);
 
-            float Remaining = Mathf.Abs(Lens.intensity.value - TargetLensDis);
+            Remaining = Mathf.Abs(Lens.intensity.value - TargetLensDis);
 
             if (Remaining < .06f)
             {
                 Lens.intensity.value = TargetLensDis;
                 ChangeLensDis = false;
             }                       
+        }
+
+        if (ChangeCamOffset)
+        {
+            float NewZ = Mathf.Lerp(CM.Offset.z, TargetCamOffset, ZOffsetChangeSpeed);
+
+            CM.Offset = new Vector3(CM.Offset.x, CM.Offset.y, NewZ);
+
+            Remaining = Mathf.Abs(TargetCamOffset - CM.Offset.z);
+
+            if (Remaining < .5f)
+            {
+                CM.Offset = new Vector3(CM.Offset.x, CM.Offset.y, TargetCamOffset);
+                ChangeCamOffset = false;
+            }
         }
 
         #endregion
@@ -275,7 +300,7 @@ public class PlayerMovement : MonoBehaviour
         {
             LensDis = LensDisLv2;
         }
-        BoostingEffects(DefaultView + ViewChange, LensDis);
+        BoostingEffects(DefaultView + ViewChange, LensDis, DefaultCamOffset - ZOffsetChange);
 
         //We Will Change the Input Move and Forward Speed temporarely
         InputMove = TakeInput;
@@ -300,17 +325,19 @@ public class PlayerMovement : MonoBehaviour
         if(StackedBoosts == 0)
         {
             Boosted = false;
-            BoostingEffects(DefaultView , 0);
+            BoostingEffects(DefaultView , 0,DefaultCamOffset);
             Shake.StartFadeOut(.5f);
         }
         
     }
 
-    private void BoostingEffects(float TargetFieldOfView, float TargetLensDistortion)
+    private void BoostingEffects(float TargetFieldOfView, float TargetLensDistortion, float TargetCamOffset)
     {
+        this.TargetCamOffset = TargetCamOffset;
         TargetView = TargetFieldOfView;
         TargetLensDis = TargetLensDistortion;
 
+        ChangeCamOffset = true;
         ChangeViewField = true;
         ChangeLensDis = true;
     }
@@ -326,7 +353,7 @@ public class PlayerMovement : MonoBehaviour
         MoveForward = false;
         InputMove = false;
         BoostEffect.SetActive(false);
-        BoostingEffects(DefaultView, 0);
+        BoostingEffects(DefaultView, 0,DefaultCamOffset);
         Shake.StartFadeOut(0);
         yield return new WaitForEndOfFrame();
 

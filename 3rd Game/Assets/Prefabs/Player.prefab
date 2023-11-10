@@ -146,6 +146,8 @@ MonoBehaviour:
   LensDisChangeSpeed: 0.03
   ViewChange: 8
   ViewChangeSpeed: 0.1
+  ZOffsetChange: 2
+  ZOffsetChangeSpeed: 0.06
   GroundLayer:
     serializedVersion: 2
     m_Bits: 1344
