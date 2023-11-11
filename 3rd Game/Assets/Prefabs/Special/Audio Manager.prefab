@@ -147,7 +147,7 @@ MonoBehaviour:
   - name: Ring Passed
     Clip: {fileID: 8300000, guid: 2bbb7acba5e979b489e465905c0c1d9d, type: 3}
     volume: 0.2
-    pitch: 1
+    pitch: 1.3
     SpacialBlend: 0
     loop: 0
     source: {fileID: 0}

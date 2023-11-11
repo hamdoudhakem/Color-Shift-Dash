@@ -84,12 +84,10 @@ public class DoorsObstBehavior : MonoBehaviour, IObsTypes
         Doors[1].enabled = true;
     }
 
-
     void OnDrawGizmos()
     {
         Gizmos.DrawCube(transform.position + Vector3.back * StartDistance, BoxSize * 2);
     }
-
 
     void Update()
     {

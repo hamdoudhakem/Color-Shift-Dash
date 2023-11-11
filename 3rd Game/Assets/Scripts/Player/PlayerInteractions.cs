@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
-using static UnityEngine.ParticleSystem;
 
 public class PlayerInteractions : MonoBehaviour
 {
@@ -206,10 +205,17 @@ public class PlayerInteractions : MonoBehaviour
         else
         {
             if(col.tag == "Ring")
-            {
-                AudioManager.AudMan.Play("Ring Passed", true);
+            {                
+                StartCoroutine(PlayRingPassSound(col.transform.position)); 
             }
         }     
+    }
+
+    IEnumerator PlayRingPassSound(Vector3 ring)
+    {
+        yield return new WaitUntil(() => ring.z - transform.position.z < -0.5f );
+
+        AudioManager.AudMan.Play("Ring Passed", true);
     }
 
     void Die()
@@ -225,15 +231,14 @@ public class PlayerInteractions : MonoBehaviour
             AudioManager.AudMan.Play("Lost");
             AudioManager.AudMan.Play("Died");
 
-            //Lost.Invoke();
+            Lost.Invoke();
 
             Pm.PlayerDied();
             CameraShaker.Instance.ShakeOnce(7, 5, .1f, .5f);
 
-            ParticleSystem PS = Instantiate(ParticleEffect, transform.position, new Quaternion()).GetComponent<ParticleSystem>();
+            ParticleSystemRenderer PS = Instantiate(ParticleEffect, transform.position, new Quaternion()).GetComponent<ParticleSystemRenderer>();
             PS.transform.Rotate(Vector3.right * -90);
-            MainModule m = PS.main;
-            m.startColor = Mat.material.color;
+            PS.material = Mat.material;
 
             Pm.StopAllCoroutines();
 

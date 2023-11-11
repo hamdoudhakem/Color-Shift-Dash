@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7206252466044423967}
   - component: {fileID: 7206252466044423966}
+  - component: {fileID: 3198933371772726905}
   m_Layer: 5
   m_Name: Tutorial UI
   m_TagString: Untagged
@@ -137,6 +138,25 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3198933371772726905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7206252466044423960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94db03f4868a1564ca1e4cb1eb969f36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurSlides: {fileID: 0}
+  Speed: 0.09
+  ScaleFactor: 1.2
+  NextBut: {fileID: 7206252466783982455}
+  PrevBut: {fileID: 7206252467721140506}
+  SlidesIndexDots: {fileID: 7206252467207767266}
+  UnusedDotsOpac: 0.274
 --- !u!1 &7206252466148858316
 GameObject:
   m_ObjectHideFlags: 0

@@ -50,22 +50,16 @@ SpriteAtlas:
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: 4989e4538d4f5b648a0022a8c3b1a5da, type: 3}
-  - {fileID: 21300000, guid: 190c5334a4d1cf04bb43c5040f090398, type: 3}
-  - {fileID: 21300000, guid: d5eb141578fa1e5498d1c77b9d889308, type: 3}
   - {fileID: 21300000, guid: 4a43c167e485a7f4d928988e6fa237e6, type: 3}
   - {fileID: 21300000, guid: cdf888d7c40fbf74cb67cd74bb3f846e, type: 3}
   - {fileID: 21300000, guid: 699925b88e6a0fa42a0f8c4b6bbfbd49, type: 3}
   - {fileID: 21300000, guid: 92e8a9dc8f85e2640b8f72529ed480d4, type: 3}
-  - {fileID: 21300000, guid: b9a1563df5702784d9d47003fb9ce20e, type: 3}
   m_PackedSpriteNamesToIndex:
   - Pause Buttons frame
-  - Menu Button
-  - Restart Button
   - Star
   - Transparent Sprites
   - Play Button
   - Title Frame
-  - Settings Button
   m_RenderDataMap: {}
   m_Tag: _Shared Atlas
   m_IsVariant: 0

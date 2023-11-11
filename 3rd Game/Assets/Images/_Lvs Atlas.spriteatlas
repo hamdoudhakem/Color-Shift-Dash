@@ -52,8 +52,10 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 69115e01b670da346a91491ff47a0ed2, type: 3}
   - {fileID: 21300000, guid: 41f8cde1cefd7db49805c1bd1e0b9808, type: 3}
   - {fileID: 21300000, guid: 4c3971f1f3e38734c98da6862c30d54a, type: 3}
+  - {fileID: 21300000, guid: 190c5334a4d1cf04bb43c5040f090398, type: 3}
   - {fileID: 21300000, guid: d89af8440d6c21444b4a19c83dbbdb1c, type: 3}
   - {fileID: 21300000, guid: ec694ac45cee4c34a93f4caf3ab4f155, type: 3}
+  - {fileID: 21300000, guid: d5eb141578fa1e5498d1c77b9d889308, type: 3}
   - {fileID: 21300000, guid: c25ff3a5346b2dc40addf2969ea0b2b0, type: 3}
   - {fileID: 21300000, guid: 201a66d662c6cb24eae8a5618ac2d165, type: 3}
   - {fileID: 21300000, guid: c5a395b78583efd4bbdf49268ae37b42, type: 3}
@@ -63,6 +65,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: ea4d70fa8cb337f4ea86b02d063b0b3b, type: 3}
   - {fileID: 21300000, guid: 4c2e169cec9f385458a398fc79246f3c, type: 3}
   - {fileID: 21300000, guid: 95fe542dd3f2b5d49ab4e687401799d8, type: 3}
+  - {fileID: 21300000, guid: b9a1563df5702784d9d47003fb9ce20e, type: 3}
   - {fileID: 21300000, guid: 3fd43abe671958140b35ef11f9bec8f5, type: 3}
   - {fileID: 21300000, guid: ba764e6f2f69a544080d33be5b7e375b, type: 3}
   - {fileID: 21300000, guid: 348686cff6da2044082b4977a41ad615, type: 3}
@@ -70,8 +73,10 @@ SpriteAtlas:
   - 270-2709698_neumob-speed-up-icon-png (5) (1)
   - Pause (3)
   - Depressed Emoji
+  - Menu Button
   - Speed Up x3 Texture (3)
   - menu
+  - Restart Button
   - Speed Up x2 Texture (2)
   - Arrow Head
   - 270-2709698_neumob-speed-up-icon-png (5)
@@ -81,6 +86,7 @@ SpriteAtlas:
   - Circle
   - Speed Up x3 Texture (4)
   - Speed Up x2 Texture (2) (1)
+  - Settings Button
   - Glow (1)
   - Pop (circles) (1)
   - Pause Panel

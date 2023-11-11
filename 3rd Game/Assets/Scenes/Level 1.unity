@@ -1825,7 +1825,7 @@ PrefabInstance:
     - target: {fileID: 1916122169216578401, guid: a19dcd91f83dfac478bce9581943b59a,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1916122169216578403, guid: a19dcd91f83dfac478bce9581943b59a,
         type: 3}
@@ -2460,7 +2460,7 @@ PrefabInstance:
     - target: {fileID: 3791685272271051259, guid: 965d6e53d74e5de468e733ea8e0c38aa,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3791685272330918558, guid: 965d6e53d74e5de468e733ea8e0c38aa,
         type: 3}
@@ -2748,6 +2748,11 @@ PrefabInstance:
       objectReference: {fileID: 1004793451}
     - target: {fileID: 7206252466044423966, guid: 8e10052b9ad873e499c5115fe7aa0e7d,
         type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7206252466044423966, guid: 8e10052b9ad873e499c5115fe7aa0e7d,
+        type: 3}
       propertyPath: TutorialStartPoints.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -2886,11 +2891,36 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7206252466148858316, guid: 8e10052b9ad873e499c5115fe7aa0e7d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7206252466165631868, guid: 8e10052b9ad873e499c5115fe7aa0e7d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7206252466586264476, guid: 8e10052b9ad873e499c5115fe7aa0e7d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7206252466752020356, guid: 8e10052b9ad873e499c5115fe7aa0e7d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7206252467273628139, guid: 8e10052b9ad873e499c5115fe7aa0e7d,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 393856992}
+    - target: {fileID: 7206252467333784865, guid: 8e10052b9ad873e499c5115fe7aa0e7d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7206252467837355233, guid: 8e10052b9ad873e499c5115fe7aa0e7d,
         type: 3}
       propertyPath: m_VideoClip
