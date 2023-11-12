@@ -138,6 +138,8 @@ public class Tutorial : MonoBehaviour, ISlideNavigCaller
     {
         if(CurSlide < CurTuto.childCount - 1)
         {
+            AudioManager.AudMan.Play("Switch Tuto Slide", UnPaused: true);
+
             SN.NextSlide();
             CurSlide++;                 
         }
@@ -147,6 +149,8 @@ public class Tutorial : MonoBehaviour, ISlideNavigCaller
     {
         if (CurSlide > 0)
         {
+            AudioManager.AudMan.Play("Switch Tuto Slide", UnPaused: true);
+
             SN.PrevSlide();
             CurSlide--;
         }

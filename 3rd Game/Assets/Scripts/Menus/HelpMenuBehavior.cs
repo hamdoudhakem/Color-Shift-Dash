@@ -11,8 +11,12 @@ public class HelpMenuBehavior : MonoBehaviour
         Sn = GetComponent<SlidesNavig>();
     }
 
-    public void UpdateSlideNavi()
+    public void SetUpSlideNavi(Transform TabVids)
     {
-       // Sn.SetUpNavig(null, )
+        if(Sn.CurSlides != TabVids)
+        {
+            Sn.ResetSlide();
+            Sn.SetUpNavig(null, TabVids, TabVids.parent.GetChild(1));
+        }           
     }
 }

@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class SlidesNavig : MonoBehaviour
 {     
-    [Tooltip("This is the Parent of The Slides that I Will Show. I Eather Give this a Value From The Inspector and Stick with it or change this value every time Through Script (Set Up Fonction)")]
-    [SerializeField] private Transform CurSlides;
+    //This is the Parent of The Slides that I Will Show. I Eather Give this a Value From The Inspector and Stick with it or change this value every time Through Script (Set Up Fonction)
+    [field: SerializeField] public Transform CurSlides { get; private set; }
     [Tooltip("The Speed At which the Player Switches Between Slides")]
     public float Speed;
     [Tooltip("How Much The Slide at the Forefront will increase scale compared to others (Cant Do more than 2)")]
@@ -32,11 +32,10 @@ public class SlidesNavig : MonoBehaviour
 
     public Vector3 OrigSildePos { get; private set; }
     private Vector3 TargetPos;
-
     private Vector3 LastSlideTargetScale, NewSlideTargetScale, OrigScale;
 
     private ISlideNavigCaller Caller;
-
+       
     void Start()
     {
         Siding = false;
@@ -94,8 +93,6 @@ public class SlidesNavig : MonoBehaviour
             CurSlide++;
             Siding = true;
 
-            AudioManager.AudMan.Play("Switch Tuto Slide", UnPaused: true);
-
             ActivateSwitchingButtons();
 
             UpdateIndexsDots(CurSlide - 1);
@@ -119,8 +116,6 @@ public class SlidesNavig : MonoBehaviour
             CurSlide--;
             Siding = true;
 
-            AudioManager.AudMan.Play("Switch Tuto Slide", UnPaused: true);
-
             ActivateSwitchingButtons();
 
             UpdateIndexsDots(CurSlide + 1);
@@ -142,34 +137,7 @@ public class SlidesNavig : MonoBehaviour
                 LastSlide.gameObject.SetActive(false);
             }
         }
-    }
-
-    public void SetUpNavig(ISlideNavigCaller caller, Transform CurSlides, Transform dots)
-    {
-        this.Caller = caller;
-        this.CurSlides = CurSlides;
-
-        SetBaseVars(dots);        
-
-        Siding = false;
-    }
-
-    private void SetBaseVars(Transform dots)
-    {
-        OrigSildePos = CurSlides.position;
-        OrigScale = CurSlides.GetChild(0).localScale;
-
-        CurSlide = 0;
-
-        if (CurSlides.childCount > 1)
-        {
-            DifBetwSlides = CurSlides.GetChild(1).position.x - CurSlides.GetChild(0).position.x;
-        }
-
-        SetUpDotIndexs(dots);
-
-        SetUpButs();
-    }
+    }        
 
     public void GoToSlide(int NewSlide)
     {
@@ -195,7 +163,38 @@ public class SlidesNavig : MonoBehaviour
         }
     }
 
-    #region Set Up Fonctions (Set Indexe Dots, Set Buttons)
+    #region Set UP The Slide Navig
+
+    public void SetUpNavig(ISlideNavigCaller caller, Transform CurSlides, Transform dots)
+    {
+        this.Caller = caller;
+        this.CurSlides = CurSlides;
+
+        SetBaseVars(dots);
+
+        Siding = false;
+    }
+
+    private void SetBaseVars(Transform dots)
+    {
+        OrigSildePos = CurSlides.position;
+        OrigScale = CurSlides.GetChild(0).localScale;
+
+        CurSlide = 0;
+
+        if (CurSlides.childCount > 1)
+        {
+            DifBetwSlides = CurSlides.GetChild(1).position.x - CurSlides.GetChild(0).position.x;
+        }
+
+        SetUpDotIndexs(dots);
+
+        SetUpButs();
+    }
+
+    #endregion
+
+    #region Set Up Features Fonctions (Set Indexe Dots, Set Buttons)
 
     void SetUpButs()
     {
@@ -252,4 +251,34 @@ public class SlidesNavig : MonoBehaviour
     }
 
     #endregion
+
+    public void ResetSlide()
+    {
+        //Fixing Slider
+        CurSlides.position = OrigSildePos;
+
+        //if I have more than 1 Slide I Will :
+        if(CurSlides.childCount > 1)
+        {
+            //1 - Fixes Slides Positions and Scales
+            Transform Slide = CurSlides.GetChild(CurSlide);
+
+            Slide.gameObject.SetActive(false);
+            Slide.localScale = OrigScale / ScaleFactor;
+
+            Slide = CurSlides.GetChild(0);
+
+            Slide.gameObject.SetActive(true);
+            Slide.localScale = OrigScale;
+
+            //Fixing Indexes
+            for (int i = 1; i < IndexDots.Length; i++)
+            {
+                IndexDots[i].color = new Color(1, 1, 1, UnusedDotsOpac);
+            }
+
+            IndexDots[0].color = Color.white;
+        }       
+        
+    }
 }

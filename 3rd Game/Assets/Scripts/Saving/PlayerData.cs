@@ -12,7 +12,7 @@ public class PlayerData
 
     public static float Sound = 1;
 
-    public static Dictionary<int, int> LvXStars = new Dictionary<int, int>() { {1 , 0},{ 7,0 } };
+    public static Dictionary<int, int> LvXStars = new Dictionary<int, int>() { {1 , 0} };
 
     public static List<int>[] CollectedStarsIndex = new List<int>[30];
 
