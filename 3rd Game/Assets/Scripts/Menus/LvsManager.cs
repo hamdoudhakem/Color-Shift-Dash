@@ -40,6 +40,7 @@ public class LvsManager : MonoBehaviour
 
         if(lv <= PlayerData.CurrentLv)
         {
+            AdsManager.HideBanner();
             LoadScreen.gameObject.SetActive(true);
             LoadScreen.SetTrigger("Appear");
             AsyncOperation asyncOp = SceneManager.LoadSceneAsync(lv);

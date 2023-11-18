@@ -36,7 +36,7 @@ public class ScreensEventHandlers : MonoBehaviour
         PauseMenu.SetActive(true);
     }
 
-    //I Called It Using a the Tutorial Event So Let it be
+    //I Called It Using the Tutorial and Ads Finished Event So Let it be
     public void Pause()
     {
         AudioManager.AudMan.PauseAll();
@@ -52,7 +52,7 @@ public class ScreensEventHandlers : MonoBehaviour
         PauseMenu.SetActive(false);
     }
 
-    //I Called It Using a the Tutorial Event So Let it be
+    //I Called It Using the Tutorial and Ads Finished Event So Let it be
     public void UnPause()
     {
         AudioManager.AudMan.UnPauseAll();
