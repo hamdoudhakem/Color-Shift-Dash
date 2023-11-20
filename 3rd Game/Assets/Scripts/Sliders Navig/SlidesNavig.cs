@@ -255,7 +255,7 @@ public class SlidesNavig : MonoBehaviour
     public void ResetSlide()
     {
         //Fixing Slider
-        CurSlides.position = OrigSildePos;
+        CurSlides.position = OrigSildePos;        
 
         //if I have more than 1 Slide I Will :
         if(CurSlides.childCount > 1)
@@ -265,12 +265,14 @@ public class SlidesNavig : MonoBehaviour
 
             Slide.gameObject.SetActive(false);
             Slide.localScale = OrigScale / ScaleFactor;
+            CheckLastSlide();
 
-            Slide = CurSlides.GetChild(0);
+            CurSlide = 0;
+            Slide = CurSlides.GetChild(CurSlide);
 
             Slide.gameObject.SetActive(true);
-            Slide.localScale = OrigScale;
-
+            Slide.localScale = OrigScale;            
+         
             //Fixing Indexes
             for (int i = 1; i < IndexDots.Length; i++)
             {
@@ -278,7 +280,11 @@ public class SlidesNavig : MonoBehaviour
             }
 
             IndexDots[0].color = Color.white;
+
+            SetUpButs();
+
+            Siding = false;
         }       
         
-    }
+    }   
 }

@@ -42,10 +42,12 @@ public class ShopManager : MonoBehaviour
                         skin.GetComponent<Image>().color = EquipedCol;
                         Display.text = "Equiped";
                         LastEquipedSkin = Display;
+                        DisableAdIcon(skin, Display);
                     }
                     else
                     {
                         Display.text = "Equip";
+                        DisableAdIcon(skin, Display);
                     }
 
                 }
@@ -64,39 +66,25 @@ public class ShopManager : MonoBehaviour
                         skybox.GetComponent<Image>().color = EquipedCol;
                         Display.text = "Equiped";
                         LastEquipedSkybox = Display;
+                        DisableAdIcon(skybox, Display);
                     }
                     else
                     {
                         Display.text = "Equip";
+                        DisableAdIcon(skybox, Display);
                     }
 
                 }
             }
             
-        }
-
-       
+        }       
     }
 
-    public void SwitchTabs(TextMeshProUGUI Header)
+    void DisableAdIcon(Transform Item, TextMeshProUGUI text)
     {
-        MainMenuAudioMan.MaAud.SelectOrEquip.Play();
-
-        if (Header.text == SkinsHeader.text)
+        if (PlayerData.ItemXRemainAds.ContainsKey(Item.name))
         {
-            Skins.gameObject.SetActive(true);
-            Skyboxes.gameObject.SetActive(false);
-
-            SkinsHeader.color = Color.red;
-            SkyboxesHeader.color = Color.white;
-        }
-        else if (Header.text == SkyboxesHeader.text)
-        {
-            Skins.gameObject.SetActive(false);
-            Skyboxes.gameObject.SetActive(true);
-
-            SkinsHeader.color = Color.white;
-            SkyboxesHeader.color = Color.red;
+            text.transform.GetChild(0).gameObject.SetActive(false);
         }
     }
 

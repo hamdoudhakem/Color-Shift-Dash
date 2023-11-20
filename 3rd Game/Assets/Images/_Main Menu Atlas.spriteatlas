@@ -61,6 +61,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: fc63b3b2fcbe0d648a23c9d081090c43, type: 3}
   - {fileID: 21300000, guid: db734df2171eedb46a863136b2356da9, type: 3}
   - {fileID: 21300000, guid: 5ab70403e1b458f47aff84ea3daad8e2, type: 3}
+  - {fileID: 21300000, guid: b375ef133dab18f469b452c6f3a13ebc, type: 3}
   - {fileID: 21300000, guid: fa35399336c9a7a46b22b6129e7b50fb, type: 3}
   - {fileID: 21300000, guid: 79f23c93cf2b1c74f82927d4d3d3f76c, type: 3}
   - {fileID: 21300000, guid: 25b3ecf3f8a374046b89def919718547, type: 3}
@@ -80,6 +81,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 4b150a558ea24f8468bef83964288a5a, type: 3}
   - {fileID: 21300000, guid: bacbedb5eaae7044aa6dceae777ead13, type: 3}
   - {fileID: 21300000, guid: 4fc167464dddcd14488913990dcf685c, type: 3}
+  - {fileID: 21300000, guid: e20299569ad0321448de42b1a54316d2, type: 3}
   - {fileID: 21300000, guid: ad8691a696db8ef4ebbc7fc5d617dcff, type: 3}
   - {fileID: 21300000, guid: d97ad52728e0b32479eb896120854f6c, type: 3}
   - {fileID: 21300000, guid: f6a251672958e3047a33619d8313c527, type: 3}
@@ -143,6 +145,7 @@ SpriteAtlas:
   - PSM_V69_D182_Small_magellanic_cloud_and_its_variable_stars (5)
   - Zebra
   - Money Frame
+  - 7627
   - Molotov
   - background V3 1
   - Shop Frame (2)
@@ -162,6 +165,7 @@ SpriteAtlas:
   - Bowling Ball
   - background Blue
   - Stars 2
+  - movie-icon
   - Lv Frame
   - background
   - Stars
