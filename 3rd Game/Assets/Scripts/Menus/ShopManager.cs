@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
-public class ShopManager : MonoBehaviour
+public class ShopManager : MonoBehaviour, IAdCallBack
 {
     public TextMeshProUGUI SkinsHeader, SkyboxesHeader, MoneyDisplay;
 
@@ -18,9 +18,12 @@ public class ShopManager : MonoBehaviour
     public GameObject ConfirmBuyPanel;
     public GameObject NoMoneyPanel;
 
+    [Tooltip("The Offset for the TextMeshPro of the Ad only items after Buying")]
+    public Vector2 TextOffsetAfterBuying;
+
     private TextMeshProUGUI LastEquipedSkin;
     private TextMeshProUGUI LastEquipedSkybox;
-    private TextMeshProUGUI ItemToBuy;      
+    private TextMeshProUGUI ItemToBuy;
 
     public void LoadBoughtItems()
     {
@@ -36,6 +39,8 @@ public class ShopManager : MonoBehaviour
                 if (PlayerData.Skins.Contains(skin.name))
                 {
                     TextMeshProUGUI Display = skin.GetComponentInChildren<TextMeshProUGUI>();
+
+                    FixTextPosForAdOnlyItems(Display, skin.name);                    
 
                     if (PlayerData.CurrentSkin == skin.name)
                     {
@@ -61,6 +66,8 @@ public class ShopManager : MonoBehaviour
                 {
                     TextMeshProUGUI Display = skybox.GetComponentInChildren<TextMeshProUGUI>();
 
+                    FixTextPosForAdOnlyItems(Display, skybox.name);
+
                     if (PlayerData.CurrentSkybox == skybox.name)
                     {
                         skybox.GetComponent<Image>().color = EquipedCol;
@@ -77,7 +84,35 @@ public class ShopManager : MonoBehaviour
                 }
             }
             
-        }       
+        }
+        
+        foreach(KeyValuePair<string, int> ItemXAds in PlayerData.ItemXRemainAds)
+        {
+            Transform val = Skins.Find(ItemXAds.Key) ? Skins.Find(ItemXAds.Key) : Skyboxes.Find(ItemXAds.Key);
+
+            TextMeshProUGUI text = val.GetComponentInChildren<TextMeshProUGUI>();
+
+
+        }
+    }
+
+    private void FixTextPosForAdOnlyItems(TextMeshProUGUI Display, string ItemName)
+    {
+        if (PlayerData.ItemXRemainAds.ContainsKey(ItemName))
+        {
+            if(PlayerData.ItemXRemainAds[ItemName] > 0)
+            {
+                //Just Update The Remmaining Ads to watch
+                Display.text = "x" + PlayerData.ItemXRemainAds[ItemName];
+            }
+            else
+            {
+                //If He Already Bought the element
+                Destroy(Display.transform.GetChild(0).gameObject);
+                Display.transform.position += (Vector3)TextOffsetAfterBuying;
+            }
+            
+        }
     }
 
     void DisableAdIcon(Transform Item, TextMeshProUGUI text)
@@ -124,20 +159,29 @@ public class ShopManager : MonoBehaviour
         }
         else
         {
-            int Cost = int.Parse(Item.text);
-
-            if (PlayerData.Money >= Cost)
+            if (PlayerData.ItemXRemainAds.ContainsKey(skinName))
             {
-                ItemToBuy = Item;
-                ConfirmBuyPanel.SetActive(true);
+                //Buy Using Ads
+                LaunchRewarededAd(Item);
             }
             else
             {
-                NoMoneyPanel.SetActive(true);
-            }
+                //Buy Using Money
+                int Cost = int.Parse(Item.text);
+
+                if (PlayerData.Money >= Cost)
+                {
+                    ItemToBuy = Item;
+                    ConfirmBuyPanel.SetActive(true);
+                }
+                else
+                {
+                    NoMoneyPanel.SetActive(true);
+                }
+            }           
             
         }
-    }
+    }    
 
     public void BuyOrEquipSkybox(TextMeshProUGUI Item)
     {
@@ -173,7 +217,46 @@ public class ShopManager : MonoBehaviour
             
         }
     }
-    
+
+    private void LaunchRewarededAd(TextMeshProUGUI Item)
+    {
+        ItemToBuy = Item;
+        AdsManager.StartAd(AdTypes.Rewarded_Android, this);
+    }
+
+    #region IAdCallBack Interface Methods
+
+    public void Reward()
+    {
+        int remainAds = --PlayerData.ItemXRemainAds[ItemToBuy.transform.parent.name];
+                
+        if(remainAds > 0)
+        {
+            ItemToBuy.text = "x" + remainAds;
+        }
+        else
+        {
+            //He watched all Ads to unlock this Item
+
+            Destroy(ItemToBuy.transform.GetChild(0).gameObject);
+            ItemToBuy.transform.position += (Vector3)TextOffsetAfterBuying;
+            ItemToBuy.text = "Equip";
+
+            MainMenuAudioMan.MaAud.Buy.Play();
+
+            UpdatePossesedItems(ItemToBuy);            
+        }
+
+        SaveSystem.Save();
+    }
+
+    public void ResumeGame()
+    {
+        
+    }
+
+    #endregion
+
     public void Buy()
     {
         int Cost = int.Parse(ItemToBuy.text);
@@ -183,11 +266,18 @@ public class ShopManager : MonoBehaviour
         PlayerData.Money -= Cost;
         MoneyDisplay.text = PlayerData.Money.ToString();
 
-        MainMenuAudioMan.MaAud.Buy.Play();
+        MainMenuAudioMan.MaAud.Buy.Play();        
 
+        UpdatePossesedItems(ItemToBuy);
+
+        SaveSystem.Save();
+    }
+
+    private void UpdatePossesedItems(TextMeshProUGUI ItemToBuy)
+    {
         string type = ItemToBuy.transform.parent.parent.tag;
 
-        if(type == "Skins")
+        if (type == "Skins")
         {
             PlayerData.Skins.Add(ItemToBuy.transform.parent.name);
         }
@@ -195,7 +285,5 @@ public class ShopManager : MonoBehaviour
         {
             PlayerData.Skyboxes.Add(ItemToBuy.transform.parent.name);
         }
-
-        SaveSystem.Save();
     }
 }

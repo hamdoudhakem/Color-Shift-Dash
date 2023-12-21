@@ -18,7 +18,7 @@ public class LoadData : MonoBehaviour
 
     void Awake()
     {
-        //SaveSystem.Load();
+        SaveSystem.Load();
 
         MoneyDis.text = PlayerData.Money.ToString();
 

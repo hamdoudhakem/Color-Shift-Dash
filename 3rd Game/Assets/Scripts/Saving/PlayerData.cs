@@ -24,20 +24,21 @@ public class PlayerData
 
     public static List<string> Skyboxes = new List<string>() { "Mega Sun" };
 
-    public static Dictionary<string, int> ItemXRemainAds = new Dictionary<string, int>() { { "BasketBall", 2 },{"FootBall",2 }, { "VolleyBall", 2 }, { "", 2 }, { "", 2 }, { "", 2 } };
+    public static Dictionary<string, int> ItemXRemainAds = new Dictionary<string, int>() { { "BasketBall", 2 },{"FootBall",2 }, { "VolleyBall", 2 }, { "1", 2 }, { "2", 2 }, { "3", 2 } };
 
     public static Dictionary<int, bool> LvXTuToUsed = new Dictionary<int, bool>() { { 1, false }, { 2, false}, {7, false } };
 
     //Data for Save
     public int MoneyData;
     public int CurrentLvData;
-    public Dictionary<int, bool> LvXTuToUsedData = new Dictionary<int, bool>();
-    public Dictionary<int, int> LvXStarsData = new Dictionary<int, int>(); 
-    public List<int>[] CollectedStarsIndexData = new List<int>[30];
+    public Dictionary<int, bool> LvXTuToUsedData;
+    public Dictionary<int, int> LvXStarsData; 
+    public List<int>[] CollectedStarsIndexData;
     public string CurrentSkinData;
     public string CurrentSkyboxData;
     public List<string> SkinsData = new List<string>();
     public List<string> SkyboxesData = new List<string>();
+    public Dictionary<string, int> ItemXRemainAdsData;
     public float SoundData;
 
     public PlayerData()
@@ -52,6 +53,7 @@ public class PlayerData
         CurrentSkyboxData = CurrentSkybox;
         CollectedStarsIndexData = CollectedStarsIndex;
         LvXTuToUsedData = LvXTuToUsed;
+        ItemXRemainAdsData = ItemXRemainAds;
     }
 
     public void Assign()
@@ -66,5 +68,6 @@ public class PlayerData
         CurrentSkybox = CurrentSkyboxData;
         CollectedStarsIndex = CollectedStarsIndexData;
         LvXTuToUsed = LvXTuToUsedData;
+        ItemXRemainAds = ItemXRemainAdsData;
     }
 }
