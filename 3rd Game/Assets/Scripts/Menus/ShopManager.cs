@@ -25,6 +25,7 @@ public class ShopManager : MonoBehaviour, IAdCallBack
     private TextMeshProUGUI LastEquipedSkybox;
     private TextMeshProUGUI ItemToBuy;
 
+    private string ItemToBuyName;
     public void LoadBoughtItems()
     {
         LastEquipedSkin = null;
@@ -40,19 +41,17 @@ public class ShopManager : MonoBehaviour, IAdCallBack
                 {
                     TextMeshProUGUI Display = skin.GetComponentInChildren<TextMeshProUGUI>();
 
-                    FixTextPosForAdOnlyItems(Display, skin.name);                    
+                    FixTextForAdOnlyItems(Display, skin.name);                    
 
                     if (PlayerData.CurrentSkin == skin.name)
                     {
                         skin.GetComponent<Image>().color = EquipedCol;
                         Display.text = "Equiped";
                         LastEquipedSkin = Display;
-                        DisableAdIcon(skin, Display);
                     }
                     else
                     {
                         Display.text = "Equip";
-                        DisableAdIcon(skin, Display);
                     }
 
                 }
@@ -66,19 +65,18 @@ public class ShopManager : MonoBehaviour, IAdCallBack
                 {
                     TextMeshProUGUI Display = skybox.GetComponentInChildren<TextMeshProUGUI>();
 
-                    FixTextPosForAdOnlyItems(Display, skybox.name);
+                    FixTextForAdOnlyItems(Display, skybox.name);
 
                     if (PlayerData.CurrentSkybox == skybox.name)
                     {
-                        skybox.GetComponent<Image>().color = EquipedCol;
+                        Debug.Log("This Display is for skybox = " + skybox.name + "and it's parent is :"+Display.transform.parent);
+                        Display.transform.parent.GetComponent<Image>().color = EquipedCol;
                         Display.text = "Equiped";
                         LastEquipedSkybox = Display;
-                        DisableAdIcon(skybox, Display);
                     }
                     else
                     {
                         Display.text = "Equip";
-                        DisableAdIcon(skybox, Display);
                     }
 
                 }
@@ -88,44 +86,39 @@ public class ShopManager : MonoBehaviour, IAdCallBack
         
         foreach(KeyValuePair<string, int> ItemXAds in PlayerData.ItemXRemainAds)
         {
-            Transform val = Skins.Find(ItemXAds.Key) ? Skins.Find(ItemXAds.Key) : Skyboxes.Find(ItemXAds.Key);
+            if (ItemXAds.Value > 0)
+            {
+                //I Take the Transform of the Skin or Skybox if it's null
+                Transform val = Skins.Find(ItemXAds.Key);
 
-            TextMeshProUGUI text = val.GetComponentInChildren<TextMeshProUGUI>();
+                if (val == null)
+                {
+                    val = Skyboxes.Find(ItemXAds.Key);
+                }
 
+                TextMeshProUGUI text = val.GetComponentInChildren<TextMeshProUGUI>();
 
+                text.text = "x" + ItemXAds.Value;
+            }
         }
     }
 
-    private void FixTextPosForAdOnlyItems(TextMeshProUGUI Display, string ItemName)
+    //After Buying an Ad only Item, I Destroy the Ad Icon and Move the TextMeshPro to the right
+    private void FixTextForAdOnlyItems(TextMeshProUGUI Display, string ItemName)
     {
         if (PlayerData.ItemXRemainAds.ContainsKey(ItemName))
-        {
-            if(PlayerData.ItemXRemainAds[ItemName] > 0)
-            {
-                //Just Update The Remmaining Ads to watch
-                Display.text = "x" + PlayerData.ItemXRemainAds[ItemName];
-            }
-            else
-            {
-                //If He Already Bought the element
-                Destroy(Display.transform.GetChild(0).gameObject);
-                Display.transform.position += (Vector3)TextOffsetAfterBuying;
-            }
+        {            
+            //If He Already Bought the element
+            Destroy(Display.transform.GetChild(0).gameObject);
+            Display.transform.position += (Vector3)TextOffsetAfterBuying;            
             
         }
-    }
-
-    void DisableAdIcon(Transform Item, TextMeshProUGUI text)
-    {
-        if (PlayerData.ItemXRemainAds.ContainsKey(Item.name))
-        {
-            text.transform.GetChild(0).gameObject.SetActive(false);
-        }
-    }
+    }      
 
     public void BuyOrEquipSkin(TextMeshProUGUI Item)
     {
         string skinName = Item.transform.parent.name;
+        ItemToBuyName = skinName;
 
         MainMenuAudioMan.MaAud.SelectOrEquip.Play();
 
@@ -185,7 +178,8 @@ public class ShopManager : MonoBehaviour, IAdCallBack
 
     public void BuyOrEquipSkybox(TextMeshProUGUI Item)
     {
-        string skyboxName = Item.transform.parent.name;
+        string skyboxName = Item.transform.parent.parent.name;
+        ItemToBuyName = skyboxName;
 
         MainMenuAudioMan.MaAud.SelectOrEquip.Play();
 
@@ -203,17 +197,26 @@ public class ShopManager : MonoBehaviour, IAdCallBack
         }
         else
         {
-            int Cost = int.Parse(Item.text);
-
-            if (PlayerData.Money >= Cost)
+            if(PlayerData.ItemXRemainAds.ContainsKey(skyboxName))
             {
-                ItemToBuy = Item;
-                ConfirmBuyPanel.SetActive(true);
+                //Buy Using Ads
+                LaunchRewarededAd(Item);
             }
             else
             {
-                NoMoneyPanel.SetActive(true);
-            }
+                //Buy Using Money 
+                int Cost = int.Parse(Item.text);
+
+                if (PlayerData.Money >= Cost)
+                {
+                    ItemToBuy = Item;
+                    ConfirmBuyPanel.SetActive(true);
+                }
+                else
+                {
+                    NoMoneyPanel.SetActive(true);
+                }
+            }            
             
         }
     }
@@ -228,7 +231,7 @@ public class ShopManager : MonoBehaviour, IAdCallBack
 
     public void Reward()
     {
-        int remainAds = --PlayerData.ItemXRemainAds[ItemToBuy.transform.parent.name];
+        int remainAds = --PlayerData.ItemXRemainAds[ItemToBuyName];
                 
         if(remainAds > 0)
         {
@@ -279,11 +282,11 @@ public class ShopManager : MonoBehaviour, IAdCallBack
 
         if (type == "Skins")
         {
-            PlayerData.Skins.Add(ItemToBuy.transform.parent.name);
+            PlayerData.Skins.Add(ItemToBuyName);
         }
         else if (type == "Skyboxes")
         {
-            PlayerData.Skyboxes.Add(ItemToBuy.transform.parent.name);
+            PlayerData.Skyboxes.Add(ItemToBuyName);
         }
     }
 }

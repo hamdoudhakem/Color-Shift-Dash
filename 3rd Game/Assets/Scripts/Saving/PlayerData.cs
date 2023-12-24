@@ -24,7 +24,7 @@ public class PlayerData
 
     public static List<string> Skyboxes = new List<string>() { "Mega Sun" };
 
-    public static Dictionary<string, int> ItemXRemainAds = new Dictionary<string, int>() { { "BasketBall", 2 },{"FootBall",2 }, { "VolleyBall", 2 }, { "1", 2 }, { "2", 2 }, { "3", 2 } };
+    public static Dictionary<string, int> ItemXRemainAds = new Dictionary<string, int>() { { "BasketBall", 2 }, { "FootBall", 2 }, { "VolleyBall", 2 }, { "Earth",2 }, { "Mars",2 }, { "Moon Night",2 }  };
 
     public static Dictionary<int, bool> LvXTuToUsed = new Dictionary<int, bool>() { { 1, false }, { 2, false}, {7, false } };
 

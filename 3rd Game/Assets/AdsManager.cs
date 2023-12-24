@@ -27,7 +27,7 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener
         if (!Advertisement.isInitialized)
         {
             Advertisement.Initialize(GameIDAndroid, testMode);           
-        }
+        }        
 
         Advertisement.AddListener(this);
 
