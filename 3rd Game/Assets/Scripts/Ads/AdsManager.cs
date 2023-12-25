@@ -103,7 +103,10 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener
 
     public void OnUnityAdsDidError(string message)
     {
+        //For when the Ad didn't load or something went wrong
+
         Debug.Log("ERROR : " + message);
+        CallBack.Error();
     }
 
     public void OnUnityAdsReady(string placementId)

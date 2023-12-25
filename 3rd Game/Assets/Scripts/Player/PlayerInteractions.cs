@@ -172,9 +172,10 @@ public class PlayerInteractions : MonoBehaviour
             {
                 StarsNum++;
                 ShowStar.Invoke(StarsNum);
-            }                                  
+            }
 
-            StartCoroutine(Pm.Stop());
+            StopAllCoroutines();
+            StartCoroutine(Pm.Stop());            
 
             Win = true;
             AudioManager.AudMan.StopAll();
@@ -229,18 +230,18 @@ public class PlayerInteractions : MonoBehaviour
 
             AudioManager.AudMan.StopAll();
             AudioManager.AudMan.Play("Lost");
-            AudioManager.AudMan.Play("Died");
+            AudioManager.AudMan.Play("Died");            
 
-            Lost.Invoke();
-
-            Pm.PlayerDied();
+            StopAllCoroutines();
+            Pm.StopAllCoroutines();
+            Pm.CancelAllEffects();
             CameraShaker.Instance.ShakeOnce(7, 5, .1f, .5f);
 
             ParticleSystemRenderer PS = Instantiate(ParticleEffect, transform.position, new Quaternion()).GetComponent<ParticleSystemRenderer>();
             PS.transform.Rotate(Vector3.right * -90);
             PS.material = Mat.material;
 
-            Pm.StopAllCoroutines();
+            Lost.Invoke();
 
             Destroy(gameObject);
         }       

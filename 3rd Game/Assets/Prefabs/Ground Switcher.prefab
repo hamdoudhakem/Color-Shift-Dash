@@ -106,7 +106,8 @@ GameObject:
   - component: {fileID: 6974365447731989419}
   - component: {fileID: 6974365447731989412}
   - component: {fileID: 5683491458280836510}
-  m_Layer: 0
+  - component: {fileID: 7840606515067031172}
+  m_Layer: 14
   m_Name: Ground Switcher
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -246,6 +247,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!65 &7840606515067031172
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6974365447731989418}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6974365447820932857
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,7 +10,7 @@ public class LoadData : MonoBehaviour
     public TextMeshProUGUI MoneyDis;
     public ShopManager ShopMan;
     public SettingsManager SettingsMan;
-    public LvsManager LvsMan;
+    public LvsManager LvsMan;    
 
     [Space]
     [Tooltip("How Much Delay Between each Banner Loaded Check and if it's Loaded I Show the banner")]
@@ -18,13 +18,15 @@ public class LoadData : MonoBehaviour
 
     void Awake()
     {
-        SaveSystem.Load();
+        //SaveSystem.Load();
 
         MoneyDis.text = PlayerData.Money.ToString();
 
         ShopMan.LoadBoughtItems();        
 
         LvsMan.LoadLvsData();
+
+        SettingsMan.LoadSettings();     
     }
 
     void Start()

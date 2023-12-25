@@ -43,5 +43,7 @@ public class AdsDisplayer : MonoBehaviour, IAdCallBack
     }
 
     public void Reward() { }
+
+    public void Error() { }
    
 }

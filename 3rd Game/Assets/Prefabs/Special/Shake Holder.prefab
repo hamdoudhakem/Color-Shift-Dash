@@ -5227,6 +5227,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1916122169216578400}
   - component: {fileID: 1916122169216578401}
+  - component: {fileID: 8686606343623878694}
   - component: {fileID: 1916122169216578406}
   m_Layer: 0
   m_Name: Shake Holder
@@ -5274,6 +5275,23 @@ MonoBehaviour:
   Player: {fileID: 0}
   Offset: {x: 0, y: 2.1, z: -6.9}
   MinHeight: 0
+--- !u!114 &8686606343623878694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1916122169216578403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f528c44bd9445cb4a969867f61aa6c87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ConcernedLayers:
+    serializedVersion: 2
+    m_Bits: 24576
+  Offset: {x: 0, y: 0, z: -27.86}
+  Size: {x: 13, y: 5.24, z: 0.7}
 --- !u!114 &1916122169216578406
 MonoBehaviour:
   m_ObjectHideFlags: 0

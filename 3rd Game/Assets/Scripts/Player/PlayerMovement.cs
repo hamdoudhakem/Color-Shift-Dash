@@ -315,6 +315,7 @@ public class PlayerMovement : MonoBehaviour
         });
 
         //AudioManager.AudMan.Stop("Boost");
+        Debug.Log("I Got Here");
         AudioManager.AudMan.Play("Deboost");
 
         StackedBoosts--;
@@ -349,12 +350,13 @@ public class PlayerMovement : MonoBehaviour
     public IEnumerator Stop()
     {
         rb.constraints |= RigidbodyConstraints.FreezeRotationX;
-             
+                
         MoveForward = false;
         InputMove = false;
+        CancelAllEffects();
         BoostEffect.SetActive(false);
         BoostingEffects(DefaultView, 0,DefaultCamOffset);
-        Shake.StartFadeOut(0);
+        
         yield return new WaitForEndOfFrame();
 
         rb.velocity = new Vector3(0, rb.velocity.y, DefaultForSpeed);
@@ -370,7 +372,7 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = Vector3.zero;
     }
 
-    public void PlayerDied()
+    public void CancelAllEffects()
     {
         Lens.active = false;
         if(Shake != null)

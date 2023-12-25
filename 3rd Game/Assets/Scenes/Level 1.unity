@@ -1832,6 +1832,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shake Holder
       objectReference: {fileID: 0}
+    - target: {fileID: 8686606343623878694, guid: a19dcd91f83dfac478bce9581943b59a,
+        type: 3}
+      propertyPath: Offset.z
+      value: -45
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a19dcd91f83dfac478bce9581943b59a, type: 3}
 --- !u!1001 &2239101294308203812
@@ -2515,7 +2520,7 @@ PrefabInstance:
     - target: {fileID: 3791685272271051259, guid: 965d6e53d74e5de468e733ea8e0c38aa,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3791685272330918558, guid: 965d6e53d74e5de468e733ea8e0c38aa,
         type: 3}
@@ -3076,7 +3081,7 @@ PrefabInstance:
     - target: {fileID: 8627992255611828132, guid: 4c1bc2e18704d63469aedad54277e308,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8627992255917197391, guid: 4c1bc2e18704d63469aedad54277e308,
         type: 3}

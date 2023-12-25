@@ -8,16 +8,25 @@ using UnityEngine.Events;
 
 public class ShopManager : MonoBehaviour, IAdCallBack
 {
-    public TextMeshProUGUI SkinsHeader, SkyboxesHeader, MoneyDisplay;
+    [Header("Texts")]
+    public TextMeshProUGUI SkinsHeader;
+    public TextMeshProUGUI SkyboxesHeader;
+    public TextMeshProUGUI MoneyDisplay;
 
+    [Header("Transforms")]
     public Transform Skins;
     public Transform Skyboxes;
     [Tooltip("The Frame Color of and Equiped Item")]
     public Color EquipedCol;
 
+    [Header("Panels")]
+    public GameObject AdErrorPanel;
     public GameObject ConfirmBuyPanel;
     public GameObject NoMoneyPanel;
+    [Tooltip("This Prevents the player from touching while the panels are active")]
+    public GameObject NoTouchPanel;
 
+    [Header("Vectors")]
     [Tooltip("The Offset for the TextMeshPro of the Ad only items after Buying")]
     public Vector2 TextOffsetAfterBuying;
 
@@ -69,7 +78,6 @@ public class ShopManager : MonoBehaviour, IAdCallBack
 
                     if (PlayerData.CurrentSkybox == skybox.name)
                     {
-                        Debug.Log("This Display is for skybox = " + skybox.name + "and it's parent is :"+Display.transform.parent);
                         Display.transform.parent.GetComponent<Image>().color = EquipedCol;
                         Display.text = "Equiped";
                         LastEquipedSkybox = Display;
@@ -166,10 +174,12 @@ public class ShopManager : MonoBehaviour, IAdCallBack
                 {
                     ItemToBuy = Item;
                     ConfirmBuyPanel.SetActive(true);
+                    NoTouchPanel.SetActive(true);
                 }
                 else
                 {
                     NoMoneyPanel.SetActive(true);
+                    NoTouchPanel.SetActive(true);
                 }
             }           
             
@@ -211,10 +221,12 @@ public class ShopManager : MonoBehaviour, IAdCallBack
                 {
                     ItemToBuy = Item;
                     ConfirmBuyPanel.SetActive(true);
+                    NoTouchPanel.SetActive(true);
                 }
                 else
                 {
                     NoMoneyPanel.SetActive(true);
+                    NoTouchPanel.SetActive(true);
                 }
             }            
             
@@ -253,9 +265,12 @@ public class ShopManager : MonoBehaviour, IAdCallBack
         SaveSystem.Save();
     }
 
-    public void ResumeGame()
+    public void ResumeGame() { }
+    
+    public void Error()
     {
-        
+        AdErrorPanel.SetActive(true);
+        NoTouchPanel.SetActive(true);
     }
 
     #endregion
@@ -288,5 +303,5 @@ public class ShopManager : MonoBehaviour, IAdCallBack
         {
             PlayerData.Skyboxes.Add(ItemToBuyName);
         }
-    }
+    }    
 }

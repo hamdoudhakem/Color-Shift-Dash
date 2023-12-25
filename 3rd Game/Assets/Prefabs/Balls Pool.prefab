@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8031483031749988194}
   - component: {fileID: 8031483031749988195}
-  m_Layer: 8
+  - component: {fileID: 8498470135123161081}
+  m_Layer: 14
   m_Name: Balls Pool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -64,6 +65,19 @@ MonoBehaviour:
   SoundLayers:
     serializedVersion: 2
     m_Bits: 264
+--- !u!65 &8498470135123161081
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8031483031749988193}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: -1, z: 0}
 --- !u!1001 &5154997642554387704
 PrefabInstance:
   m_ObjectHideFlags: 0
