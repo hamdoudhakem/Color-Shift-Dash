@@ -1832,11 +1832,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shake Holder
       objectReference: {fileID: 0}
-    - target: {fileID: 8686606343623878694, guid: a19dcd91f83dfac478bce9581943b59a,
-        type: 3}
-      propertyPath: Offset.z
-      value: -45
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a19dcd91f83dfac478bce9581943b59a, type: 3}
 --- !u!1001 &2239101294308203812
