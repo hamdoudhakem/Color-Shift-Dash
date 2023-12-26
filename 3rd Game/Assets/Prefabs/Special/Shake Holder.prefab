@@ -5290,7 +5290,7 @@ MonoBehaviour:
   ConcernedLayers:
     serializedVersion: 2
     m_Bits: 24576
-  Offset: {x: 0, y: 0, z: -27.86}
+  Offset: {x: 0, y: 0, z: -45}
   Size: {x: 13, y: 5.24, z: 0.7}
 --- !u!114 &1916122169216578406
 MonoBehaviour:

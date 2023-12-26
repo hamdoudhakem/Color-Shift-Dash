@@ -26,6 +26,8 @@ public class Destroyer : MonoBehaviour
 
     void OnDrawGizmos()
     {
+        Gizmos.color = Color.red;
+
         Gizmos.DrawCube(new Vector3(transform.position.x + Offset.x, Offset.y,
                             transform.position.z + Offset.z), Size * 2);
     }

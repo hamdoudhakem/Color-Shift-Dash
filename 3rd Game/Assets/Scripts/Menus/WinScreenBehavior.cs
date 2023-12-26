@@ -15,11 +15,12 @@ public class WinScreenBehavior : MonoBehaviour
     [Tooltip("How Much Seconds it will take to reach the Money earned on this level on the money display")]
     [Range(1 , 5)]public int MoneyTime;
 
-    [Header("Performance")]
+    [Header("Player Performance")]
     [Tooltip("The Text Mesh Pro for the Note that I will give the player (good, passable...)")]
     public TextMeshProUGUI Remark;
     [Tooltip("This Array represents the possible remarks for the Player performance and they are sorted (exp: if he has 2 stars it's index need's to be 1)")]
     public string[] Remarks;
+    public Vector2[] RemarksOffset;
 
     [Tooltip("How Much Time between each star appearance (in seconds)")]
     public float StarInterval;
@@ -38,6 +39,7 @@ public class WinScreenBehavior : MonoBehaviour
         Finished = false;
         IncreaseMoney = false;
         MoneyProgress = 0;
+        Remark.transform.position += (Vector3)RemarksOffset[PlayerInteractions.StarsNum - 1];
         remark = Remarks[PlayerInteractions.StarsNum - 1];
 
         int StarDif = PlayerInteractions.StarsNum - PlayerData.LvXStars[SceneManager.GetActiveScene().buildIndex];
@@ -77,12 +79,7 @@ public class WinScreenBehavior : MonoBehaviour
     }
 
     IEnumerator ShowTheRest()
-    {
-        if(PlayerInteractions.StarsNum < 3)
-        {
-            Remark.text = "   ";
-        }                
-
+    {                       
         for (int i = 0; i < remark.Length; i++)
         {
             Remark.text += remark[i];

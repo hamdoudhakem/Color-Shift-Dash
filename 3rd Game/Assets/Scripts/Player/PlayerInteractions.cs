@@ -34,6 +34,7 @@ public class PlayerInteractions : MonoBehaviour
     private PlayerMovement Pm;
     private EffectsBehavior Effs;
     private bool AlreadyIn;
+    private GameObject Star; //The Star that will Disappear after the player gets it
 
     void Start()
     {
@@ -53,7 +54,7 @@ public class PlayerInteractions : MonoBehaviour
         StarLayer = LayerMask.NameToLayer("Star");
 
         Mat.material.color = StartCol.color;
-        ChangeTrail();
+        ChangeTrail();      
 
         //Save System Stuff
         int CurLv = SceneManager.GetActiveScene().buildIndex;
@@ -174,6 +175,12 @@ public class PlayerInteractions : MonoBehaviour
                 ShowStar.Invoke(StarsNum);
             }
 
+            //Because Disbaling The Star Won't Work when I stop all coroutines
+            if (Star != null)
+            {
+                Star.SetActive(false); 
+            }
+           
             StopAllCoroutines();
             StartCoroutine(Pm.Stop());            
 
@@ -188,12 +195,25 @@ public class PlayerInteractions : MonoBehaviour
         }
     }
 
+    #region Coroutines (IEnumerators)
+
     IEnumerator DisbaleStar(GameObject star, float Time)
     {
+        this.Star = star;
+
         yield return new WaitForSeconds(Time);
 
         star.SetActive(false);
     }
+
+    IEnumerator PlayRingPassSound(Vector3 ring)
+    {
+        yield return new WaitUntil(() => ring.z - transform.position.z < -0.5f);
+
+        AudioManager.AudMan.Play("Ring Passed", true);
+    }
+
+    #endregion
 
     #region Death Related
 
@@ -206,18 +226,11 @@ public class PlayerInteractions : MonoBehaviour
         else
         {
             if(col.tag == "Ring")
-            {                
+            {
                 StartCoroutine(PlayRingPassSound(col.transform.position)); 
             }
         }     
-    }
-
-    IEnumerator PlayRingPassSound(Vector3 ring)
-    {
-        yield return new WaitUntil(() => ring.z - transform.position.z < -0.5f );
-
-        AudioManager.AudMan.Play("Ring Passed", true);
-    }
+    }    
 
     void Die()
     {

@@ -2458,9 +2458,13 @@ MonoBehaviour:
   MoneyTime: 1
   Remark: {fileID: 3791685271743018733}
   Remarks:
-  - Well
-  - Good
+  - Well Done
+  - Good Job
   - Incredible !
+  RemarksOffset:
+  - {x: 10.55141, y: 0}
+  - {x: 30.67603, y: 0}
+  - {x: 0, y: 0}
   StarInterval: 0.5
   TypingInterval: 0.05
 --- !u!95 &1993967954839568009
@@ -3158,8 +3162,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.40600002}
   m_AnchorMax: {x: 1, y: 0.40600002}
-  m_AnchoredPosition: {x: 0.012939453, y: -32.33}
-  m_SizeDelta: {x: -272.2499, y: 46.2028}
+  m_AnchoredPosition: {x: 2.8649902, y: -32.33}
+  m_SizeDelta: {x: -278.4286, y: 46.2028}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3791685271743018732
 CanvasRenderer:
@@ -3191,8 +3195,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 850588afb87615c48b2c640299eb0f15, type: 2}
+  m_sharedMaterial: {fileID: 6886978645342684150, guid: 850588afb87615c48b2c640299eb0f15,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3222,7 +3227,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -4521,8 +4526,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: +0
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 47201580819c96b449c8685a2e5a27a7, type: 2}
+  m_sharedMaterial: {fileID: 1682887126526421042, guid: 47201580819c96b449c8685a2e5a27a7,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5408,7 +5414,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.44705883}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.56078434}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
