@@ -3,6 +3,7 @@
     "com.unity.2d.spriteshape": "5.1.7",
     "com.unity.ads": "3.7.5",
     "com.unity.collab-proxy": "1.15.18",
+    "com.unity.device-simulator": "3.1.0-preview",
     "com.unity.formats.alembic": "2.1.2",
     "com.unity.ide.visualstudio": "2.0.22",
     "com.unity.mobile.android-logcat": "1.2.3",
