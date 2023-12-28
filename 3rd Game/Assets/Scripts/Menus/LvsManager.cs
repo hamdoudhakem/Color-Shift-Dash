@@ -8,10 +8,15 @@ using TMPro;
 public class LvsManager : MonoBehaviour
 {
     public Transform Sliders;
+    public TextMeshProUGUI CollectedStars;
     public Animator LoadScreen;
+
+    private int TotalStars;
 
     public void LoadLvsData()
     {
+        TotalStars = 0;
+
         int LvsPerSlider = Sliders.GetChild(0).childCount;
 
         ShowLvStars(Sliders.GetChild(0).GetChild(0).GetChild(1), 1);
@@ -23,13 +28,17 @@ public class LvsManager : MonoBehaviour
             CurLv.GetChild(1).gameObject.SetActive(false);
 
             ShowLvStars(CurLv.GetChild(2), i+1);            
-        }        
+        }
+
+        CollectedStars.text = TotalStars.ToString();
     }
 
     void ShowLvStars(Transform Stars, int lvNum)
-    {      
+    {
+        TotalStars += PlayerData.LvXStars[lvNum];
+
         for (int i = 0; i < PlayerData.LvXStars[lvNum]; i++)
-        {
+        {           
             Stars.GetChild(i).gameObject.SetActive(true);
         }
     }

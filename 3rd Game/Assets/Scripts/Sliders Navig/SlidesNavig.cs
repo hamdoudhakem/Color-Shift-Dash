@@ -86,7 +86,7 @@ public class SlidesNavig : MonoBehaviour
             NewSlide = CurSlides.GetChild(CurSlide + 1);
             NewSlide.gameObject.SetActive(true);
 
-            TargetPos = new Vector3(OrigSildePos.x - (CurSlide + 1) * DifBetwSlides, CurSlides.position.y);
+            TargetPos = new Vector3(OrigSildePos.x - (CurSlide + 1) * DifBetwSlides, CurSlides.position.y,OrigSildePos.z);
             NewSlideTargetScale = OrigScale;
             LastSlideTargetScale = OrigScale / ScaleFactor;
 
@@ -109,7 +109,7 @@ public class SlidesNavig : MonoBehaviour
             NewSlide = CurSlides.GetChild(CurSlide - 1);
             NewSlide.gameObject.SetActive(true);
 
-            TargetPos = new Vector3(OrigSildePos.x + (1 - CurSlide) * DifBetwSlides, CurSlides.position.y);
+            TargetPos = new Vector3(OrigSildePos.x + (1 - CurSlide) * DifBetwSlides, CurSlides.position.y, OrigSildePos.z);
             NewSlideTargetScale = OrigScale;
             LastSlideTargetScale = OrigScale / ScaleFactor;
 
