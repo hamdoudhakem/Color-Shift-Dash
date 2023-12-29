@@ -142,8 +142,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   streamDescriptor: {fileID: -4568800466751488081, guid: d5e1093f9b7f2fa48b67ad73e90e54c7,
     type: 3}
-  startTime: 0.041666668
-  endTime: 10.416667
+  startTime: 0.66775
+  endTime: 0.85
   currentTime: 0
   vertexMotionScale: 1
 --- !u!95 &5159873978394901539

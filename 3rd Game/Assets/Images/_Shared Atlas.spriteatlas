@@ -50,12 +50,14 @@ SpriteAtlas:
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: 4989e4538d4f5b648a0022a8c3b1a5da, type: 3}
+  - {fileID: 21300000, guid: 37e08024e95bfb04a8e707db0c7b5cb5, type: 3}
   - {fileID: 21300000, guid: 4a43c167e485a7f4d928988e6fa237e6, type: 3}
   - {fileID: 21300000, guid: cdf888d7c40fbf74cb67cd74bb3f846e, type: 3}
   - {fileID: 21300000, guid: 699925b88e6a0fa42a0f8c4b6bbfbd49, type: 3}
   - {fileID: 21300000, guid: 92e8a9dc8f85e2640b8f72529ed480d4, type: 3}
   m_PackedSpriteNamesToIndex:
   - Pause Buttons frame
+  - Loading Image
   - Star
   - Transparent Sprites
   - Play Button

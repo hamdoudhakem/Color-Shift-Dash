@@ -73,7 +73,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: af1a3134f76c7d74d9c76232f1bf9ce9, type: 3}
   - {fileID: 21300000, guid: cec793442b5d35647a7554869c958b51, type: 3}
   - {fileID: 21300000, guid: ca769c4465d502b478424e322dc6a24b, type: 3}
-  - {fileID: 21300000, guid: cd14e754fe5886d4c9a93adbf7401db8, type: 3}
   - {fileID: 21300000, guid: 8de67a546b65f734a9f50da5f6517593, type: 3}
   - {fileID: 21300000, guid: 18787b64f7942c74ca2105933ba4ca29, type: 3}
   - {fileID: 21300000, guid: f1b840944db91d5448fe148e3dc75926, type: 3}
@@ -171,7 +170,6 @@ SpriteAtlas:
   - Loved More
   - Avengers
   - Stylish 1
-  - background V3
   - Soccer Ball
   - Model 2 (2)
   - background V1_2

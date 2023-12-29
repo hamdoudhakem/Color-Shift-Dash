@@ -2187,10 +2187,20 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0.30548096
       objectReference: {fileID: 0}
+    - target: {fileID: 1986172914554305017, guid: 965d6e53d74e5de468e733ea8e0c38aa,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3391594595260157874, guid: 965d6e53d74e5de468e733ea8e0c38aa,
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3651182137173031937, guid: 965d6e53d74e5de468e733ea8e0c38aa,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3673910099396603668, guid: 965d6e53d74e5de468e733ea8e0c38aa,
         type: 3}
@@ -2271,6 +2281,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -0.5000305
+      objectReference: {fileID: 0}
+    - target: {fileID: 3791685270828414868, guid: 965d6e53d74e5de468e733ea8e0c38aa,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3791685270848256306, guid: 965d6e53d74e5de468e733ea8e0c38aa,
         type: 3}
@@ -2620,7 +2635,7 @@ PrefabInstance:
     - target: {fileID: 3791685272271051259, guid: 965d6e53d74e5de468e733ea8e0c38aa,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3791685272330918558, guid: 965d6e53d74e5de468e733ea8e0c38aa,
         type: 3}
@@ -2661,6 +2676,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0.30548096
+      objectReference: {fileID: 0}
+    - target: {fileID: 7713803253469216689, guid: 965d6e53d74e5de468e733ea8e0c38aa,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 965d6e53d74e5de468e733ea8e0c38aa, type: 3}

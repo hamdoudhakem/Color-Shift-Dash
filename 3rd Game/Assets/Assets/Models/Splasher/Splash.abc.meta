@@ -31,7 +31,5 @@ ScriptedImporter:
   startTime: 0.041666666666666664
   endTime: 10.416666666666666
   importWarning: 
-  varyingTopologyMeshNames:
-  - Cube_001
-  splittingMeshNames: []
   firstImport: 0
+  isHDF5: 0
