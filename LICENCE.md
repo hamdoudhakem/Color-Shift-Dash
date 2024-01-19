@@ -1,1 +1,1 @@
-Copyright 2023 Hamdoud Hakem. All Rights Reserved.
+Copyright 2023-2024 Hamdoud Hakem. All Rights Reserved.
