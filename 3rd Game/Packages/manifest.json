@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.benoitfreslon.vibration": "https://github.com/BenoitFreslon/Vibration.git",
     "com.coffee.ui-particle": "https://github.com/mob-sakai/ParticleEffectForUGUI.git",
     "com.unity.2d.spriteshape": "5.1.7",
     "com.unity.ads": "3.7.5",

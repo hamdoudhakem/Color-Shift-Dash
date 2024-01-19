@@ -10,6 +10,11 @@ public class LoadItems : MonoBehaviour
     public static Material Skybox;
     public static VolumeProfile Profile;
 
+    void Awake()
+    {
+        Vibration.Init();   
+    }
+
     ///<summary>
     ///Needs to be in Awake ('cause of the skin/color change order)
     ///</summary>

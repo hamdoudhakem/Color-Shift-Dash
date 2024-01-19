@@ -42,6 +42,18 @@ public class SplashBallBehavior : MonoBehaviour
         }
     }
 
+    void DesOrSpare()
+    {
+        if (IsNeeded)
+        {
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     void OnCollisionEnter(Collision collision)
     {        
         AudioManager.AudMan.Play("Color Ball Collided", true);
@@ -69,18 +81,6 @@ public class SplashBallBehavior : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
-
-    void DesOrSpare()
-    {
-        if (IsNeeded)
-        {
-            gameObject.SetActive(false);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
+    }   
    
 }

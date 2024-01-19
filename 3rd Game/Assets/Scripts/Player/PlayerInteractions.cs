@@ -186,6 +186,7 @@ public class PlayerInteractions : MonoBehaviour
 
             Win = true;
             AudioManager.AudMan.StopAll();
+            Vibration.VibratePop();
 
             Won.Invoke();
         }
@@ -253,6 +254,8 @@ public class PlayerInteractions : MonoBehaviour
             ParticleSystemRenderer PS = Instantiate(ParticleEffect, transform.position, new Quaternion()).GetComponent<ParticleSystemRenderer>();
             PS.transform.Rotate(Vector3.right * -90);
             PS.material = Mat.material;
+
+            Vibration.VibratePeek();
 
             Lost.Invoke();
 
