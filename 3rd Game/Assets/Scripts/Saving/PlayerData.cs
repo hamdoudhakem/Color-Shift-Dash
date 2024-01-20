@@ -12,6 +12,10 @@ public class PlayerData
 
     public static float Sound = 1;
 
+    public static bool FirstTime = false/*true*/;
+
+    public static bool Vibrations = false;
+
     public static Dictionary<int, int> LvXStars = new Dictionary<int, int>() { {1 , 0} };
 
     public static List<int>[] CollectedStarsIndex = new List<int>[30];
@@ -40,6 +44,8 @@ public class PlayerData
     public List<string> SkyboxesData = new List<string>();
     public Dictionary<string, int> ItemXRemainAdsData;
     public float SoundData;
+    public bool VibrationsData;
+    public bool FirstTimeData;
 
     public PlayerData()
     {
@@ -49,6 +55,8 @@ public class PlayerData
         SkinsData = Skins;
         SkyboxesData = Skyboxes;
         SoundData = Sound;
+        VibrationsData = Vibrations;
+        FirstTimeData = FirstTime;
         CurrentSkinData = CurrentSkin;
         CurrentSkyboxData = CurrentSkybox;
         CollectedStarsIndexData = CollectedStarsIndex;
@@ -64,6 +72,8 @@ public class PlayerData
         Skins = SkinsData;
         Skyboxes = SkyboxesData;
         Sound = SoundData;
+        Vibrations = VibrationsData;
+        FirstTime = FirstTimeData;
         CurrentSkin = CurrentSkinData;
         CurrentSkybox = CurrentSkyboxData;
         CollectedStarsIndex = CollectedStarsIndexData;

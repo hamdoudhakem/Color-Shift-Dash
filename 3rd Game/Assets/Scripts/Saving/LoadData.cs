@@ -10,7 +10,8 @@ public class LoadData : MonoBehaviour
     public TextMeshProUGUI MoneyDis;
     public ShopManager ShopMan;
     public SettingsManager SettingsMan;
-    public LvsManager LvsMan;    
+    public LvsManager LvsMan;
+    public GameObject VibrationPanel;
 
     [Space]
     [Tooltip("How Much Delay Between each Banner Loaded Check and if it's Loaded I Show the banner")]
@@ -20,13 +21,20 @@ public class LoadData : MonoBehaviour
     {
         //SaveSystem.Load();
 
+        if (PlayerData.FirstTime)
+        {
+            VibrationPanel.SetActive(true);
+        }
+        else
+        {
+            Destroy(VibrationPanel);
+        }
+
         MoneyDis.text = PlayerData.Money.ToString();
 
         ShopMan.LoadBoughtItems();        
 
-        LvsMan.LoadLvsData();
-
-        SettingsMan.LoadSettings();     
+        LvsMan.LoadLvsData();                 
     }
 
     void Start()
@@ -39,6 +47,9 @@ public class LoadData : MonoBehaviour
 
     IEnumerator StartBanner(AdTypes Bannertype)
     {
+        //Wait Until the Player set the Vibration he wants
+        yield return new WaitUntil(() => !PlayerData.FirstTime);
+
         do
         {
             yield return new WaitForSeconds(BannerDelay);
@@ -47,5 +58,14 @@ public class LoadData : MonoBehaviour
 
         } while (!Advertisement.Banner.isLoaded);
 
+    }
+
+    public void VibrationPanelEnd()
+    {        
+        Destroy(VibrationPanel);
+        PlayerData.FirstTime = false;
+        SaveSystem.Save();
+
+        SettingsMan.LoadSettings();
     }
 }

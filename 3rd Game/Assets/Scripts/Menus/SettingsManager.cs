@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
@@ -7,7 +5,30 @@ using UnityEngine.UI;
 public class SettingsManager : MonoBehaviour
 {
     public AudioMixer AudMix;
-    public Slider volume; 
+    public Slider volume;
+    public Image VibrationsToggle;
+    public Sprite[] Toggles;
+
+    public void LoadSettings()
+    {
+        volume.value = PlayerData.Sound;
+
+        Sound_EventHandler(PlayerData.Sound);
+
+        ChangeToggleImg();
+    }
+
+    void ChangeToggleImg()
+    {
+        if (PlayerData.Vibrations)
+        {
+            VibrationsToggle.sprite = Toggles[1];
+        }
+        else
+        {
+            VibrationsToggle.sprite = Toggles[0];
+        }
+    }
 
     public void Sound_EventHandler(float NewVal)
     {
@@ -20,12 +41,25 @@ public class SettingsManager : MonoBehaviour
         PlayerData.Sound = NewVal;
 
         SaveSystem.Save();
+    }    
+
+    public void Vibrations_EventHandler(Animator anim)
+    {
+        PlayerData.Vibrations = !PlayerData.Vibrations;
+
+        if (PlayerData.Vibrations)
+        {
+            anim.SetTrigger("On");
+        }
+        else
+        {
+            anim.SetTrigger("Off");
+        }                
     }
 
-    public void LoadSettings()
-    {     
-        volume.value = PlayerData.Sound;
-
-        Sound_EventHandler(PlayerData.Sound);
+    private void OnDisable()
+    {
+        Debug.Log("I Saved on Disable");
+        SaveSystem.Save();
     }
 }

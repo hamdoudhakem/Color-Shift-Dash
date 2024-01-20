@@ -186,7 +186,10 @@ public class PlayerInteractions : MonoBehaviour
 
             Win = true;
             AudioManager.AudMan.StopAll();
-            Vibration.VibratePop();
+            if (PlayerData.Vibrations)
+            {
+                Vibration.VibrateNope();
+            }
 
             Won.Invoke();
         }
@@ -255,7 +258,10 @@ public class PlayerInteractions : MonoBehaviour
             PS.transform.Rotate(Vector3.right * -90);
             PS.material = Mat.material;
 
-            Vibration.VibratePeek();
+            if (PlayerData.Vibrations)
+            {
+                Vibration.VibratePop();
+            }            
 
             Lost.Invoke();
 
