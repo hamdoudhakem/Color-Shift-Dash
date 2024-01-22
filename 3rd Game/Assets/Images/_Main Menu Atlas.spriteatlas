@@ -79,9 +79,11 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 16dc1eb4fa989854198a7d760a0fbc1c, type: 3}
   - {fileID: 21300000, guid: c96b72e4a662c654a9eb5d884fa39a4a, type: 3}
   - {fileID: 21300000, guid: 5b67d00510130664fab4ade722ed8a14, type: 3}
+  - {fileID: 21300000, guid: a1622905c24d0fb4c9f18ab2b8fff8c3, type: 3}
   - {fileID: 21300000, guid: ec588245f6ea9d94b90a4655924eb35e, type: 3}
   - {fileID: 21300000, guid: b6a44845de1342748b8a462a2f34a4ae, type: 3}
   - {fileID: 21300000, guid: 4b150a558ea24f8468bef83964288a5a, type: 3}
+  - {fileID: 21300000, guid: 6ad3ec85b78335f4a841821c1507ce4c, type: 3}
   - {fileID: 21300000, guid: bacbedb5eaae7044aa6dceae777ead13, type: 3}
   - {fileID: 21300000, guid: 4fc167464dddcd14488913990dcf685c, type: 3}
   - {fileID: 21300000, guid: e20299569ad0321448de42b1a54316d2, type: 3}
@@ -176,9 +178,11 @@ SpriteAtlas:
   - Writing 1
   - Heart (7)
   - Mid
+  - mobile-vibration-icon (2)
   - Help Button
   - Tenis Ball
   - Bowling Ball
+  - mobile-vibration-icon
   - background Blue
   - Stars 2
   - movie-icon

@@ -12,7 +12,7 @@ public class PlayerInteractions : MonoBehaviour
     public static bool Dead , Win;
 
     public Material StartCol;
-    public GameObject ParticleEffect;
+    public GameObject DeathPartEff, RingPassPartEff;    
     [HideInInspector] public float Origin;
     [Tooltip("How much the player needs to fall from his original platform to Die")]
     public float FallLimit;
@@ -54,7 +54,10 @@ public class PlayerInteractions : MonoBehaviour
         StarLayer = LayerMask.NameToLayer("Star");
 
         Mat.material.color = StartCol.color;
-        ChangeTrail();      
+        ChangeTrail();
+
+        RingPassPartEff = Instantiate(RingPassPartEff, transform.position, new Quaternion());
+        RingPassPartEff.SetActive(false);
 
         //Save System Stuff
         int CurLv = SceneManager.GetActiveScene().buildIndex;
@@ -210,11 +213,16 @@ public class PlayerInteractions : MonoBehaviour
         star.SetActive(false);
     }
 
-    IEnumerator PlayRingPassSound(Vector3 ring)
+    IEnumerator RingPassBehavior(Vector3 EffPos)
     {
-        yield return new WaitUntil(() => ring.z - transform.position.z < -0.5f);
-
         AudioManager.AudMan.Play("Ring Passed", true);
+
+        RingPassPartEff.transform.position = EffPos;
+        RingPassPartEff.SetActive(true);
+
+        yield return new WaitForSeconds(1);
+
+        RingPassPartEff.SetActive(false);
     }
 
     #endregion
@@ -229,9 +237,9 @@ public class PlayerInteractions : MonoBehaviour
         }
         else
         {
-            if(col.tag == "Ring")
+            if (col.tag == "Ring")
             {
-                StartCoroutine(PlayRingPassSound(col.transform.position)); 
+                StartCoroutine(RingPassBehavior(transform.position));
             }
         }     
     }    
@@ -254,7 +262,7 @@ public class PlayerInteractions : MonoBehaviour
             Pm.CancelAllEffects();
             CameraShaker.Instance.ShakeOnce(7, 5, .1f, .5f);
 
-            ParticleSystemRenderer PS = Instantiate(ParticleEffect, transform.position, new Quaternion()).GetComponent<ParticleSystemRenderer>();
+            ParticleSystemRenderer PS = Instantiate(DeathPartEff, transform.position, new Quaternion()).GetComponent<ParticleSystemRenderer>();
             PS.transform.Rotate(Vector3.right * -90);
             PS.material = Mat.material;
 

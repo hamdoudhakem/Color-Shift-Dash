@@ -168,7 +168,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartCol: {fileID: 2100000, guid: 977085e6b2fc1de49b0aeddb18097348, type: 2}
-  ParticleEffect: {fileID: 2534509045215940672, guid: 0fa5f9ec35ca0d1408307d437f0f2050,
+  DeathPartEff: {fileID: 2534509045215940672, guid: 0fa5f9ec35ca0d1408307d437f0f2050,
+    type: 3}
+  RingPassPartEff: {fileID: 7373808441931370661, guid: 3d7da698bb7e1424eae97b40a9487fd6,
     type: 3}
   Origin: 0
   FallLimit: 4
