@@ -31,6 +31,10 @@ public class CannonsObs : MonoBehaviour, IObsTypes
     [Tooltip("How Much this will increase the scale of the projected Cannon Balls")] [Range(.5f , 2)]
     public float UpScalingFac;
 
+    [Header("Destroy Cannon Effect")]
+    [Tooltip("The Time it will take the Cannon to be destroyed")]
+    public float DestAnimTime;
+
     [Header("Performances")]
     [Tooltip("how Many times between each player position check to see if I should Disable This Script or not yet")]
     public float PlayerPosCheckDelay;
@@ -49,6 +53,9 @@ public class CannonsObs : MonoBehaviour, IObsTypes
     private List<CanBallBehavior> CannonBalls;
     private ParticleSystem[] FireEffs;
 
+    private Transform CannonToDest;
+    private bool StartCannonDestAnim;   
+
     void Start()
     {
         TimeLeft = 0;
@@ -56,7 +63,10 @@ public class CannonsObs : MonoBehaviour, IObsTypes
 
         used = false;
         CannonsNum = transform.childCount / 2;
-        
+
+        StartCannonDestAnim = false;
+
+        //Fillin The Rug2x Disctionary with the Rugs and their corresponding Cannons
         ParRugs = new List<Transform>();
         Rug2x = new Dictionary<Transform, Transform>();
 
@@ -201,7 +211,18 @@ public class CannonsObs : MonoBehaviour, IObsTypes
             {
                 TimeLeft -= Time.deltaTime;
             }
-        }      
+        }
+
+        if (StartCannonDestAnim)
+        {
+            CannonToDest.localScale -= (1 / DestAnimTime) * Time.deltaTime * CannonToDest.localScale;
+
+            if (CannonToDest.localScale.magnitude <= 0.1f)
+            {
+                CannonToDest.gameObject.SetActive(false);
+                StartCannonDestAnim = false;
+            }
+        }        
     }
 
     #region Setting Up The Cannon Balls
@@ -261,14 +282,12 @@ public class CannonsObs : MonoBehaviour, IObsTypes
         FireEffs[EffIndex].Play();        
     }
 
-    #endregion
-
     int ChooseCloseToPlayer(Transform player)
     {
         int index = 0;
         float min = Mathf.Abs(player.position.x - ParRugs[0].position.x);
 
-        for(int i = 1; i < ParRugs.Count; i++)
+        for (int i = 1; i < ParRugs.Count; i++)
         {
             float dif = Mathf.Abs(player.position.x - ParRugs[i].position.x);
 
@@ -282,16 +301,21 @@ public class CannonsObs : MonoBehaviour, IObsTypes
         return index;
     }
 
+    #endregion
+
+    #region Destroying Cannons and Disabling This Script
+
     public void DestCan(Transform Rug)
     {
         if(!used)
         {
             used = true;
 
-            //The Cannon needs to be the first child of the parent Rug
-            Rug2x[Rug].GetChild(0).gameObject.SetActive(false);
-
             ParRugs.Remove(Rug2x[Rug]);
+
+            //The Cannon needs to be the first child of the parent Rug           
+            CannonToDest = Rug2x[Rug].GetChild(0);
+            StartCannonDestAnim = true;                       
 
             AudioManager.AudMan.Play("Cannon Gone", true);
 
@@ -316,4 +340,6 @@ public class CannonsObs : MonoBehaviour, IObsTypes
         }
       
     }
+
+    #endregion
 }

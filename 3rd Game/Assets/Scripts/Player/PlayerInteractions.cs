@@ -1,4 +1,5 @@
 using EZCameraShake;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -215,6 +216,8 @@ public class PlayerInteractions : MonoBehaviour
 
     IEnumerator RingPassBehavior(Vector3 EffPos)
     {
+        yield return new WaitUntil(() => transform.position.z - EffPos.z > .5f);
+
         AudioManager.AudMan.Play("Ring Passed", true);
 
         RingPassPartEff.transform.position = EffPos;
@@ -230,8 +233,8 @@ public class PlayerInteractions : MonoBehaviour
     #region Death Related
 
     void DeathCheck(Collider col)
-    {             
-        if (col.gameObject.GetComponent<MeshRenderer>().material.color != Mat.material.color)
+    {
+        if (!CompColorsRGB(Mat.material.color, col.gameObject.GetComponent<MeshRenderer>().material.color))
         {          
             Die();
         }
@@ -242,7 +245,13 @@ public class PlayerInteractions : MonoBehaviour
                 StartCoroutine(RingPassBehavior(transform.position));
             }
         }     
-    }    
+    }
+
+    bool CompColorsRGB(Color color1, Color color2)
+    {
+        //Creating a Comparisent that only takes into account the RGB Values
+        return color1.r == color2.r && color1.g == color2.g && color1.b == color2.b;
+    }
 
     void Die()
     {

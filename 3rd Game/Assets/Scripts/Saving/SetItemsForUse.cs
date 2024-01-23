@@ -7,8 +7,7 @@ public class SetItemsForUse : MonoBehaviour
 {
     public Skin DefaultSkin;
     public List<Skin> PlayerSkins;
-    public List<Material> Skyboxes;
-    public List<VolumeProfile> Profiles;    
+    public List<SkyboxProperties> Skyboxes;    
 
     void Start()
     {        
@@ -21,8 +20,6 @@ public class SetItemsForUse : MonoBehaviour
             LoadItems.PlayerSkin = PlayerSkins.Find(skin => skin.SkinName.Contains(PlayerData.CurrentSkin));
         }
 
-        LoadItems.Skybox = Skyboxes.Find(skybox => skybox.name == PlayerData.CurrentSkybox);
-
-        LoadItems.Profile = Profiles.Find(profile => profile.name.Contains(PlayerData.CurrentSkybox));
+        LoadItems.Skybox = Skyboxes.Find(skybox => skybox.SkyboxName == PlayerData.CurrentSkybox);
     }
 }

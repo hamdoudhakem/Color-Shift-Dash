@@ -18,7 +18,8 @@ public class EffectsBehavior : MonoBehaviour
     {
         Player = transform.parent.GetComponent<CameraMovement>().Player;
         SpeedUpEf = transform.GetChild(0);
-        
+        TrailParticles.gameObject.SetActive(true);
+
         BaseOffset = SpeedUpEf.position - transform.position;
     }
 

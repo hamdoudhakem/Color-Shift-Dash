@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca2b1f4adde12314c8787a858e88c920, type: 3}
+  m_Name: Cosmos
+  m_EditorClassIdentifier: 
+  SkyboxName: Cosmos
+  SkyboxMaterial: {fileID: 2100000, guid: f531e09e2ad2fb440b4eed7605863143, type: 2}
+  Profile: {fileID: 11400000, guid: 903aa7d30a24e7e45befdcd7440d1493, type: 2}
+  LightRotation: {x: 0, y: 0, z: 0}

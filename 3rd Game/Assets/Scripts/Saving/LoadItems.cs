@@ -7,8 +7,7 @@ using UnityEngine.Rendering.Universal;
 public class LoadItems : MonoBehaviour
 {
     public static Skin PlayerSkin;
-    public static Material Skybox;
-    public static VolumeProfile Profile;
+    public static SkyboxProperties Skybox;   
 
     void Awake()
     {
@@ -22,27 +21,26 @@ public class LoadItems : MonoBehaviour
     {             
         Debug.Log("I Will Assign The Skybox, Skin and Instansiate the right Post Processing");
 
+        //Getting the Variables
         Transform Player = GetComponent<CameraMovement>().Player;
 
-        SetSkin(Player.GetComponent<MeshFilter>());
+        MeshFilter mr = Player.GetComponent<MeshFilter>();
 
-        RenderSettings.skybox = Skybox;
-
-        //Loading the Post-rocessing
-        Volume PostPro = FindObjectOfType<Volume>();
-
-        PostPro.profile = Profile;
-
-        Player.GetComponent<PlayerMovement>().Lens = (LensDistortion)PostPro.profile.components.Find(comp => comp is LensDistortion);
-    }
-
-    void SetSkin(MeshFilter mr)
-    {
+        //Loading The Skin
         mr.mesh = PlayerSkin.mesh;
-
         if (PlayerSkin.CustMaterials)
         {
             mr.GetComponent<MeshRenderer>().materials = PlayerSkin.Materials;
         }
-    }
+
+        //Loading The Skybox
+        RenderSettings.skybox = Skybox.SkyboxMaterial;
+
+        //Loading the Post-rocessing
+        Volume PostPro = FindObjectOfType<Volume>();
+
+        PostPro.profile = Skybox.Profile;
+
+        Player.GetComponent<PlayerMovement>().Lens = (LensDistortion)PostPro.profile.components.Find(comp => comp is LensDistortion);
+    }        
 }

@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca2b1f4adde12314c8787a858e88c920, type: 3}
+  m_Name: Moon Night
+  m_EditorClassIdentifier: 
+  SkyboxName: Moon Night
+  SkyboxMaterial: {fileID: 2100000, guid: d4454f71d85928744be7771e2143dab7, type: 2}
+  Profile: {fileID: 11400000, guid: 41a2ba4c7a7500e43a15c814b36faf6b, type: 2}
+  LightRotation: {x: 0, y: 0, z: 0}
