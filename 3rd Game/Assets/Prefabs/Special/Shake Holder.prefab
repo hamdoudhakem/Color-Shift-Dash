@@ -4977,7 +4977,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 1.5
-  far clip plane: 1000
+  far clip plane: 200
   field of view: 74
   orthographic: 0
   orthographic size: 5
@@ -5292,6 +5292,7 @@ MonoBehaviour:
     m_Bits: 24576
   Offset: {x: 0, y: 0, z: -45}
   Size: {x: 13, y: 5.24, z: 0.7}
+  FixXAxe: 0
 --- !u!114 &1916122169216578406
 MonoBehaviour:
   m_ObjectHideFlags: 0

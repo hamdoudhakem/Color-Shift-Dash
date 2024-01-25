@@ -8,12 +8,23 @@ public class Destroyer : MonoBehaviour
     public LayerMask ConcernedLayers;
     [Tooltip("The Destroyer Overlapbox Offset from the Shake Holder (Except the Y which will be static and in WolrdPoint not relative to this Object)")]
     public Vector3 Offset;
-    public Vector3 Size;   
+    public Vector3 Size;
+    public bool FixXAxe = false;
+
+    private float StartXPos;
+
+    void Start()
+    {
+        if (FixXAxe)
+        {
+            StartXPos = transform.position.x + Offset.x;
+        }
+    }
 
     void Update()
     {
-        var cols = Physics.OverlapBox(new Vector3(transform.position.x + Offset.x, Offset.y,
-                            transform.position.z + Offset.z), Size, new Quaternion(), ConcernedLayers);
+        var cols = Physics.OverlapBox(new Vector3(FixXAxe ? StartXPos: transform.position.x + Offset.x,
+                        Offset.y, transform.position.z + Offset.z), Size, new Quaternion(), ConcernedLayers);
 
         if(cols.Length > 0)
         {

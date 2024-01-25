@@ -15,4 +15,4 @@ MonoBehaviour:
   SkyboxName: Mega Sun
   SkyboxMaterial: {fileID: 2100000, guid: cede08c9fc471e64884909cd4bbeaf59, type: 2}
   Profile: {fileID: 11400000, guid: 0f045d34b36818e4dbfef7d56560205f, type: 2}
-  LightRotation: {x: 0, y: 0, z: 0}
+  LightRotation: {x: 44.3, y: 5, z: 0}

@@ -42,5 +42,12 @@ public class LoadItems : MonoBehaviour
         PostPro.profile = Skybox.Profile;
 
         Player.GetComponent<PlayerMovement>().Lens = (LensDistortion)PostPro.profile.components.Find(comp => comp is LensDistortion);
+
+        //Loading the Light data
+        Transform lightSource = PostPro.transform.GetChild(0);
+
+        lightSource.rotation = Quaternion.Euler(Skybox.LightRotation);
+
+        lightSource.GetComponent<Light>().color = Skybox.LightColor;
     }        
 }
