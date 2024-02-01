@@ -1,3 +1,4 @@
+using RotaryHeart.Lib.SerializableDictionary;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,107 +9,86 @@ public class ColorBridgeBehavior : MonoBehaviour, IObsTypes
     public ObsTypes obsType { get; set; }
 
     public Material NeededMat;
-    public MeshRenderer[] StartMeshes;
-    public MeshRenderer[] SideMehes1;
-    public MeshRenderer[] SideMehes2;
+
+    [Space]   
+    public TransXMatIndexDictionary TransXMatIndex;
+    [Tooltip("If this is False then The Other Side materials (where I can Have the Third Bridge) won't change there current material at Runtime")]
+    public bool ChangeOtherSideMat;
+    public Transform[] StartMeshes;
+    public Transform[] SideMehes1;
+    public Transform[] SideMehes2;
     [Tooltip("The Middle bridge that I added to this obstacle")]
-    public MeshRenderer[] ThirdBridge;
-
-    private Material OtherMat;
-
+    public Transform[] ThirdBridge;
+    
+    private MeshRenderer mesh;       
+        
     void Start()
     {
-        OtherMat = StaticData.Materials[StaticData.ChooseMat(NeededMat)];
+        mesh = GetComponent<MeshRenderer>();
+        Material OtherMat = StaticData.Materials[StaticData.ChooseMat(NeededMat)];
 
-        AssignStartMats(NeededMat, OtherMat);
+        //Chossing which starting material will get the NeededMat
+        int ChosenStartMesh = Random.Range(0, StartMeshes.Length);
 
-        if(ThirdBridge.Length == 0)
+        //Chossing which other material will get the NeededMat
+        Transform[] ChosenOtherMesh = SideMehes1;
+
+        int y = (ThirdBridge.Length > 0 ? Random.Range(0, 3) : Random.Range(0, 2));
+
+        switch (y)
         {
-            if (Random.Range(0, 2) == 0)
+            case 0:
+                ChosenOtherMesh = SideMehes1;
+                break;
+            case 1:
+                ChosenOtherMesh = SideMehes2;
+                break;
+            case 2:
+                ChosenOtherMesh = ThirdBridge;
+                break;
+        }
+
+        //Getting the Mat Array to be able to change the materials
+        Material[] mats = mesh.materials;
+
+        //Assigning the Needed mat to one of the Starting materials
+        mats[TransXMatIndex[StartMeshes[ChosenStartMesh]]].color = NeededMat.color;
+
+        
+        if (ChangeOtherSideMat)
+        {
+            Debug.Log("I will change the Transform : " + ChosenOtherMesh[0].name + " which mat is number : " + TransXMatIndex[ChosenOtherMesh[0]]);
+            //Assigning the NeededMat to a Material in the other Side 
+            mats[TransXMatIndex[ChosenOtherMesh[0]]].color = NeededMat.color;
+
+            //I created an array of the indexes of the materials
+            //that have the NeededMat to only change the other Materials to the Other Mat
+            List<int> NeededMatIndex = new List<int>() { TransXMatIndex[StartMeshes[ChosenStartMesh]], TransXMatIndex[ChosenOtherMesh[0]] };
+
+            for (int i = 1; i < mats.Length; i++)
             {
-                Assign(SideMehes1, NeededMat);
-                Assign(SideMehes2, OtherMat);
-            }
-            else
-            {
-                Assign(SideMehes1, OtherMat);
-                Assign(SideMehes2, NeededMat);
+                if (!NeededMatIndex.Contains(i))
+                {
+                    mats[i].color = OtherMat.color;
+                }                
+                                
             }
         }
         else
         {
-            int y = Random.Range(0, 3), TrackingNeededMat = 0;            
-
-            //To randomise My starting mesh and Go On from it
-            for(int i = 0; i < 3; i++)
-            {
-                if((y + i) % 3 == 0)
-                {
-                    Assign(SideMehes1, ref TrackingNeededMat);
-                }
-                else if ((y + i) % 3 == 1)
-                {
-                    Assign(SideMehes2, ref TrackingNeededMat);
-                }
-                else if ((y + i) % 3 == 2)
-                {
-                    Assign(ThirdBridge ,ref TrackingNeededMat);
-                }
-            }
-        }                     
-    }
-
-    private void AssignStartMats(Material Mat1 , Material Mat2)
-    {
-        int i = Random.Range(0 , 2);
-
-        foreach(MeshRenderer mesh in StartMeshes)
-        {
-            if(i % 2 == 0)
-            {
-                mesh.material = Mat1;
-            }
-            else
-            {
-                mesh.material = Mat2;
-            }
-
-            i++;
-        }        
-    }
-
-    private void Assign(MeshRenderer[] sideMehes, Material material)
-    {
-        foreach(MeshRenderer mesh in sideMehes)
-        {
-            mesh.material = material;
-        }
-    }
-
-    private void Assign(MeshRenderer[] sideMeshes ,ref int Count)
-    {
-        //In case i didn't get a single NeededMat
-        if(Count == 2)
-        {
-            Assign(sideMeshes, NeededMat);
-        }
-        else
-        {
-            //To make so that i don't get 3 NeededMats (2 Max)
-            if (Count > -1 && Random.Range(0 , 2) == 0)
-            {
-                Assign(sideMeshes, NeededMat);
-                Count = -1;
-            }
-            else
-            {                
-                Assign(sideMeshes, OtherMat);
-                Count++;
-            }
-                  
+            //Changing the Second Starting Material to Other Mat (after assigning NeededMat to the other one)
+            mats[TransXMatIndex[StartMeshes[(ChosenStartMesh + 1) % StartMeshes.Length]]].color = OtherMat.color;
         }
 
+
     }
 
-    
+    public Material GetTouchedColor(Transform TouchedChild)
+    {
+        return mesh.materials[TransXMatIndex[TouchedChild]];
+    }
+        
 }
+
+[System.Serializable]
+public class TransXMatIndexDictionary : SerializableDictionaryBase<Transform, int> { }

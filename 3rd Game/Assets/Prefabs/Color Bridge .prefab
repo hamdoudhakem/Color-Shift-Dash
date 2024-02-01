@@ -449,15 +449,54 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <obsType>k__BackingField: 7
   NeededMat: {fileID: 2100000, guid: 977085e6b2fc1de49b0aeddb18097348, type: 2}
+  TransXMatIndex:
+    reorderableList:
+      canAdd: 1
+      canRemove: 1
+      draggable: 1
+      expandable: 1
+      multipleSelection: 1
+      isExpanded: 0
+      label:
+        m_Text: Keys
+        m_Image: {fileID: 0}
+        m_Tooltip: 
+      headerHeight: 18
+      footerHeight: 13
+      slideEasing: 0.15
+      verticalSpacing: 2
+      showDefaultBackground: 1
+      elementDisplayType: 0
+      elementNameProperty: 
+      elementNameOverride: 
+      elementIcon: {fileID: 0}
+    reqReferences: {fileID: 11400000, guid: 3d6785e46e940b843aa5fbe4ca729d60, type: 2}
+    isExpanded: 0
+    _keyValues:
+    - {fileID: 172403132699122945}
+    - {fileID: 3419182884869854990}
+    - {fileID: 6848938266992630383}
+    - {fileID: 6078958271336873804}
+    - {fileID: 1010532825856693536}
+    - {fileID: 6283378903992830864}
+    _keys:
+    - {fileID: 172403132699122945}
+    - {fileID: 3419182884869854990}
+    - {fileID: 6848938266992630383}
+    - {fileID: 6078958271336873804}
+    - {fileID: 1010532825856693536}
+    - {fileID: 6283378903992830864}
+    _values: 030000000200000004000000040000000100000001000000
+  ChangeOtherSideMat: 1
   StartMeshes:
-  - {fileID: 1739033924992765855}
-  - {fileID: 5159008677142775463}
+  - {fileID: 172403132699122945}
+  - {fileID: 3419182884869854990}
   SideMehes1:
-  - {fileID: 6050319374431940654}
-  - {fileID: 526683833620399344}
+  - {fileID: 6848938266992630383}
+  - {fileID: 6078958271336873804}
   SideMehes2:
-  - {fileID: 3561061060964704558}
-  - {fileID: 727946358685314898}
+  - {fileID: 1010532825856693536}
+  - {fileID: 6283378903992830864}
   ThirdBridge: []
 --- !u!65 &8754543714291009132
 BoxCollider:

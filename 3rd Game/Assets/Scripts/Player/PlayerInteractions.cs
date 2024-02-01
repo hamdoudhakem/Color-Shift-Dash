@@ -203,7 +203,7 @@ public class PlayerInteractions : MonoBehaviour
         }
     }
 
-    #region Coroutines (IEnumerators)
+    #region Coroutines (DisbaleStar, RingPassBehavior)
 
     IEnumerator DisbaleStar(GameObject star, float Time)
     {
@@ -234,12 +234,27 @@ public class PlayerInteractions : MonoBehaviour
 
     void DeathCheck(Collider col)
     {
-        if (!CompColorsRGB(Mat.material.color, col.gameObject.GetComponent<MeshRenderer>().material.color))
+        Material mat = null;        
+
+        if(col.gameObject.TryGetComponent(out MeshRenderer mesh))
+        {
+            //If the Collided Object have Mesh Renderer Then I will check color Directly
+            mat = mesh.material;
+        }
+        else
+        { 
+            //If the Collided Object doesn't have Mesh Renderer
+            //Then I will get the color throught the IColliderColor Interface
+            mat = col.gameObject.GetComponent<IColliderColor>().GetColor();
+        }
+
+        if (!CompColorsRGB(Mat.material.color, mat.color))
         {          
             Die();
         }
         else
         {
+            //If the player doesn't Die then He will do stuff based on which Obstacales he passed
             if (col.tag == "Ring")
             {
                 StartCoroutine(RingPassBehavior(transform.position));
