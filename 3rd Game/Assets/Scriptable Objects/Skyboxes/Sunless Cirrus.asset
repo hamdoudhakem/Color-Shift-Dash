@@ -15,4 +15,5 @@ MonoBehaviour:
   SkyboxName: Sunless Cirrus
   SkyboxMaterial: {fileID: 2100000, guid: 4e154bf235e41704bbd6bbc6fd6c63f6, type: 2}
   Profile: {fileID: 11400000, guid: 09ed8975961b06f43bd281c571d33118, type: 2}
-  LightRotation: {x: 0, y: 0, z: 0}
+  LightRotation: {x: 44.3, y: 5, z: 0}
+  LightColor: {r: 0.9150943, g: 0.910242, b: 0.6776878, a: 1}

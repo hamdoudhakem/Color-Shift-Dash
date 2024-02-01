@@ -166,6 +166,7 @@ public class CannonsObs : MonoBehaviour, IObsTypes
 
                         } while (index < CannonBalls.Count);
 
+                        //Using an Already created Cannon Ball
                         if(index < CannonBalls.Count)
                         {
                             CanBallBehavior obj = CannonBalls[index];
@@ -186,6 +187,7 @@ public class CannonsObs : MonoBehaviour, IObsTypes
                         }
                         else
                         {
+                            //Creating a New Temporary Cannon Ball (will Destroy instead of recycle)
                             CanBallBehavior obj = Instantiate(CanBall, ParRugs[i].position + OffsetFirePoint, new Quaternion()).GetComponent<CanBallBehavior>();
 
                             SetCanBallVars(obj, false); 

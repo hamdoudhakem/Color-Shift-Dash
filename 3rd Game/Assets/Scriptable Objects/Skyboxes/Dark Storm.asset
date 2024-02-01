@@ -15,4 +15,5 @@ MonoBehaviour:
   SkyboxName: Dark Storm
   SkyboxMaterial: {fileID: 2100000, guid: 2039a0ad0a9d05549928b70362f54902, type: 2}
   Profile: {fileID: 11400000, guid: b0ae0604fea3f9545b02aa7ce02486f8, type: 2}
-  LightRotation: {x: 0, y: 0, z: 0}
+  LightRotation: {x: 44.3, y: 5, z: 0}
+  LightColor: {r: 0.9150943, g: 0.910242, b: 0.6776878, a: 1}

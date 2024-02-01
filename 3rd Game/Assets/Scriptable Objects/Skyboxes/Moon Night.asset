@@ -15,4 +15,5 @@ MonoBehaviour:
   SkyboxName: Moon Night
   SkyboxMaterial: {fileID: 2100000, guid: d4454f71d85928744be7771e2143dab7, type: 2}
   Profile: {fileID: 11400000, guid: 41a2ba4c7a7500e43a15c814b36faf6b, type: 2}
-  LightRotation: {x: 0, y: 0, z: 0}
+  LightRotation: {x: 44.3, y: 5, z: 0}
+  LightColor: {r: 0.9150943, g: 0.910242, b: 0.6776878, a: 1}

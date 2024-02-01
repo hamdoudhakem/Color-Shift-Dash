@@ -16,3 +16,4 @@ MonoBehaviour:
   SkyboxMaterial: {fileID: 2100000, guid: d9dca9ae1786c394f9e79c637aa9a7bf, type: 2}
   Profile: {fileID: 11400000, guid: 0aabd2e8912cce641ad071ca74ea0c46, type: 2}
   LightRotation: {x: 79.7, y: 202.59, z: 0}
+  LightColor: {r: 0.9150943, g: 0.910242, b: 0.6776878, a: 1}

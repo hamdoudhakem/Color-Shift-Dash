@@ -12,8 +12,4 @@ public class SkyboxProperties : ScriptableObject
     public Material SkyboxMaterial;
 
     public VolumeProfile Profile;
-
-    public Vector3 LightRotation;
-
-    public Color LightColor = new Color(0.9150943f, 0.910242f, 0.6776878f);
 }

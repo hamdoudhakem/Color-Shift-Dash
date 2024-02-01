@@ -6,6 +6,8 @@ public class CanBallBehavior : MonoBehaviour
 {
     [Tooltip("The Cannon Ball Destruction particle effect")]
     public GameObject CanBallDesEffect;
+    [Tooltip("The Distance between the Player and the Cannon Ball at which the Cannon Ball is gonna self destroy")]
+    public float PlayerDis;
     [Tooltip("How Much Times passes between each Distance Check (in seconds)")]
     public float CheckRate;
 
@@ -36,7 +38,7 @@ public class CanBallBehavior : MonoBehaviour
     void CheckDis()
     {      
         if (StartZ - transform.position.z > MaxDistance 
-            || !PlayerInteractions.Dead && Player.position.z - transform.position.z >= 1)
+            || !PlayerInteractions.Dead && Player.position.z - transform.position.z >= PlayerDis)
         {
             DestOrDisactivate();
         }       

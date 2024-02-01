@@ -61,7 +61,7 @@ public class SplasherBehavior : MonoBehaviour ,IObsTypes
     void Start()
     {
         StartPos = transform.position;
-        Mesh = Barrel.GetComponent<MeshRenderer>();
+        Mesh = GetComponent<MeshRenderer>();
         CoolDown = 0;
         ShotNum = 0;
 
@@ -98,7 +98,9 @@ public class SplasherBehavior : MonoBehaviour ,IObsTypes
                     if (Physics.OverlapBox(Pos, CheckSize, new Quaternion(), GroundLayer).Length > 0)
                     {
                         Target = new Vector3(hit.transform.position.x, transform.position.y, transform.position.z);
-                        Mesh.material = StaticData.Materials[Random.Range(0, StaticData.Materials.Count)];
+
+                        Material[] mats = Mesh.materials;
+                        mats[1].color = StaticData.Materials[Random.Range(0, StaticData.Materials.Count)].color;
 
                         Moving = true;
                         AudioManager.AudMan.Play("Splasher Moving");
@@ -137,7 +139,7 @@ public class SplasherBehavior : MonoBehaviour ,IObsTypes
                     SetBallVars(ball, false);
                 }
 
-                ball.transform.GetChild(0).GetComponent<MeshRenderer>().material = Mesh.material;
+                ball.transform.GetChild(0).GetComponent<MeshRenderer>().material = Mesh.materials[1];
 
                 ball.start();
 
