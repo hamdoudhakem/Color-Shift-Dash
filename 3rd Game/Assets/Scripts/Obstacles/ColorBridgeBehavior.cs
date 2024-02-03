@@ -65,8 +65,14 @@ public class ColorBridgeBehavior : MonoBehaviour, IObsTypes
             //that have the NeededMat to only change the other Materials to the Other Mat
             List<int> NeededMatIndex = new List<int>() { TransXMatIndex[StartMeshes[ChosenStartMesh]], TransXMatIndex[ChosenOtherMesh[0]] };
 
-            for (int i = 1; i < mats.Length; i++)
+            for (int i = 0; i < mats.Length; i++)
             {
+                //I'm Skipping the Middle Part Material (the Grounded/Neutral one)
+                if(i == 2)
+                {
+                    continue;
+                }
+
                 if (!NeededMatIndex.Contains(i))
                 {
                     mats[i].color = OtherMat.color;

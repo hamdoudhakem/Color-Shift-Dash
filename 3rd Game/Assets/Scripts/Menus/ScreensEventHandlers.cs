@@ -65,11 +65,11 @@ public class ScreensEventHandlers : MonoBehaviour
     {
         if (!LoadingScene)
         {
+            LoadingScene = true;
+
             Time.timeScale = 1;
             AsyncOperation asyncOp = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
-            StartLoadScreen();
-
-            LoadingScene = true;
+            StartLoadScreen();            
         }
        
     }

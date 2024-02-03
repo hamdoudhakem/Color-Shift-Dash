@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: c52c5d7968fa6c9499b0b5752f899bfb, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: cede08c9fc471e64884909cd4bbeaf59, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4220388, g: 0.2701422, b: 0.16811746, a: 1}
+  m_IndirectSpecularColor: {r: 0.5404919, g: 0.296529, b: 0.15578635, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -944,6 +944,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1359668117}
     m_Modifications:
+    - target: {fileID: 1874477101, guid: 0e3fa4ba0664f3646bc5c18e5e48bea7, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 566bf3f94c861a84a98277f754835622, type: 2}
+    - target: {fileID: 1874477101, guid: 0e3fa4ba0664f3646bc5c18e5e48bea7, type: 3}
+      propertyPath: m_Materials.Array.data[4]
+      value: 
+      objectReference: {fileID: 2100000, guid: 566bf3f94c861a84a98277f754835622, type: 2}
     - target: {fileID: 526683833620399344, guid: 0e3fa4ba0664f3646bc5c18e5e48bea7,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -2506,7 +2514,7 @@ PrefabInstance:
     - target: {fileID: 1577680473598033232, guid: dc669cae770f0b243877bf6e5f5397e3,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.17862701
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1577680473598033232, guid: dc669cae770f0b243877bf6e5f5397e3,
         type: 3}
@@ -3023,7 +3031,7 @@ PrefabInstance:
     - target: {fileID: 6446185912101322020, guid: dcb154dbfff2fa049858b7a2a59d76de,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.33
+      value: 3.35
       objectReference: {fileID: 0}
     - target: {fileID: 6446185912101322020, guid: dcb154dbfff2fa049858b7a2a59d76de,
         type: 3}
@@ -3554,6 +3562,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1359668117}
     m_Modifications:
+    - target: {fileID: 1874477101, guid: 0e3fa4ba0664f3646bc5c18e5e48bea7, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 566bf3f94c861a84a98277f754835622, type: 2}
+    - target: {fileID: 1874477101, guid: 0e3fa4ba0664f3646bc5c18e5e48bea7, type: 3}
+      propertyPath: m_Materials.Array.data[3]
+      value: 
+      objectReference: {fileID: 2100000, guid: 566bf3f94c861a84a98277f754835622, type: 2}
+    - target: {fileID: 1874477101, guid: 0e3fa4ba0664f3646bc5c18e5e48bea7, type: 3}
+      propertyPath: m_Materials.Array.data[4]
+      value: 
+      objectReference: {fileID: 2100000, guid: 55fc817cdb8c69b4c9397ed8d6f9945f, type: 2}
     - target: {fileID: 526683833620399344, guid: 0e3fa4ba0664f3646bc5c18e5e48bea7,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
