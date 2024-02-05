@@ -68,6 +68,7 @@ public class PlayerMovement : MonoBehaviour
     private float LastTargetSpeed;
     private CameraMovement CM;
 
+    private Collider[] Cols = new Collider[1];
     private bool Grounded , LastGrounded;
     private bool Boosted;
 
@@ -101,7 +102,7 @@ public class PlayerMovement : MonoBehaviour
     {        
         if (!ScreensEventHandlers.IsPaused)
         {
-            Grounded = Physics.OverlapBox(transform.position + Vector3.down * .5f, GroundedSize, new Quaternion(), GroundLayer, QueryTriggerInteraction.Ignore).Length > 0;
+            Grounded = Physics.OverlapBoxNonAlloc(transform.position + Vector3.down * .5f, GroundedSize, Cols, new Quaternion(), GroundLayer, QueryTriggerInteraction.Ignore) > 0;
 
             if (Grounded && rb.velocity.z > .3f)
             {
@@ -308,12 +309,13 @@ public class PlayerMovement : MonoBehaviour
 
         yield return new WaitForSeconds(BoostTime);
 
+        //Wait Until I'm Either Grounded or Colliding Head first against Something (a problem)
+        Collider[] cols = new Collider[1];
         yield return new WaitUntil(() =>
         {
-            return Physics.OverlapBox(transform.position + Vector3.down * .5f, GroundedSize, new Quaternion(), GroundLayer ,QueryTriggerInteraction.Ignore).Length > 0
-            || Physics.OverlapBox(transform.position + Vector3.forward * .5f, GroundedSize, Quaternion.Euler(90, 0, 0), GroundLayer, QueryTriggerInteraction.Ignore).Length > 0;
+            return Grounded || Physics.OverlapBoxNonAlloc(transform.position + Vector3.forward * .5f, GroundedSize, cols, Quaternion.Euler(90, 0, 0), GroundLayer, QueryTriggerInteraction.Ignore) > 0;
         });
-
+        
         //AudioManager.AudMan.Stop("Boost");
         Debug.Log("I Got Here");
         AudioManager.AudMan.Play("Deboost");

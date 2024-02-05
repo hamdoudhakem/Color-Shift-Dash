@@ -32,12 +32,12 @@ public class LoadItems : MonoBehaviour
         {
             mr.GetComponent<MeshRenderer>().materials = PlayerSkin.Materials;
         }
-
+        
         //Loading The Skybox
         RenderSettings.skybox = Skybox.SkyboxMaterial;
 
         //Loading the Post-rocessing
-        Volume PostPro = FindObjectOfType<Volume>();
+        Volume PostPro = GameObject.FindWithTag("Volume").GetComponent<Volume>();
 
         PostPro.profile = Skybox.Profile;
 
