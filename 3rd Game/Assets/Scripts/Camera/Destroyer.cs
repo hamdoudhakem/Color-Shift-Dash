@@ -12,6 +12,7 @@ public class Destroyer : MonoBehaviour
     public bool FixXAxe = false;
 
     private float StartXPos;
+    private Collider[] cols = new Collider[10];  //Help When Using Non Alloc versions of Overlaps and Casts
 
     void Start()
     {
@@ -23,12 +24,12 @@ public class Destroyer : MonoBehaviour
 
     void Update()
     {
-        var cols = Physics.OverlapBox(new Vector3(FixXAxe ? StartXPos: transform.position.x + Offset.x,
-                        Offset.y, transform.position.z + Offset.z), Size, new Quaternion(), ConcernedLayers);
+        int colsNum = Physics.OverlapBoxNonAlloc(new Vector3(FixXAxe ? StartXPos: transform.position.x + Offset.x,
+                        Offset.y, transform.position.z + Offset.z), Size,cols, new Quaternion(), ConcernedLayers);
 
-        if(cols.Length > 0)
+        if(colsNum > 0)
         {
-            for (int i = 0; i< cols.Length; i++)
+            for (int i = 0; i< colsNum; i++)
             {
                 Destroy(cols[i].gameObject);
             }

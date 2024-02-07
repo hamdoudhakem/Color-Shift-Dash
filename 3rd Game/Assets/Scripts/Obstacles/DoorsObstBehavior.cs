@@ -36,7 +36,8 @@ public class DoorsObstBehavior : MonoBehaviour, IObsTypes
     public float OffsetX { get; private set; }
 
     private DoorMovement[] Doors;
-    private bool StartRemaiDoors;    
+    private bool StartRemaiDoors;  
+    private Collider[] PlayerCol = new Collider[1];  //Help When Using Non Alloc version of OverlapBox
 
     void Start()
     {
@@ -99,11 +100,11 @@ public class DoorsObstBehavior : MonoBehaviour, IObsTypes
 
                 if (!StartRemaiDoors)
                 {
-                    Collider[] cols = Physics.OverlapBox(transform.position + Vector3.back * StartDistance, BoxSize, new Quaternion(), PlayerLayer);
+                    int colsNum = Physics.OverlapBoxNonAlloc(transform.position + Vector3.back * StartDistance, BoxSize, PlayerCol, new Quaternion(), PlayerLayer);
 
-                    if (cols.Length > 0)
+                    if (colsNum > 0)
                     {
-                        Player = cols[0].transform;
+                        Player = PlayerCol[0].transform;
                         StartRemaiDoors = true;
 
                         InvokeRepeating("UpdateAudPos", AudUpdateTime, AudUpdateTime);

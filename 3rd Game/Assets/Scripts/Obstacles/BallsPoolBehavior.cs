@@ -24,7 +24,8 @@ public class BallsPoolBehavior : MonoBehaviour, IObsTypes
     public LayerMask SoundLayers;
 
     private bool IsIn;
-    private Collider[] cols, lastCols;
+    private Collider[] lastCols;
+    private Collider[] PlayerCol = new Collider[1];  //Help When Using Non Alloc version of OverlapBox
     [HideInInspector] public int MovingBalls {
 
         get => movingBalls;
@@ -38,9 +39,7 @@ public class BallsPoolBehavior : MonoBehaviour, IObsTypes
     private int movingBalls;
 
     void Start()
-    {
-        //PlayerLayer = LayerMask.NameToLayer("Player");
-        //SoundLayers = PlayerLayer | LayerMask.NameToLayer("Color Obst");
+    {        
         movingBalls = 0;
         IsIn = false;
 
@@ -107,30 +106,35 @@ public class BallsPoolBehavior : MonoBehaviour, IObsTypes
 
     void Update()
     {
-        cols = Physics.OverlapBox(transform.position + Offset, BoxSize, new Quaternion(), PlayerLayer);
-
-        if (!IsIn)
-        {           
-            if (cols.Length > 0)
-            {
-                cols[0].GetComponent<Rigidbody>().constraints |= RigidbodyConstraints.FreezePositionY;
-
-                IsIn = true;
-            }
-        }
-        else
+        if (!ScreensEventHandlers.IsPaused)
         {
-            if (cols.Length <= 0)
-            {
-                if(lastCols[0] != null)
-                {
-                    lastCols[0].GetComponent<Rigidbody>().constraints &= ~RigidbodyConstraints.FreezePositionY;
-                }
-                enabled = false;
-            }
-        }
+            //This Code Will Freeze or Defreeze the Player Y axe Movement to Stop him from Going Above the Balls
 
-        lastCols = cols;
+            int colsNum = Physics.OverlapBoxNonAlloc(transform.position + Offset, BoxSize, PlayerCol, new Quaternion(), PlayerLayer);
+
+            if (!IsIn)
+            {
+                if (colsNum > 0)
+                {
+                    PlayerCol[0].GetComponent<Rigidbody>().constraints |= RigidbodyConstraints.FreezePositionY;
+
+                    IsIn = true;
+                }
+            }
+            else
+            {
+                if (colsNum <= 0)
+                {
+                    if (lastCols[0] != null)
+                    {
+                        lastCols[0].GetComponent<Rigidbody>().constraints &= ~RigidbodyConstraints.FreezePositionY;
+                    }
+                    enabled = false;
+                }
+            }
+
+            lastCols = PlayerCol;
+        }        
     }
 
     void CheckDragSound()
@@ -138,12 +142,12 @@ public class BallsPoolBehavior : MonoBehaviour, IObsTypes
         if(MovingBalls > 0)
         {
             AudioManager.AudMan.Play("Drag Balls");
-            Debug.Log("Draging");
+           // Debug.Log("Draging");
         }
         else
         {
             AudioManager.AudMan.Stop("Drag Balls");
-            Debug.Log("Stoped Draging");
+            //Debug.Log("Stoped Draging");
         }
     }
 

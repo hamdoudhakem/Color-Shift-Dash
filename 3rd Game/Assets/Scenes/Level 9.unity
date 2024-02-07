@@ -4126,7 +4126,6 @@ GameObject:
   - component: {fileID: 3402328969174535801}
   - component: {fileID: 635983236165253811}
   - component: {fileID: 2239101295797020209}
-  - component: {fileID: 2239101295797020211}
   m_Layer: 6
   m_Name: Ramp
   m_TagString: Untagged
@@ -4146,7 +4145,6 @@ GameObject:
   - component: {fileID: 3402328968257100623}
   - component: {fileID: 635983237124763525}
   - component: {fileID: 2239101294609314567}
-  - component: {fileID: 2239101294609314565}
   m_Layer: 0
   m_Name: Ramp
   m_TagString: Untagged
@@ -4228,22 +4226,6 @@ Transform:
   m_Father: {fileID: 1772267328729470186}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 47.1, y: 180, z: 0}
---- !u!114 &2239101294609314565
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1428638417394273872}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72860fbf1a7f30c4e96d21e3eb5ca23d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OverlapBox: {x: 13.2, y: 6.68, z: 0.15}
-  PlayerMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!65 &2239101294609314567
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4346,22 +4328,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.99999994, y: 0.16440439, z: 1.4062437}
   m_Center: {x: 0.00000004171208, y: -0.41779807, z: -0.29687682}
---- !u!114 &2239101295797020211
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1428638416434895718}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72860fbf1a7f30c4e96d21e3eb5ca23d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OverlapBox: {x: 13.2, y: 6.68, z: 0.15}
-  PlayerMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!114 &2239101296033184084
 MonoBehaviour:
   m_ObjectHideFlags: 0

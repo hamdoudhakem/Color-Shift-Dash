@@ -31,9 +31,8 @@ public class CannonsObs : MonoBehaviour, IObsTypes
     [Tooltip("How Much this will increase the scale of the projected Cannon Balls")] [Range(.5f , 2)]
     public float UpScalingFac;
 
-    [Header("Destroy Cannon Effect")]
-    [Tooltip("The Time it will take the Cannon to be destroyed")]
-    public float DestAnimTime;
+    [Header("Cannon Destroy Stuff")]
+    public GameObject CannonDestEff;
 
     [Header("Performances")]
     [Tooltip("how Many times between each player position check to see if I should Disable This Script or not yet")]
@@ -51,10 +50,11 @@ public class CannonsObs : MonoBehaviour, IObsTypes
     private Transform Player;
 
     private List<CanBallBehavior> CannonBalls;
-    private ParticleSystem[] FireEffs;
+    private ParticleSystem[] FireEffs;  
 
-    private Transform CannonToDest;
-    private bool StartCannonDestAnim;   
+    //Help When Using Non Alloc versions of Overlaps and Casts
+    private Collider[] PlayerCol = new Collider[1];
+    private RaycastHit[] PlayerHit = new RaycastHit[1];
 
     void Start()
     {
@@ -63,8 +63,6 @@ public class CannonsObs : MonoBehaviour, IObsTypes
 
         used = false;
         CannonsNum = transform.childCount / 2;
-
-        StartCannonDestAnim = false;
 
         //Fillin The Rug2x Disctionary with the Rugs and their corresponding Cannons
         ParRugs = new List<Transform>();
@@ -134,20 +132,21 @@ public class CannonsObs : MonoBehaviour, IObsTypes
             //To check if enough time has passed between this shot and the last one
             if (TimeLeft <= 0)
             {
-                //To see if the player is now pressing 1 of the triggers to disable a cannon
-                if (Physics.OverlapBox(transform.position + new Vector3(0, 4, -SafeDistance), OverBoxSize, new Quaternion(), PlayerLayer).Length <= 0)
+                //To see if the player is in the right position to start shooting
+                if (Physics.BoxCastNonAlloc(transform.position + Vector3.up * 4, OverBoxSize, Vector3.back, PlayerHit, new Quaternion(), FireDistance, PlayerLayer) <= 0)
                 {
-                    if (Physics.BoxCast(transform.position + Vector3.up * 4, OverBoxSize,Vector3.back,out RaycastHit hit, new Quaternion(), FireDistance, PlayerLayer))
-                    {
-                        if(Player == null)
+                    //To see if the player is now pressing 1 of the triggers to disable a cannon
+                    if (Physics.OverlapBoxNonAlloc(transform.position + new Vector3(0, 4, -SafeDistance), OverBoxSize, PlayerCol, new Quaternion(), PlayerLayer) <= 0)
+                    {                        
+                        if (Player == null)
                         {
-                            Player = hit.transform;
+                            Player = PlayerHit[0].transform;
                             InvokeRepeating("CheckObstPassed", PlayerPosCheckDelay, PlayerPosCheckDelay);                           
                         }
 
                         TimeLeft = FireRate;
 
-                        int i = Randomize ? Random.Range(0 , ParRugs.Count) : ChooseCloseToPlayer(hit.transform), j;
+                        int i = Randomize ? Random.Range(0 , ParRugs.Count) : ChooseCloseToPlayer(PlayerHit[0].transform), j;
 
                         j = (Random.Range(1, 3) + i) % ParRugs.Count;
 
@@ -213,18 +212,7 @@ public class CannonsObs : MonoBehaviour, IObsTypes
             {
                 TimeLeft -= Time.deltaTime;
             }
-        }
-
-        if (StartCannonDestAnim)
-        {
-            CannonToDest.localScale -= (1 / DestAnimTime) * Time.deltaTime * CannonToDest.localScale;
-
-            if (CannonToDest.localScale.magnitude <= 0.1f)
-            {
-                CannonToDest.gameObject.SetActive(false);
-                StartCannonDestAnim = false;
-            }
-        }        
+        }       
     }
 
     #region Setting Up The Cannon Balls
@@ -316,8 +304,9 @@ public class CannonsObs : MonoBehaviour, IObsTypes
             ParRugs.Remove(Rug2x[Rug]);
 
             //The Cannon needs to be the first child of the parent Rug           
-            CannonToDest = Rug2x[Rug].GetChild(0);
-            StartCannonDestAnim = true;                       
+            Transform Cannon = Rug2x[Rug].GetChild(0);
+            Instantiate(CannonDestEff, Cannon.position + Vector3.up, Quaternion.Euler(-90, 0, 0));
+            Destroy(Cannon.gameObject);
 
             AudioManager.AudMan.Play("Cannon Gone", true);
 

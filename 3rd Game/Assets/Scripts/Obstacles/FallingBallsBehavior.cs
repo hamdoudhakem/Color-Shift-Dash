@@ -37,6 +37,7 @@ public class FallingBallsBehavior : MonoBehaviour , IObsTypes, IColParent
     private ParticleSystem[] Effects;
     private int BaseEffectsInsta, CurEffIndex;
     private Transform Player;
+    private Collider[] PlayerCol = new Collider[1]; //Help When Using Non Alloc version of OverlapBox
     private float BallHalfSize;
  
     void Start()
@@ -82,12 +83,12 @@ public class FallingBallsBehavior : MonoBehaviour , IObsTypes, IColParent
     {
         if(!Started)
         {
-            Collider[] cols = Physics.OverlapBox(transform.position + Vector3.back * StartDistance + (Vector3)Offset,
-                              BoxSize, new Quaternion(), PlayerLayer);
+            int colsNum = Physics.OverlapBoxNonAlloc(transform.position + Vector3.back * StartDistance + (Vector3)Offset,
+                              BoxSize, PlayerCol, new Quaternion(), PlayerLayer);
 
-            if(cols.Length > 0)
+            if(colsNum > 0)
             {
-                Player = cols[0].transform;
+                Player = PlayerCol[0].transform;
                 Started = true;
                 StartCoroutine(DoIt());
             }
@@ -119,8 +120,7 @@ public class FallingBallsBehavior : MonoBehaviour , IObsTypes, IColParent
                 ChooseSide(Balls[i % Balls.Length].transform);
                 
                 yield return new WaitForSeconds(Delay - .4f);
-            }            
-
+            }          
             
         }
     }

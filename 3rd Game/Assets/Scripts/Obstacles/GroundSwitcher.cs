@@ -19,6 +19,7 @@ public class GroundSwitcher : MonoBehaviour, IObsTypes
 
     private GameObject[] Grs;
     private AudioSource Switched;
+    private Collider[] PlayerCol = new Collider[1];  //Help When Using Non Alloc version of OverlapBox
 
     void Start()
     {
@@ -36,9 +37,33 @@ public class GroundSwitcher : MonoBehaviour, IObsTypes
         InvokeRepeating("ChangeDelay", 0, Delay);
     }    
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawCube(transform.position + Offset, Size * 2);
+    }
+
+    void Update()
+    {
+        if (!ScreensEventHandlers.IsPaused)
+        {
+            Switched.UnPause();
+
+            if (Physics.OverlapBoxNonAlloc(transform.position + Offset, Size, PlayerCol, new Quaternion(), PlayerLayer) > 0)
+            {
+                CancelInvoke();
+                enabled = false;
+            }
+        }
+        else
+        {
+            Switched.Pause();
+        }      
+
+    }
+
     void ChangeDelay()
     {
-        if(Grs[0].activeSelf == false)
+        if (Grs[0].activeSelf == false)
         {
             Grs[0].SetActive(true);
             Grs[1].SetActive(false);
@@ -53,28 +78,5 @@ public class GroundSwitcher : MonoBehaviour, IObsTypes
 
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawCube(transform.position + Offset, Size * 2);
-    }
-
-    void Update()
-    {
-        if (!ScreensEventHandlers.IsPaused)
-        {
-            Switched.UnPause();
-
-            if (Physics.OverlapBox(transform.position + Offset, Size, new Quaternion(), PlayerLayer).Length > 0)
-            {
-                CancelInvoke();
-                enabled = false;
-            }
-        }
-        else
-        {
-            Switched.Pause();
-        }      
-
-    }
 
 }

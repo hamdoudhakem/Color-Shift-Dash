@@ -57,6 +57,7 @@ public class SplasherBehavior : MonoBehaviour ,IObsTypes
     private Vector3 StartPos;
 
     private List<SplashBallBehavior> BaseBalls;
+    private RaycastHit[] PlayerHit = new RaycastHit[1]; //Help with the NonAlloc version of the BoxCast
 
     void Start()
     {
@@ -85,19 +86,19 @@ public class SplasherBehavior : MonoBehaviour ,IObsTypes
         {
             if (CoolDown <= 0)
             {
-                if (Physics.BoxCast(StartPos + Vector3.back, CastSize, Vector3.back, out RaycastHit hit, new Quaternion(), Range, PlayerLayer))
+                if (Physics.BoxCastNonAlloc(StartPos + Vector3.back, CastSize, Vector3.back, PlayerHit, new Quaternion(), Range, PlayerLayer) > 0)
                 {
-                    Vector3 Pos = new Vector3(hit.transform.position.x, GroundCheck.position.y, transform.position.z);
+                    Vector3 Pos = new Vector3(PlayerHit[0].transform.position.x, GroundCheck.position.y, transform.position.z);
 
                     if(Player == null)
                     {
-                        Player = hit.transform;
+                        Player = PlayerHit[0].transform;
                         InvokeRepeating("CheckObstPassed", PlayerPosCheckDelay, PlayerPosCheckDelay);
                     }
 
                     if (Physics.OverlapBox(Pos, CheckSize, new Quaternion(), GroundLayer).Length > 0)
                     {
-                        Target = new Vector3(hit.transform.position.x, transform.position.y, transform.position.z);
+                        Target = new Vector3(PlayerHit[0].transform.position.x, transform.position.y, transform.position.z);
 
                         Material[] mats = Mesh.materials;
                         mats[1].color = StaticData.Materials[Random.Range(0, StaticData.Materials.Count)].color;
