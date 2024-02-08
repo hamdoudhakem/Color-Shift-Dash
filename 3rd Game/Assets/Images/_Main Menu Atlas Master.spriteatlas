@@ -6,7 +6,7 @@ SpriteAtlas:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: _Main Menu Atlas
+  m_Name: _Main Menu Atlas Master
   m_EditorData:
     serializedVersion: 2
     textureSettings:
@@ -26,7 +26,7 @@ SpriteAtlas:
       m_MaxTextureSize: 2048
       m_ResizeAlgorithm: 0
       m_TextureFormat: -1
-      m_TextureCompression: 1
+      m_TextureCompression: 2
       m_CompressionQuality: 50
       m_CrunchedCompression: 0
       m_AllowsAlphaSplitting: 0
@@ -44,7 +44,7 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: ee76b5b5518825e408c0c36dbbbc2d9f, type: 3}
-    bindAsDefault: 1
+    bindAsDefault: 0
     isAtlasV2: 0
     cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
@@ -247,5 +247,5 @@ SpriteAtlas:
   - Graffiti-Transparent-PNG (12)
   - Heart (8)
   m_RenderDataMap: {}
-  m_Tag: _Main Menu Atlas
+  m_Tag: _Main Menu Atlas Master
   m_IsVariant: 0
